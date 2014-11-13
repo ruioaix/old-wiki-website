@@ -1,0 +1,4 @@
+= 南京 =
+
+<div class="PhotoAndIntro">{{../files/LRphoto/nanjing001.jpg||class="photo"}} *夫子庙1* </div>
+<div class="PhotoAndIntro">{{../files/LRphoto/nanjing002.jpg||class="photo"}} *夫子庙2* </div>

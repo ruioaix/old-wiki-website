@@ -1,0 +1,60 @@
+= 进程环境 =
+
+8种方式使进程终止，其中5种为正常终止：
+# 从main返回
+# 调用exit
+# 调用_exit或_Exit
+# 最后一个线程从其启动例程返回
+# 最后一个线程调用pthread_exit
+# 调用abort
+# 接到一个信号并终止
+# 最后一个线程对取消请求做出响应
+
+main函数是c程序的主函数，main返回，c程序就结束了。但对内核来说，不是这样的，在main还是之前，内核做了一些事情，在main返回之后，内核也做了一些事情。而在main返回之后，内核就立即调用exit函数，这种立即调用可以看作是`exit(main(argc,argv));`，所以，在main中`return 0;`和直接调用exit(0)没有区别。
+
+按照ISO C的规定，一个进程可以登记多达32个函数，这些函数将由exit自动调用。
+- 这写登记的函数称为终止处理函数。
+- `int atexit(void (*func)(void));`
+- exit会自动调用这些函数。
+
+根据ISO C和POSIX.1，exit首先调用各终止处理程序，然后按需多次调用fclose，关闭所有打开流。
+
+内核首先启动一个c启动例程，然后c启动例程调用main函数，main完成后，如果没有exit，那么就返回到c启动例程，c启动例程就exit，然后exit就调用终止处理程序，以及关闭标准I/O流等。在任何时候调用_exit和_Exit都会导致直接返回内核。
+
+内核使程序执行的唯一方法是调用一个exec函数。
+
+进程资源终止的唯一方法是显式或隐式（通过exit）的调用_exit和_Exit。
+
+ISO C和POSIX.1都要求argv[argc]是一个空指针。
+
+通常使用getenv和putenv函数来访问特定的环境变量，而不是用environ变量。但是，如果要查看整个环境，则必须使用environ指针。
+
+ISO C说明了三个用于存储空间动态分配的函数。
+# malloc——分配指定字节数的存储区，此存储区中的初始值不确定。
+# calloc——为指定数量且指定长度的对象分配存储空间。该空间中的每一位都初始化为0
+# realloc——更改以前分配区的长度。新增区域内的初始值不确定。
+# `#include <stdlib.h>`
+# `void *malloc(size_t size);`
+# `void *calloc(size_t nobj, size_t size);`
+# `void *realloc(void *ptr, size_t newsize);`
+# `void *free(void *ptr);`
+# 三个分配函数所返回的指针一定是适当对齐的。
+
+因为realloc可能移动存储区，所以，不应该有任何指针指向将要realloc的存储区。
+
+上面的函数通常都使用sbrk系统调用实现。
+
+内核并不care环境变量，环境变量仅仅是用于应用程序的。ISO C没有定义任何的环境变量。
+
+非局部goto——setjmp和longjmp函数
+- `#include <betjm.h>`
+- `int setjmp(jmp_buf env);`
+- `void longjmp(jmp_buf env, int val);`
+
+使用getrlimit和setrlimit函数来查询和更改进行的资源限制。
+- `#include <sys/resource.h>`
+- `int getrlimit(int resource, struct rlimit *rlptr);`
+- `int setrlimit(int resource, const struct rlimit *rlptr);`
+
+= OVER =
+

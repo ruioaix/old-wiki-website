@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Applied_jQuery_DevelopAndDesign</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Applied jQuery: Develop and Design</h1>
+
+<p>
+learning a few jQuery tips:
+</p>
+<ul>
+<li>
+cache select result.
+
+<li>
+troubleshooting with firebug.
+
+<li>
+packing up your code
+
+<li>
+using return false
+
+<li>
+jsfiddle.net
+
+</ul>
+
+<p>
+jquery的使用并不是独立于css和html的，良好的网站设计通常是需要结合在html中进行适当的组织，以便于jquery可以方便的操作html，同时，某些华丽的功能依赖于html和jquery的深度结合。
+</p>
+
+<p>
+jquery，css，html三者是一体的，而不是分离的。
+</p>
+
+<p>
+将一个div放在浏览器窗口正中的方法是，先position：fixed，top：50%，left：50%，再margin-top：-height，margin-left：-width。
+</p>
+
+<p>
+突出显示，也就是背景变暗的方法是，先position：fixed，top：0，left：0，width：100%，height：100%，再jquery，css：opacity0.7，fadein。
+</p>
+
+<p>
+如果一个元素不是link，那么可以使用live函数或者delegate函数来元素和click event。
+</p>
+
+<p>
+想做一个自动滚动的图片栏：
+</p>
+<ol>
+<li>
+指定宽度，并指定overflow：hidden；
+
+<li>
+子div可以比母div更宽，但母div设置了overflow，所以任意超过母div宽度的部分都不显示。不管是左边超过的（left：-340），还是右边超过的。
+
+<li>
+每一张图片都指定一个宽度，3张图片都是可以显示的，其他的都不显示。
+
+<li>
+jquery每次做是事情是将整体向左移动一个图片的长度，这一步完成后，callback将最前面的图片放到最后面图片的后面，然后，整体再向右移动一个图片的长度。这是经过思考实验的核心。
+
+<li>
+然后就是setInterval，几秒钟做一次。
+
+<li>
+想要效果好一些的话：
+
+<ol>
+<li>
+所有图片透明度设为0.5
+
+<li>
+当鼠标位于其上之时停止setinterval，离开时再次开始
+
+<li>
+当鼠标位于其上，不透明，离开，再次透明。
+
+</ol>
+</ol>
+
+<p>
+点击自动滚动图片栏的小图片产生大图片的方法是：
+</p>
+<ol>
+<li>
+在html保留一个photomodel。
+
+<li>
+点击的时候，想其内部插入带有正确id和pic的img标签。
+
+<li>
+对id进行操作，获得body的高度，设置图片的高度。
+
+<li>
+设置阴影，居中。
+
+</ol>
+
+<p>
+想实现导航栏的动画效果：
+</p>
+<ol>
+<li>
+设定导航栏的高度。
+
+<li>
+设定导航个栏目为float，left。
+
+<li>
+定义每个栏目a的背景图片
+
+<li>
+定义每个栏目a下面span的背景图片
+
+<li>
+上述两个图片是一样。
+
+<li>
+三个栏目分别设置了栏目的background-position
+
+<li>
+span的位置为向上偏移30px
+
+<li>
+然后就是hover的两个函数来设置其透明度，从0到1.
+
+</ol>
+
+<h2 id="toc_1.1">Chapter3 making forms pop</h2>
+<p>
+<code>focus</code>，光标闪烁的位置。可以输入的位置。
+</p>
+
+<p>
+<code>jQuery(':input:visible').each(function(i,e){});</code>信息量很多。
+</p>
+
+<p>
+<code>val</code>，获取input的值。
+</p>
+
+<p>
+<code>test</code>，正则验证。
+</p>
+
+<p>
+<code>change</code>，input时验证。
+</p>
+
+<p>
+<code>jQuery(function(){});</code>在dom完成loading之后，运行函数。
+</p>
+
+<h2 id="toc_1.2">Chapter4 being effective with ajax</h2>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Applied_jQuery_DevelopAndDesign";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Applied_jQuery_DevelopAndDesign";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

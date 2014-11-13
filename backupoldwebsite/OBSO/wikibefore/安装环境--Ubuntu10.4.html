@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>安装环境--Ubuntu10.4</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h2 id="toc_0.1">总述</h2>
+
+<p>
+这里的安装环境其实可以有很多，是个linux应该就可以，当然我没有一个一个的试过；但我看到别人用fedora装过，再根据我实用ubuntu安装Geant4的经验来说，linux应该都可以，看个人了。
+</p>
+
+<h2 id="toc_0.2">使用的光盘</h2>
+<p>
+我实用的是从官网上下的ubuntu 10.04 desktop i386 dvd iso，好久之前下的，估计现在应该是10.04.1了。
+</p>
+
+<p>
+<sup><small>注意</small></sup>：我使用的dvd版本，4G，虽然下的费时，但给人安全感……
+</p>
+
+<h2 id="toc_0.3">系统安装过程</h2>
+<p>
+略过，图形化界面，傻瓜式操作；要注意的是分区，如果是新人，直接选择使用空闲空间或者整个磁盘吧。
+</p>
+
+<p>
+安装的时候使用中文的环境，下面的都是基于中文环境的ubuntu来操作的。安装英文版本的时候会出现在新立得里面找不到函数库的问题。最终导致不能开启opengl。
+</p>
+
+<h2 id="toc_0.4">更新源</h2>
+<p>
+如果是学校的用户，可以去瀚海的linux版的置顶贴里面，能找到ubuntu10.04的源，直接下载下来：source.list.ubuntu，就这名字。
+然后copy到/etc/apt下面，备份原来的：
+</p>
+
+<ol>
+<li>
+<code>mv source.list source.list.bak</code>
+
+<li>
+<code>mv source.list.ubuntu source.list</code>
+
+<li>
+<code>apt-get update</code>
+
+<li>
+<code>apt-get upgrade</code>
+
+</ol>
+
+<p>
+等……学校的源很快，1MB/s的速度还是有的。
+</p>
+
+<p>
+<sup><small>注意</small></sup>：下面上述命令可能会因为权限问题不能执行，这种时候在语句前加上<code>sudo</code>即可。
+</p>
+
+<h2 id="toc_0.5">一些环境设置和安装一些库</h2>
+<h3 id="toc_0.5.1">环境设置</h3>
+<p>
+打开终端，输入：
+</p>
+
+<ul>
+<li>
+<code>sudo passwd root</code>
+
+</ul>
+
+<p>
+这句话是用来设置你机器的root密码的，还是设置一个比较NB的密码比较好。
+<sup><small>注意</small></sup>：我这有个挺好的测试密码安全程度的网站，可以试下:[<a href="http://howsecureismypassword.net/">http://howsecureismypassword.net/</a> 穿越].
+</p>
+
+<p>
+接着，装vim，ubuntu里面默认没有安装，这个必须装啦。_要是你用emacs，当我什么都没说_
+</p>
+
+<ul>
+<li>
+<code>sudo apt-get install vim</code>
+
+</ul>
+
+<p>
+即可。
+</p>
+
+<p>
+接着，装c++的工作环境，也是一句：
+</p>
+
+<ul>
+<li>
+<code>sudo apt-get install build-essential</code>
+
+</ul>
+
+<p>
+就好。
+</p>
+
+<h3 id="toc_0.5.2">安装一些库</h3>
+<p>
+这些库如果不装的话，会导致N多古怪的问题，但大多都是由于opengl这个与图形相关的部分引起的。
+</p>
+
+<p>
+你可以使用新立得，也可以使用命令行，这些库包括：
+</p>
+
+<ul>
+<li>
+libgl1-mesa-dev	
+
+<li>
+libgl1-mesa-glx
+
+<li>
+mesa-common-dev	<sup><small>如果发现已经安装就不要管了</small></sup>
+
+<li>
+libglu1-mesa-glx   <sup><small>如果没找到这个，也不要管了</small></sup>
+
+<li>
+libglu1-mesa-dev
+
+<li>
+libxi6
+
+<li>
+libxi-dev
+
+<li>
+libxmu 			<sup><small>这个会搜到7/8个包，全部安装</small></sup>
+
+</ul>
+
+<p>
+安装好之后，准备工作就完成了，就可以开始正式的安装Geant4了。
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="安装环境--Ubuntu10.4";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="安装环境--Ubuntu10.4";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

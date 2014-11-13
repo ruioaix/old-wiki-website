@@ -1,0 +1,115 @@
+= Quick Look on Apache2 =
+一直没有仔细的研究过http server，即使是Apache，也是属于能用就不管其具体配置、以及那样配置的原因所在的程度。因为这样，越发的肤浅、困惑。为了解惑决定仔细理解一下apache2。
+
+apache的配置给我的感觉是繁杂和牵一发动全身。将之简单化，区分化应该会比较好，一块一块的理解。
+
+== Binding ==
+- `Listen 80`
+- `Listen 192.0.2.1:80`
+- `Listen [2001:db8::a00:20ff:fea7:ccea]:80`
+*Listen* 可以多次出现，组合。无ip，即所有ip。
+
+VirtualHost必须与Listen保持一致，否则不能被访问。（binding很简单，但是牵涉到了VirtualHost，暂且记忆。
+
+== Configuration Sections ==
+- `<IfDefine>,<IfModule>,<IfVersion>`只在server start和restart的时候evaluated，如果评估的时候为真，那么，这3个section中的所有命令都将对每一个request执行。否则，就会被忽略。
+- `<IfDefine>`的判断在于`httpd`命令行参数。
+- `<IfModule>`的判断在于某个module是否在server上可用（可以是静态编译进server的，也可以是动态编译，并且已经`LoadModule`了的）。
+- `<IfVersion>`的判断在于server的版本。
+上面3个是一组。
+
+下面的2个是另外一组。
+- `<Directory>`里面的的directive会被应用于对应filesystem目录和所有其子目录。
+- `<Files>`里面的directive会被应用于所有指定名称的文件上，而不管文件的位置。
+- 上面两者可以结合，从而指定某些目录下的某些文件。
+
+下面这个自成一体。
+- `<Location>`是作用于网址的。网址和filesystem上的文件可以有关系，但也可以完全没有关系，两者之间没有必然联系。
+
+上面三个都可以使用shell-style wildcard。并且对应于上面三个，`<DirectoryMatch>,<FilesMatch>,<LocationMatch>`可以使用正则表达式。
+
+前面的都很清楚。后面的大多不是很清楚，但我知道的是：后面的这些也都是Configuration Section。
+- `<VirtualHost>`
+- `<Proxy>,<ProxyMatch>`
+
+各种section的执行顺序还是蛮有讲究的，优先级从前到后是`<Directory>`,`<DirectoryMatch>`,`<Files><FilesMatch>`,`<Location><LocationMatch>`。同级的就按顺序执行，`<VirtualHost>`的顺序取决于其内部的section，并仅次于其内部的section。
+
+`httpd -l` 显示静态编译进入httpd的模块名称。
+
+== Directive ==
+# `ServerRoot` 内容是 `/etc/httpd`。
+# `ServerTokens` 返回给client的关于apache的信息，可多，可少。
+# `PidFile` 记录了httpd daemon的pid的file，不是绝对地址的话，就是相对于上面`ServerRoot`的位置。
+# `Timeout` 超时时间，具体超时的行为不清楚，但概念是明确的：不能总等你吧。
+# 一起3个
+    # `KeepAlive` 一种长久连接的特性，on或者off。
+    # `MaxKeepAliveRequests` 上面长久链接中允许的最大request数目，100或500...
+    # `KeepAliveTimeout` 长久链接中两个request之间的超时时间。
+# `<IfModule prefork.c>`
+    - 如果这个module存在，那么也就是说无线程，纯多进程的http server，那么，一个request就由一个进程来处理，总会存在一定的idle process，存在一个queue。合理。
+# `<IfModule worker.c>`
+    - 这个是有线程，有进程的混合http server，总会存在一定的idle thread。合理。
+# `Listen 80`
+# `LoadModule` 使能动态编译的模块，有了这句，该模块就处于active状态了。
+# `Include`  用这个可以包含其他的configure文件了，和c的处理一样吧。
+# `User`,`Group` 用于处理request的process的effective user id和group id。
+# `ServerAdmin` 这个会出现在server返回给用户的某些错误界面上，可以是email可以是url。
+# 不太理解的几个。
+    # `ServerName` 是server用来确定自己的方式，蛮复杂的。和DNS，和VirtualHost都相关，记忆。
+    # `UseCanonicalName` 不太理解
+# `DocumentRoot` request url的后一部分会和本指令的值结合，从而找到对应的目录或文件，本指令如果不是绝对地址，那么就和`ServerRoot`结合；是绝对地址的话，就不结合了。
+# `<Directory>` 这个指令的参数总是绝对地址，不相对于任何其他的地址，当只有一个`/`的时候，指的就是linux的根目录，NB。
+# `Options` 某个目录支持的特性，明白了就很简单了。
+# `AllowOverride` 这个就是.htaccess的相关指令，其说明.htaccess中哪些指令可以执行，哪些不可以。
+# `Order`,`Allow`,`Deny` 这三个真是NB，简单的解释一下，理解起来还是蛮多讲究的。
+    - `Order allow,deny`和`Order deny,allow`两个的意思是确定了一个基础，allow和deny的基础，前者说所有访问都deny掉，后者说所有访问都允许；这是两个基础。
+    - 上述前者之后，会先运行`Allow`的语句，再运行`Deny`的语句，这写语句的执行顺序只由上面的`Order`决定，而与在httpd.conf文件中的位置无关。
+    - 上述后者之后，会先运行`Deny`的语句，再运行`Allow`的语句，这写语句的执行顺序只由上面的`Order`决定，而与在httpd.conf文件中的位置无关。
+    - `Allow`和`Deny`都是在上面的那两个基础上再加限制，`Allow`就是allow，`Deny`就是deny。
+    - `Allow`和`Deny`并不需要都存在，存在一个或者都不存在都是可以的，两者只是在上面的那两个基础上再加限制而已。
+# `DirectoryIndex` 就是没有指定文件，只指定目录的情况下，找寻的文件，一般是index.html等。
+# `AccessFileName` 指定.htaccess的名字。
+# `Satisfy` 不太懂。
+# `TypesConfig` 指定mine type文件的位置。
+# `DefaultType` default MIME type
+# `ErrorLog`,`LogLevel`
+# `LogFormat`,`CustomLog`
+# `ServerSignature` 有点类似于`ServerTokens`，也是server输出页面上会显示的东西。
+# `Alias` 这个是将url映射到非`DocumentRoot`的地方的一个方法。
+# `ScriptAlias` 与上面很相似。
+# `IndexOptions` 目录下的索引建立的配置。
+    - `AddIconByEncoding`,`AddIconByType`,`AddIcon`,`DefaultIcon` 目录列表的时候使用的条目图片？
+    - `ReadmeName`,`HeaderName` 目录列表的下面和上面。
+    - `IndexIgnore` 目录列表不显示的文件等
+# `AddLanguage`,`LanguagePriority`,`ForceLanguagePriority` 语言相关。
+
+== 当前我PC的apache配置理解 ==
+- `DocumentRoot "/var/www/html/xxxx/yyyy"`
+    - 也就是说，这是我被访问的时候的对应filesystem。
+    - localhost/xxx就会到对应的地方去。
+- 我定义了userdir，所以，localhost/~me/就会到filesystem中的userdir去。
+- 上述两个不冲突。
+
+== Name-based Virtual Host ==
+首先，这种功能依赖于client要将目标hostname作为HTTP header的一部份。这是前提。
+- `NameVirtualHost *.80`
+- `<VirtualHost *:80>`
+
+== Mapping URLs to Filesystem Locations ==
+apache的default行为是从url取出url-path，放在`DocumentRoot`之后。
+- 每个virtualhost可以有自己的`DocumentRoot`。
+
+`Alias`是另一种对应filesystem到web的方法。
+
+UserDir是另一种。
+
+`Redirect`是另一种。
+
+`ProxyPass`和上面的类似，但区别是上面的会导致浏览器的url变化，但本directive不会。
+
+`Rewriting Engine`是另一种，强大的一种。
+
+`ErrorDocument`搞定404，500等等。
+
+总共也就这么几种。
+

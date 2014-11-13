@@ -1,0 +1,10 @@
+#!/bin/bash
+cd ~/Wiki/wikiofRRRUI   
+echo "-----------------------------Now,begin to pull github'wikiofRRRUI:"
+git pull 
+echo "-----------------------------Pull github's wikiofRRRUI is done."
+cd ~/webDevelopDir/wikiofRRRUI_html
+echo "-----------------------------Now,begin to pull github'wikiofRRRUI_html:"
+git pull 
+echo "-----------------------------Pull github's wikiofRRRUI_html is done."
+cd 

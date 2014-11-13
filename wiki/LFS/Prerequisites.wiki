@@ -1,0 +1,3 @@
+= Prerequisites =
+- [[Building_and_Installing_Software_Packages_for_Linux]]
+- [[../Tips/UEFI认识]]

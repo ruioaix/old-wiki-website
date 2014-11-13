@@ -1,0 +1,6 @@
+%toc
+%title XR's Personal Wiki
+= Linux System= 
+- [[Linux_System/Linux_Tools]]
+
+

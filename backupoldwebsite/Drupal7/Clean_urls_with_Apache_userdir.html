@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Clean_urls_with_Apache_userdir</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Clean urls with Apache userdir in RHEL6</h1>
+<p>
+之前按照<a href="../RHEL6/在RHEL6配置LAMP_fordevelopment.html">../RHEL6/在RHEL6配置LAMP_fordevelopment</a>里面的内容设置了userdir，从而可以使用我本身的vim配置（如果将需要开发的内容放在/var/www/html/内部的话，我就需要使用root账户了，很不舒服）。
+</p>
+
+<p>
+但由于使用了apache的userdir导致了我今天在配置drupal718的clean urls的时候总是出问题，好在最终找到原因了。
+</p>
+
+<h2 id="toc_1.1">配置步骤</h2>
+<ol>
+<li>
+确认mod_rewrite的存在
+
+<ul>
+<li>
+<code>apachectl -M |grep rewrite</code>得到了 <strong>rewrite_module (shared)</strong> 的输出，ok。
+
+<li>
+或者，查看 <code>/etc/httpd/conf/httpd.conf</code>，在RHEL6.3中的apache2.2.15的环境下，在上面文件的190行左右可以看到 <strong>LoadModule rewrite_module modules/mod_rewrite.so</strong> 这一行，ok。
+
+</ul>
+<li>
+修改httpd.conf，就是上面的文件，因为我的drupal放在userdir（/home/*/webDevelopDir）下，找到这个Directory，确保其下的 <strong>AllowOverride All</strong> 。
+<pre>
+	&lt;Directory /home/*/webDevelopDir&gt;
+		AllowOverride All
+		Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+		Allow from all
+		Order allow,deny
+	&lt;/Directory&gt;
+</pre>
+
+<li>
+修改httpd.conf，确保其中存在 <strong>AccessFileName .htaccess</strong> 的存在。这在httpd.conf中本来也是存在的，在416行左右。所以不用修改。
+
+<li>
+修改drupal目录下的.htaccess文件，在drupal718下的.htaccess文件中，98行是<code>RewriteBase /home/ray/webDevelopDir/drupal718</code>，这一行的内容根据你的userdir和drupal目录的名字不同而不同，但格式如上，将此行comment掉，然后加入新行<code>RewriteBase /~ray/drupal718</code>即可。
+
+<li>
+到你的drupal页面，configuration，search节下的clean urls，这个时候应该就可以enable了。
+
+<li>
+OVER
+
+</ol>
+
+<p>
+中间记得<code>/etc/init.d/httpd restart</code>。
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Clean_urls_with_Apache_userdir";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Clean_urls_with_Apache_userdir";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

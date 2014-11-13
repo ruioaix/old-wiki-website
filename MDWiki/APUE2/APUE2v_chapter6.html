@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chapter 6. System Data Files and Information</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link type="image/x-icon" rel="shortcut icon" href="../cssjs/css/favicon.ico"/>
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/css/custom.css" rel="stylesheet">
+	<script type="text/javascript" src="../cssjs/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../cssjs/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../cssjs/js/custom.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+
+</head>
+
+<body>
+	<div class="row-fluid">
+		<div id="left-side"  class="span4"> <div class="row-fluid">
+			<div class="navbar navbar-fixed-top visible-desktop">
+				<div class="navbar-inner">
+					<a class="brand" href="#"></a> 
+					<ul class="nav">
+						<li class="active"><a href="../index.html">home</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> index <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li class="dropdown-submenu"><a href="../">MyExperiences(wishToBeUseful)</a>
+									<ul class="dropdown-menu">
+									<li><a href="./index.html">RHEL6(6.3)</a>
+									<li><a href="#toc_1.1.2">Geant4(4.9.2.p02)</a>
+									<li><a href="#toc_1.1.3">Tips</a>
+									<li><a href="#toc_1.1.4">Apache(2.2.15)</a>
+									<li><a href="#toc_1.1.5">Reprint(good enough)</a>
+									</ul></li>
+								<li class="dropdown-submenu"><a href="#toc_1.2">Read&amp;Study(justForMyself)</a>
+									<ul class="dropdown-menu">
+									<li><a href="#toc_1.2.1">Css</a>
+									<li><a href="#toc_1.2.2">JQuery</a>
+									<li><a href="#toc_1.2.3">Ajax</a>
+									<li><a href="#toc_1.2.4">Cookies,Sessions</a>
+									<li><a href="#toc_1.2.5">Firebug</a>
+									<li><a href="#toc_1.2.6">GNU Make(3.81)</a>
+									<li><a href="#toc_1.2.7">Redis(2.6.10)</a>
+									<li><a href="#toc_1.2.8">LFS(7.2)</a>
+									<li><a href="#toc_1.2.9">APUE(v2)</a>
+									<li><a href="#toc_1.2.10">MySQL5(5.5)</a>
+									<li><a href="#toc_1.2.11">Drupal7</a>
+									</ul></li>
+								<li class="dropdown-submenu"><a href="#toc_1.3">LifeRecord(onTheRoad)</a></li>
+								<li class="dropdown-submenu"><a href="#toc_1.4">Obsoleted(useless)</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div><!--navbar --!>
+
+			<div id="myCarousel" class="carousel slide span12 img-polaroid  hidden-phone">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+					<li data-target="#myCarousel" data-slide-to="6"></li>
+					<li data-target="#myCarousel" data-slide-to="7"></li>
+					<li data-target="#myCarousel" data-slide-to="8"></li>
+					<li data-target="#myCarousel" data-slide-to="9"></li>
+					<li data-target="#myCarousel" data-slide-to="10"></li>
+					<li data-target="#myCarousel" data-slide-to="11"></li>
+					<li data-target="#myCarousel" data-slide-to="12"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item">		 <img src="../file/LRphoto/fribourg001.jpg"></div> 
+					<div class="item">       <img src="../file/LRphoto/fribourg002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg003.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg004.jpg"></div>
+					<div class="active item"><img src="../file/LRphoto/fribourg005.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/hangzhou001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/kunming001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/shanghai001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/someplace001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zhoushan001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zurich001.jpg"></div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+
+			<div class="span12" id="profile"><div class="row-fluid">
+				<div class="span4 offset1">
+					<a href="http://github.com/xrfind"><img src="http://s.gravatar.com/avatar/c273e7c0a671536c4d122bc39d67c3d2?s=512" id="avatar" class="img-polaroid"></a>
+				</div>
+				<div class="span6 offset1 hidden-phone">
+					<strong><i class="icon-user"></i> xrfind</strong><br />
+					<span><i class="icon-home"></i><a href="http://wiki.rrrui.com"> wiki.rrrui.com</a></span><br />
+					<span><i class="icon-envelope"></i> xrfind@gmail.com</span><br />
+					<span><i class="icon-heart"></i><abbr title="c, c++, Linux"> System Engineer</abbr></span><br />
+					<span><i class="icon-tasks"></i><abbr title="php, html/css/javascript, LAMP, Redis"> Web Developer</abbr></span><br />
+					<span><i class="icon-road"></i> Complex Network</span>
+				</div>
+			</div></div>
+
+			<div class="span12 hidden-phone" id="disqus">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				var disqus_title="Chapter 6. System Data Files and Information";
+				var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+				var disqus_identifier="Chapter 6. System Data Files and Information";
+
+				(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+
+
+
+		</div></div><!-- left-side --!>
+
+		<div id="right-side" class="span8" >
+			<div id="content">
+			<h1>Chapter 6. System Data Files and Information</h1>
+
+<p>11 sections.</p>
+
+<h2>Section 6.1. Introduction</h2>
+
+<p>本来linux是有很多系统配置文件的，这ok，所有这些配置文件一般都是ASCII的文本文件，这ok，小系统文本文件的读取也ok，如果是大系统，文本文件太多，
+太大的时候，可能就不行了。</p>
+
+<p>这章就介绍这个问题的解决方案，是吧。</p>
+
+<h2>Section 6.2. Password File</h2>
+
+<p>这节的两个函数还是很有用的。</p>
+
+<ul>
+<li><code>#include &lt;pwd.h&gt;</code></li>
+<li><code>struct passwd *getpwuid(uid_t uid);</code></li>
+<li><code>struct passwd *getpwnam(const char *name);</code></li>
+<li><code>struct passwd *getpwent(void);</code></li>
+<li><code>void setpwent(void);</code></li>
+<li><code>void endpwent(void);</code></li>
+</ul>
+
+<p>这个password涉及到的是linux的/etc/passwd文件，可以在我们的程序中直接对这个文件进行open
+read，也可以使用上面的函数。显然上面的函数要容易使用很多。</p>
+
+<h2>Section 6.3. Shadow Passwords</h2>
+
+<ul>
+<li><code>#include &lt;shadow.h&gt;</code></li>
+<li><code>struct spwd *getspnam(const char *name);</code></li>
+<li><code>struct spwd *getspent(void);</code></li>
+<li><code>void setspent(void);</code></li>
+<li><code>void endspent(void);</code></li>
+</ul>
+
+<p>linux有/etc/shadow文件，freebsd和mac os x现在都没有吗？</p>
+
+<p>这些系统调用都是可以发生错误的，内核的权限控制应该是一项导致发生错误的原因吧。</p>
+
+<h2>Section 6.4. Group File</h2>
+
+<p>group还有密码域，平时完全没有用到。</p>
+
+<ul>
+<li><code>#include &lt;grp.h&gt;</code></li>
+<li><code>struct group *getgrgid(gid_t gid);</code></li>
+<li><code>struct group *getgrnam(const char *name);</code></li>
+<li><code>struct group *getgrent(void);</code></li>
+<li><code>void setgrent(void);</code></li>
+<li><code>void endgrent(void);</code></li>
+</ul>
+
+<p>这些函数都一个模子刻出来的。</p>
+
+<h2>Section 6.5. Supplementary Group IDS</h2>
+
+<p>对于supplementary group id，有些不理解。</p>
+
+<ul>
+<li>使用<code>getgroups</code>函数获得的是所有的supplementary group id吗？ </li>
+<li>用户得到的是部分supplementary group id，还是全部的sgi？ </li>
+<li>linux里面没有对应的文件？ </li>
+</ul>
+
+<p>在网上查到的资料显示，spi也是放置在/etc/group中。理解的还是没错的，那么每个用户都应该具有可以一样，可以不一样的一套spi，那么，我就不理解这一
+节中的函数的意思了。</p>
+
+<ul>
+<li><code>#include &lt;unistd.h&gt;</code></li>
+<li><code>int getgroups(int gidsetsize, gid_t grouplist[]);</code></li>
+</ul>
+
+<p>这个函数得到的是这个进程的effiective uid的spi吗？</p>
+
+<p>通过在本机上面测试，的确，这个函数获取的是登录用户，同时也是effective uid，的/etc/group里面的内容。</p>
+
+<ul>
+<li><code>#include &lt;unistd.h&gt;</code></li>
+<li><code>int initgroups(const char *username, gid_t basegid);</code></li>
+</ul>
+
+<p>这个函数是初始化，用<code>setgroups</code>来初始化spi，这个初始化的过程的作用应该就是放置到内核中吧，先读取/etc/group，然后根据读取的内容，来初
+始化。</p>
+
+<p>这样理解，应该没有错。</p>
+
+<h2>Section 6.6. Implementation Differences</h2>
+
+<p>恩</p>
+
+<h2>Section 6.7. Other Data Files</h2>
+
+<p>这一节很重要，其总结了一个观点，即存在于unix的系统数据文件，总是有那么几个函数来进行文件的读取设置搜索操作，方便，安逸。</p>
+
+<h2>Section 6.8. Login Accounting</h2>
+
+<p>事实上，现在的我虽然对于linux本身的操作设置有一定的了解，同时，对于UNIX系统接口有一定的了解，但是前者依靠后者实现的过程我就不了解了，我现在知道的仅
+仅是linux的命令包含的内容远远多余命令对应的接口，命令是使用接口的结果编译的二进制文件，其中除了接口还有更多的逻辑用于形成linux一整套管理命令，各种
+逻辑，各种权限的处理，这目前在我看来是个庞杂的过程。但是，必定存在这一种原则，会知道这种原则的。</p>
+
+<p>这节讲述的是两个文件，和对应的操作这两个文件的命令。</p>
+
+<ul>
+<li>/var/run/utmp, /var/log/wtmp </li>
+<li>who, last </li>
+</ul>
+
+<h2>Section 6.9. System Identification</h2>
+
+<p>这节也没啥，讲了uname函数和uname命令。</p>
+
+<h2>Section 6.10. Time and Date Routines</h2>
+
+<ul>
+<li><code>#include &lt;time.h&gt;</code></li>
+<li><code>time_t time(time_t *calptr);</code></li>
+</ul>
+
+<p>这个函数是基本的，其他的time函数都操作于其上。最上层函数操作的最终结果就是string。中间有个struct tm的结构。就在这三者之间换来换去。</p>
+
+<p>这一章和linux本身的时钟显示还是很有关系的。主要在于TZ这个环境变量。</p>
+
+<h2>Section 6.11. Summary</h2>
+
+<p><strong>OVER</strong></p>
+			</div><!-- content --!>
+		</div><!-- right-side span8 --!>
+	</div> <!--row-fluid --!>
+</body>
+</html>

@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+	echo "there is no commit message."
+	exit 0
+else
+	read -p "are you sure for submit? (y/n)" answer
+fi
+if [ "$answer" == "y" ]; then
+    cd ~/Wiki/wikiofRRRUI
+  echo "-----------------------------Now,begin to commit to wikiofRRRUI:"
+	git add .
+	git commit -a -m "$1"
+	git push origin master
+  echo "-----------------------------Commit to wikiofRRRUI is done."
+    cd ~/webDevelopDir/wikiofRRRUI_html
+  echo "-----------------------------Now,begin to commit to wikiofRRRUI_html:"
+	git add .
+	git commit -a -m "$1"
+	git push origin master
+  echo "-----------------------------Commit to wikiofRRRUI_html is done."
+	cd 
+fi

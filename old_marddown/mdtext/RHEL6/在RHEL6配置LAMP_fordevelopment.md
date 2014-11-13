@@ -1,0 +1,110 @@
+# RHEL6配置LAMP（用于本机开发）
+
+## apache和php
+
+apache可以在rpmfusion中找到，所以可以直接yum之。
+
+  * `yum install httpd php php-common`
+  * `yum install php-pecl-apc php-cli php-pear php-pdo php-mysql php-pgsql php-pecl-mongo php-sqlite php-pecl-memcache php-pecl-memcached php-gd php-mcrypt php-xml`
+  * **php-mbstring** 在EPEL和rpmfusion中都找不到，所以可以使用remi。当然也可以从rpmsearch这种地方找单独的rpm包，然后安装之。（如果这个php-mbstring没有安装的话，也不会有什么，但phpmyadmin会出现提示，总要装上的） 
+  * `/etc/init.d/httpd start` apache开始 
+  * `chkconfig --levels 235 httpd on` 设置开机启动 
+  * 默认的html文件夹，在`/var/www/html/`，在这个文件夹中建立 **test.php** 测试下。 
+    
+    
+        <?php
+            phpinfo();
+        ?>
+    
+
+## mysql
+
+同上面类似
+
+  * `yum install mysql mysql-server` 安装MySQL server，以及用于连接server的mysql client软件。 
+  * `/etc/init.d/mysqld start`
+  * `chkconfig --levels 235 mysqld on`
+  * 这里安装完mysql后，最好，立刻执行下面的脚本，可以认为是必执行的。 
+  * `/usr/bin/mysql_secure_installation` 这个脚本一步一步的说明很详细，照着来就好。 
+    
+    
+        NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MySQL
+              SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+               
+                
+        In order to log into MySQL to secure it, we\'ll need the current
+        password for the root user.  If you\'ve just installed MySQL, and
+        you haven\'t set the root password yet, the password will be blank,
+        so you should just press enter here
+       
+        Enter current password for root (enter for none): 
+        OK, successfully used password, moving on...
+         
+        Setting the root password ensures that nobody can log into the MySQL
+        root user without the proper authorisation.
+          
+        Set root password? [Y/n] Y
+        New password: 
+        Re-enter new password: 
+        Password updated successfully
+        Reloading privilege tables..
+        ... Success!
+        
+        XXXX,....,XXXX
+    
+
+## apache userdir
+
+  * `su -`
+  * `vim /etc/httpd/conf/httpd.conf`
+    
+    
+        360 <IfModule mod_userdir.c>
+        361     #
+        362     # UserDir is disabled by default since it can confirm the presence
+        363     # of a username on the system (depending on home directory
+        364     # permissions).
+        365     #
+        366     #UserDir disabled
+        367 
+        368     #
+        369     # To enable requests to /~user/ to serve the user's public_html
+        370     # directory, remove the "UserDir disabled" line above, and uncomment
+        371     # the following line instead:
+        372     # 
+        373     UserDir webDevelopDir
+        374 
+        375 </IfModule>
+        ......
+        393 <Directory /home/*/webDevelopDir>
+        394     AllowOverride All
+        395     Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+        396     Allow from all
+        397     Order allow,deny
+        398 </Directory>
+    
+
+  * `chmod 711 /home/xxx`
+  * **CTRL+D**
+  * `cd`
+  * `mkdir webDevelopDir`
+  * `chmod 755 webDevelopDir`
+  * SElinux需要设置下，userdir才会起作用。我自己一般都是disabled。 
+    * `echo 0 >/selinux/enforce` 临时关闭 
+    * `vim /etc/selinux/config` 永久关闭 
+  * 到这里设置好了，`/etc/init.d/httpd restart`下，在 **webDevelopDir** 中建立一个html或者php文件，使用[http://localhost/~xxx/yyy.html](http://localhost/~xxx/yyy.html) 访问下看看。 
+
+## phpmyadmin
+
+  * 去官网下载最新的包：[http://www.phpmyadmin.net/home_page/downloads.php](http://www.phpmyadmin.net/home_page/downloads.php) 。 
+  * 解压，放在userdir可以，放在`/var/www/html/`也可以。 
+  * 重要的只有一点，就是：`cp config.sample.inc.php config.inc.php`。并修改其中的`$cfg['blowfish_secret'] = 'nihaoaworld'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */`。否则，cookies不可用，即使相隔时间很短，访问phpmyadmin都会要求你输入用户名密码。 
+
+## Other Tips
+
+  * [../Drupal7/Clean_urls_with_Apache_userdir](../Drupal7/Clean_urls_with_Apache_userdir.html)
+  * 对于在重启apache时候出现的`httpd: apr_sockaddr_info_get() failed for RHEL6.T430`，解决方法是在`/etc/hosts`中的127.0.0.1后面填上`RHEL6.T430`。 
+  * 对于在重启apache时候出现的`httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName`，解决的方法是在httpd.conf中确保`ServerName localhost:80`的存在。 
+
+# OVER
+

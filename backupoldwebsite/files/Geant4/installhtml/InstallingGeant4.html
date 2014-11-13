@@ -1,0 +1,2088 @@
+
+<!-- saved from url=(0112)http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm -->
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv="Content-Type" content="text/html; charset=macintosh">
+<meta name="Title" content="Installing Geant4 Release 4.9.2.p02 on Linux">
+<meta name="Keywords" content="">
+
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Microsoft Word 11">
+<meta name="Originator" content="Microsoft Word 11">
+<link rel="File-List" href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation_files/filelist.xml">
+<link rel="Edit-Time-Data" href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Installing Geant4 Release 4.9.2.p02 on Linux</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Joseph Perl</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Joseph Perl</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:Created>2009-09-04T03:36:00Z</o:Created>
+  <o:LastSaved>2009-09-04T03:36:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>4800</o:Words>
+  <o:Characters>27361</o:Characters>
+  <o:Company>Stanford Linear Accelerator Center</o:Company>
+  <o:Lines>228</o:Lines>
+  <o:Paragraphs>54</o:Paragraphs>
+  <o:CharactersWithSpaces>33601</o:CharactersWithSpaces>
+  <o:Version>11.1282</o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:PixelsPerInch>96</o:PixelsPerInch>
+  <o:TargetScreenSize>800x600</o:TargetScreenSize>
+ </o:OfficeDocumentSettings>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>200</w:Zoom>
+  <w:DoNotShowRevisions/>
+  <w:DoNotPrintRevisions/>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Times New Roman";
+	panose-1:0 2 2 6 3 5 4 5 2 3;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:50331648 0 0 0 1 0;}
+@font-face
+	{font-family:Arial;
+	panose-1:0 2 11 6 4 2 2 2 2 2;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:50331648 0 0 0 1 0;}
+@font-face
+	{font-family:"Courier New";
+	panose-1:0 2 7 3 9 2 2 5 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:50331648 0 0 0 1 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:0 5 2 1 2 1 8 4 8 7;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 0 256 0 -2147483648 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	mso-font-kerning:16.0pt;}
+h2
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	font-family:Arial;
+	font-style:italic;}
+h3
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;}
+h4
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:14.0pt;
+	font-family:"Times New Roman";}
+h5
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:5;
+	font-size:13.0pt;
+	font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoNormalIndent, li.MsoNormalIndent, div.MsoNormalIndent
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoList, li.MsoList, div.MsoList
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.25in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoList2, li.MsoList2, div.MsoList2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoBodyTextIndent, li.MsoBodyTextIndent, div.MsoBodyTextIndent
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoDate, li.MsoDate, div.MsoDate
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Courier New";}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Courier New";}
+table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+span.normal
+	{mso-style-name:normal;}
+p.ReferenceLine, li.ReferenceLine, div.ReferenceLine
+	{mso-style-name:"Reference Line";
+	mso-style-parent:"Body Text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-header:url(":Geant4_9_2_p02_Linux_Installation_files:header.htm") h1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:157044701;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1245614266 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:359282188;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1790235082 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+
+<body bgcolor="white" lang="EN-US" link="blue" vlink="purple" style="tab-interval:.5in">
+
+<div class="Section1">
+
+<form>
+
+<h1>Installing Geant4 Release 4.9.2.p02 on Linux</h1>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Installation guides are available for a variety of different
+Geant4 releases and operating systems.<span style="mso-spacerun: yes">&nbsp;
+</span>Be sure to use the appropriate guide for your Geant4 release and system.<span style="mso-spacerun: yes">&nbsp; </span>The full set of guides can be found at:<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/installation">http://geant4.slac.stanford.edu/installation</a><o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<h3>Contents:<o:p></o:p></h3>
+
+</form>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_What_are_the">What are the two pieces of software
+required for building Geant4?<o:p></o:p></a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_Getting_and_Installing">Getting and Installing
+CLHEP<o:p></o:p></a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_Getting_Geant4">Getting Geant4<o:p></o:p></a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_Getting_Data_Files">Getting Data Files</a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_Doing_the_Initial">Doing the Initial Build<o:p></o:p></a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_Single_versus_Multi-User">Single versus
+Multi-User Installation</a><o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_Creating_the_setup">Creating the setup script<o:p></o:p></a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_The_Geant4_Work">The Geant4 Work Directory</a><o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_Selecting_an_Example">Selecting an Example
+Application</a><o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_Configuring_the_Environment">Configuring the
+Environment<o:p></o:p></a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_Building_an_Example">Building an Example
+Application<o:p></o:p></a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_Running">Running<o:p></o:p></a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4_9_2_p02_Linux_Installation.htm#_How_to_go">How to Go Back and Change Choices
+from./Configure -build</a><o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<h3><a name="_What_are_the"></a>What are the two pieces of software required
+for building Geant4?<o:p></o:p></h3>
+
+<p class="MsoNormal"><b>&nbsp;<o:p></o:p></b></p>
+
+<p class="MsoNormal"><b>gcc 3.4.6 (for SLC4 or RedHat 4) or gcc 4.2.1 (for SLC5
+or RedHat 5):<o:p></o:p></b></p>
+
+<p class="MsoNormal">gcc is the compiler that is recommended for Geant4 on Linux.
+<span style="mso-spacerun: yes">&nbsp;</span>Users have also had success with
+some other gcc versions, but there is no guarantee.</p>
+
+<p class="MsoNormal">To check your version, type: gcc –v.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><b>CLHEP:<o:p></o:p></b></p>
+
+<p class="MsoNormal">CLHEP is a set of base libraries that have long provided
+great functionality for the particle physics community.<span style="mso-spacerun: yes">&nbsp; </span>They provide things like matrix
+manipulations, four-vector tools and lists of particle properties.<span style="mso-spacerun: yes">&nbsp; </span>The Geant4 collaboration has chosen to
+use these libraries rather than re-invent these wheels.<span style="mso-spacerun: yes">&nbsp; </span>Please note that while CLHEP and Geant4
+both come out of the particle physics communities, they are separate products -
+the Geant4 collaboration is not responsible for maintenance, distribution or
+documentation of CLHEP.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<h3><a name="_Getting_and_Installing"></a>Getting and Installing CLHEP<o:p></o:p></h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Go to the CLHEP source download page:</p>
+
+<p class="MsoNormal"><span class="MsoHyperlink"><a href="http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/clhep.html">http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/clhep.html</a><o:p></o:p></span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">From the "Source" section near the bottom of the
+page, select "clhep-2.0.4.2.tgz"</p>
+
+<p class="MsoNormal">which corresponds to:</p>
+
+<p class="MsoNormal"><a href="http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/distributions/clhep-2.0.4.2.tgz">http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/distributions/clhep-2.0.4.2.tgz</a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">The file is about 3.4MB.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Put it into your directory of choice, such as:</p>
+
+<p class="MsoPlainText">~/CLHEP</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Navigate to this directory and unpack the file:</p>
+
+<p class="MsoPlainText">cd ~/CLHEP</p>
+
+<p class="MsoPlainText">tar -zxvf clhep-2.0.4.2.tgz</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">The unpacking process will begin, starting with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">2.0.4.2/<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">2.0.4.2/CLHEP/<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">2.0.4.2/CLHEP/CVS/<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">2.0.4.2/CLHEP/CVS/Root<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">2.0.4.2/CLHEP/CVS/Repository<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">And ending with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">2.0.4.2/CLHEP/Vector/configure<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">2.0.4.2/CLHEP/config.guess<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">2.0.4.2/CLHEP/config.sub<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">2.0.4.2/CLHEP/Makefile.in<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">2.0.4.2/CLHEP/configure<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">For the following step, note that there are two dashes in a
+row before the word "prefix".</p>
+
+<p class="MsoNormal">Also note that for this command you should use the absolute
+path for your CLHEP, such as:</p>
+
+<p class="MsoPlainText">/u/ey/perl/CLHEP</p>
+
+<p class="MsoNormal">rather than a relative path, such as:</p>
+
+<p class="MsoPlainText">~/CLHEP</p>
+
+<p class="MsoNormal">And be sure to point to your top level CLHEP directory, NOT:</p>
+
+<p class="MsoPlainText">/u/ey/perl/CLHEP/2.0.4.2/CLHEP</p>
+
+<p class="MsoPlainText">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Now navigate into the unpacked directory and begin the
+configuration process.<o:p></o:p></p>
+
+<p class="MsoNormal">Of course, substitute your actual CLHEP path here:<o:p></o:p></p>
+
+<p class="MsoPlainText">cd 2.0.4.2/CLHEP</p>
+
+<p class="MsoPlainText">./configure --prefix /u/ey/perl/CLHEP<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You should get a response that starts with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">checking
+build system type... i686-pc-linux-gnu<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">checking
+host system type... i686-pc-linux-gnu<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">checking
+target system type... i686-pc-linux-gnu<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">checking
+for a BSD-compatible install... /usr/bin/install -c<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">checking
+whether build environment is sane... yes<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">And ends with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">config.status:
+creating test/exctest4.sh<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">config.status:
+creating test/exctestNothrow.sh<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">config.status:
+creating test/excDblThrow.sh<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">config.status:
+creating Exceptions/defs.h<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">config.status:
+executing depfiles commands<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">The complete output from the above command can be found in
+this same web directory as:</p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/CLHEPConfigure.txt">CLHEPConfigure.txt</a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">For the following, be sure to type <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">make</span> rather than <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">gmake.</span> It can be very
+hard to remember which of these to type.<span style="mso-spacerun: yes">&nbsp;
+</span>One some Linux systems, they may even do the exact same thing, but not
+always.<span style="mso-spacerun: yes">&nbsp; </span>So for your CLHEP and
+Geant4 work, don't use <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">gmake</span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Run the build process:</p>
+
+<p class="MsoPlainText">make</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You should get a response that starts with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+all in Units<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">make[1]:
+Entering directory `/afs/slac.stanford.edu/u/ey/perl/CLHEP/2.0.4.2/CLHEP/Units'<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+all in Units<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">make[2]:
+Entering directory `/afs/slac.stanford.edu/u/ey/perl/CLHEP/2.0.4.2/CLHEP/Units/Units'<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">make<span style="mso-spacerun: yes">&nbsp; </span>all-am<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">And ends with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">rm
+-f libCLHEP-2.0.4.2.so<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">liblist=`./getObjectList
+-shared Units Vector Evaluator GenericFunctions Geometry Random Matrix
+RandomObjects RefCount Cast Exceptions`; \<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">g++
+-O -ansi -pedantic -Wall -D_GNU_SOURCE -g -O2<span style="mso-spacerun:yes">&nbsp;&nbsp; </span>-o libCLHEP-2.0.4.2.so -shared
+-Wl,-soname,libCLHEP-2.0.4.2.so $liblist -o libCLHEP-2.0.4.2.so<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">./build-header<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">make[1]:
+Leaving directory `/afs/slac.stanford.edu/u/ey/perl/CLHEP/2.0.4.2/CLHEP'<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">The complete output from the above command can be found in
+this same web directory as:</p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/CLHEPMake.txt">CLHEPMake.txt</a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Move the build<span style="mso-spacerun: yes">&nbsp;
+</span>products to their installation area (again, be careful you don't
+accidentally use <span style="font-family:&quot;Courier New&quot;">gmake</span> - you
+need to use <span style="font-family:&quot;Courier New&quot;">make</span>):</p>
+
+<p class="MsoPlainText">make install</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You should get a response that starts with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+install in Units<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">make[1]:
+Entering directory `/afs/slac.stanford.edu/u/ey/perl/CLHEP/2.0.4.2/CLHEP/Units'<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+install in Units<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">make[2]:
+Entering directory `/afs/slac.stanford.edu/u/ey/perl/CLHEP/2.0.4.2/CLHEP/Units/Units'<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">And ends with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">test
+-z "/u/ey/perl/CLHEP/include/CLHEP" || mkdir -p --
+"/u/ey/perl/CLHEP/include/CLHEP"<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">if
+test -f ClhepVersion.h; then \<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>echo " /usr/bin/install -c -m 644
+'ClhepVersion.h' '/u/ey/perl/CLHEP/include/CLHEP/ClhepVersion.h'"; \<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>/usr/bin/install -c -m 644
+"ClhepVersion.h"
+"/u/ey/perl/CLHEP/include/CLHEP/ClhepVersion.h"; \<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">else
+:; fi<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp;</span>/usr/bin/install -c -m 644
+'ClhepVersion.h' '/u/ey/perl/CLHEP/include/CLHEP/ClhepVersion.h'<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">make[2]:
+Nothing to be done for `install-data-am'.<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">make[2]:
+Leaving directory `/afs/slac.stanford.edu/u/ey/perl/CLHEP/2.0.4.2/CLHEP'<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">make[1]:
+Leaving directory `/afs/slac.stanford.edu/u/ey/perl/CLHEP/2.0.4.2/CLHEP'<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">The complete output from the above command can be found in
+this same web directory as:</p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/CLHEPInstall.txt">CLHEPInstall.txt</a><o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You will now have directories such as:<o:p></o:p></p>
+
+<p class="MsoPlainText">~/CLHEP/include<o:p></o:p></p>
+
+<p class="MsoNormal">and<o:p></o:p></p>
+
+<p class="MsoPlainText">~/CLHEP/lib<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You're done setting up CLHEP.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">We do not recommend you run the <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">"make check"</span> command described in
+the CLHEP documentation unless you really want to.<span style="mso-spacerun:yes">&nbsp; </span>If you do, note that it will report some errors that you can
+ignore, such as:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">FAIL:
+testMatrix.sh<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">FAIL:
+testInversion.sh<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">FAIL:
+testBug6181</span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Much more detailed instructions on installation of CLHEP are
+available from the CLHEP web site:</p>
+
+<p class="MsoNormal"><a href="http://proj-clhep.web.cern.ch/proj-clhep/INSTALLATION/newCLHEP-install.html">http://proj-clhep.web.cern.ch/proj-clhep/INSTALLATION/newCLHEP-install.html</a></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<h3><a name="_Getting_Geant4"></a>Getting Geant4</h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">From the top of the Geant4 home page:</p>
+
+<p class="MsoNormal"><span class="MsoHyperlink"><a href="http://geant4.web.cern.ch/geant4/">http://geant4.web.cern.ch/geant4/</a><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span class="MsoHyperlink">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">Select "Download" from near the top right corner
+of the page.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Select "Unix tar format, compressed using gzip"</p>
+
+<p class="MsoNormal">which corresponds to:<o:p></o:p></p>
+
+<p class="MsoNormal"><span class="MsoHyperlink"><a href="http://geant4.web.cern.ch/geant4/support/source/geant4.9.2.p02.tar.gz">http://geant4.web.cern.ch/geant4/support/source/geant4.9.2.p02.tar.gz</a><o:p></o:p></span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">The file is about 18M.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Put it into your directory of choice, such as:</p>
+
+<p class="MsoPlainText">~/geant4</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Navigate to this directory and unpack the file:</p>
+
+<p class="MsoPlainText">cd ~/geant4</p>
+
+<p class="MsoPlainText">tar -zxvf geant4.9.2.p02.tar.gz</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">The unpacking process will begin, starting with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/ReleaseNotes/<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/ReleaseNotes/Beta4.9.2-1.txt<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/ReleaseNotes/Patch4.4.0-1.txt<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/ReleaseNotes/Patch4.4.0-2.txt<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">And ending with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/source/visualization/modeling/src/G4TrajectoryOriginVolumeFilter.cc<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/source/visualization/modeling/src/G4TrajectoryParticleFilter.cc<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/source/visualization/modeling/src/G4VModel.cc<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/source/visualization/modeling/src/G4VTrajectoryModel.cc<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/source/visualization/modeling/src/G4VisTrajContext.cc<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">geant4.9.2.p02/source/GNUmakefile<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<h3><a name="_Getting_Data_Files"></a>Getting Data Files<o:p></o:p></h3>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">Depending on the physics of your particular application, you
+may need to install additional data files.<span style="mso-spacerun:yes">&nbsp; </span>These data files can be downloaded separately from the
+Geant4 source distribution page (the same place where you got Geant4 itself).</p>
+
+<p class="MsoNormal"><span style="mso-spacerun: yes">&nbsp;</span></p>
+
+<p class="MsoNormal">Create a new folder within <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">~/geant4/geant4.9.2.p02</span> to hold any of these
+required data files.</p>
+
+<p class="MsoPlainText">~/geant4/geant4.9.2.p02/data</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">For now, pick up the "data files for low energy
+electromagnetic processes":</p>
+
+<p class="MsoNormal"><span class="MsoHyperlink"><a href="http://geant4.web.cern.ch/geant4/support/source/G4EMLOW.6.2.tar.gz">http://geant4.web.cern.ch/geant4/support/source/G4EMLOW.6.2.tar.gz</a><o:p></o:p></span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">The file is about 8.0M.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Put the file into your new data directory.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Navigate to this directory and unpack the file:</p>
+
+<p class="MsoPlainText">cd ~/geant4/geant4.9.2.p02/data</p>
+
+<p class="MsoPlainText">tar -zxvf G4EMLOW.6.2.tar.gz</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">The unpacking process will begin, starting with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">G4EMLOW6.2/<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">G4EMLOW6.2/auger/<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">G4EMLOW6.2/auger/au-tr-pr-10.dat<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">G4EMLOW6.2/auger/au-tr-pr-100.dat<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">G4EMLOW6.2/auger/au-tr-pr-11.dat<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">And ending with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">G4EMLOW6.2/tripdata/pp-trip-cs-95.dat<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">G4EMLOW6.2/tripdata/pp-trip-cs-96.dat<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">G4EMLOW6.2/tripdata/pp-trip-cs-97.dat<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">G4EMLOW6.2/tripdata/pp-trip-cs-98.dat<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">G4EMLOW6.2/tripdata/pp-trip-cs-99.dat<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<h3><a name="_Doing_the_Initial"></a>Doing the Initial Build<o:p></o:p></h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">TAKE YOUR TIME AT THIS STAGE, DON'T RUSH IT.</p>
+
+<p class="MsoNormal">Mistakes made at this stage can be very time-consuming to
+correct.<span style="mso-spacerun: yes">&nbsp; </span>Slow down.</p>
+
+<p class="MsoNormal">Maybe get a cup of coffee (or a glass of wine) before you
+proceed.<span style="mso-spacerun: yes">&nbsp; </span>Breathe.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Finally, unless you're absolutely sure you are starting from
+a nice clean system, make sure you don't have any pre-existing Geant4
+environment variables.<span style="mso-spacerun: yes">&nbsp; </span>You can use
+the "printenv" command to show all variables, and filter this with a
+"grep" for the string G4 as follows:</p>
+
+<p class="MsoNormal">From a Terminal or xterm window:</p>
+
+<p class="MsoPlainText">printenv | grep G4</p>
+
+<p class="MsoNormal">If any variables show up, find out what is setting them and
+remove them.<span style="mso-spacerun: yes">&nbsp; </span>They might be coming
+from your .login or .cshrc file or from some other script that you invoke upon
+login for some other project.<span style="mso-spacerun: yes">&nbsp; </span>Take
+the time now to find the cause and resolve it.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">From a Terminal or xterm window:</p>
+
+<p class="MsoPlainText">cd ~/geant4/geant4.9.2.p02</p>
+
+<p class="MsoPlainText">./Configure -build</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You will be asked a series of questions.</p>
+
+<p class="MsoNormal">In most cases, you can just take the default response (by
+hitting carriage return).</p>
+
+<p class="MsoNormal">But pay close attention so that you do not accept the
+default for certain questions listed below.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Along the way you will see a message <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">"Failed to locate one or more of the
+Geant4 data libraries..."</span><span style="mso-spacerun: yes">&nbsp;
+</span>Don't worry about this.<span style="mso-spacerun: yes">&nbsp; </span>The
+additional data libraries are not required for the simple physics in our
+initial examples.<span style="mso-spacerun: yes">&nbsp; </span>They can be
+loaded later as needed.<span style="mso-spacerun: yes">&nbsp; </span>For now,
+just accept the default response (by hitting carriage return).</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">When the configure script says:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Could
+not find CLHEP installed on this system!<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Please,
+specify where CLHEP is installed:<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">First, confirm that you have installed your CLHEP to</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">/u/ey/perl/CLHEP<o:p></o:p></span></p>
+
+<p class="MsoNormal">Or wherever you've decided to keep CLHEP.<o:p></o:p></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">Make sure you have lib, bin and include subdirectories in
+that directory.</p>
+
+<p class="MsoNormal">If not, recheck your CLHEP installation.<span style="mso-spacerun: yes">&nbsp; </span>If so, proceed.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Note that for this command you should use the absolute path
+for your CLHEP, such as:</p>
+
+<p class="MsoPlainText">/u/ey/perl/CLHEP</p>
+
+<p class="MsoNormal">rather than a relative path, such as:</p>
+
+<p class="MsoPlainText">~/CLHEP</p>
+
+<p class="MsoNormal">Of course, substitute your actual CLHEP path here.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Enter: <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">/u/ey/perl/CLHEP</span><o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Take the default for everything else except:</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">When it asks about:</p>
+
+<p class="MsoPlainText">G4VIS_BUILD_OPENGLX_DRIVER</p>
+
+<p class="MsoPlainText">G4VIS_USE_OPENGLX</p>
+
+<p class="MsoNormal">Enter: <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">y</span></p>
+
+<p class="MsoNormal">This tells Geant4 that you want to include the optional
+OpenGL Visualization driver.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">When it asks about:</p>
+
+<p class="MsoPlainText">G4VIS_BUILD_RAYTRACERX_DRIVER</p>
+
+<p class="MsoPlainText">G4VIS_USE_RAYTRACERX</p>
+
+<p class="MsoNormal">Enter: <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">y</span></p>
+
+<p class="MsoNormal">This tells Geant4 that you want to include the optional
+RayTracerX Visualization driver.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Take the default for everything else.<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Once all of the questions have been answered, you will be
+told:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">WARNING:
+the generated configuration file<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">can
+be edited if necessary!<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">You
+can introduce any change to the configuration file<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">/u/ey/perl/geant4/geant4.9.2.p02/.config/bin/Linux-g++/config.sh
+before the final installation. <o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">To
+do so, use a shell escape now (e.g. !vi /u/ey/perl/geant4/geant4.9.2.p02/.config/bin/Linux-g++/config.sh).<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Press
+[Enter] to start installation or use a shell escape to edit config.sh: <o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">At this point, what you have seen in this question and
+answer session should match what you find in this web directory as:</p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4Build.txt">Geant4Build.txt</a></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">You are ready to proceed with the build.</p>
+
+<p class="MsoNormal">Hit Enter.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You will then see:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Now
+starting Geant4 libraries build...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp;</span><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4SYSTEM=Linux-g++<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4INSTALL=/u/ey/perl/geant4/geant4.9.2.p02<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4TMP=/u/ey/perl/geant4/geant4.9.2.p02/tmp<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4LIB=/u/ey/perl/geant4/geant4.9.2.p02/lib<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the
+G4LEVELGAMMADATA=/u/ey/perl/geant4/geant4.9.2.p02/data/PhotonEvaporation2.0<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the
+G4RADIOACTIVEDATA=/u/ey/perl/geant4/geant4.9.2.p02/data/RadioactiveDecay3.2<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4LEDATA=/u/ey/perl/geant4/geant4.9.2.p02/data/G4EMLOW6.2<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the
+G4NEUTRONHPDATA=/u/ey/perl/geant4/geant4.9.2.p02/data/G4NDL3.13<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4ABLADATA=/u/ey/perl/geant4/geant4.9.2.p02/data/G4ABLA3.0<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the CLHEP_BASE_DIR=/u/ey/perl/geant4/CLHEP<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the CLHEP_INCLUDE_DIR=/u/ey/perl/geant4/CLHEP/include<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the CLHEP_LIB_DIR=/u/ey/perl/geant4/CLHEP/lib<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the CLHEP_LIB=CLHEP<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine G4UI_NONE is not set - following UIs will be built:<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine G4VIS_NONE is not set - following drivers will be built:<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4VIS_BUILD_OPENGLX_DRIVER=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4VIS_BUILD_RAYTRACERX_DRIVER=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4VIS_USE_OPENGLX=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4VIS_USE_RAYTRACERX=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XMFLAGS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XMLIBS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XMFLAGS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XAWFLAGS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XAWLIBS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4LIB_BUILD_STATIC=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4LIB_USE_GRANULAR=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Starting
+build...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">*************************************************************<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp;</span>Installation Geant4 version :
+geant4-09-02-patch-02 <o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp;</span>Copyright (C) 1994-2009 Geant4
+Collaboration <span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">*************************************************************<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4ios.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4coutDestination.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4VStateDependent.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4VNotifier.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4VExceptionHandler.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4UnitsTable.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4Timer.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4StateManager.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4SliceTimer.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4PhysicsVector.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4PhysicsTable.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4PhysicsOrderedFreeVector.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4PhysicsLogVector.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4PhysicsLnVector.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4PhysicsLinearVector.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4PhysicsFreeVector.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4OrderedTable.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4LPhysicsFreeVector.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4GeometryTolerance.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4Exception.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4ErrorPropagatorData.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4DataVector.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/G4AllocatorPool.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Compiling
+G4AllocatorPool.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Compiling
+G4DataVector.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Compiling
+G4ErrorPropagatorData.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Compiling
+G4Exception.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">Once you see any lines like:</p>
+
+<p class="MsoPlainText">Compiling G4AllocatorPool.cc ...</p>
+
+<p class="MsoNormal">with no errors,</p>
+
+<p class="MsoNormal">the compilation is successfully under way.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If you get a lot of warnings of the form</p>
+
+<p class="MsoPlainText">/usr/include/c++/3.2.3/i386-redhat-linux/bits/codecvt_specializations.h:84:
+warning: unused parameter `int __ibom'</p>
+
+<p class="MsoNormal">just ignore them.<span style="mso-spacerun: yes">&nbsp;
+</span>These result from a bug in certain versions of gcc.<span style="mso-spacerun: yes">&nbsp; </span>The bug is harmless.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Adjust your machine's power management properties so that it
+doesn't go to sleep, and then walk away for a long long time.<span style="mso-spacerun: yes">&nbsp; </span>Wait, and wait, and wait, for the
+initial compilation to run.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">The same information that is showing on the console is also
+being written to a log file so that you can review it later if necessary.<span style="mso-spacerun: yes">&nbsp; </span>The information will appear in:</p>
+
+<p class="MsoPlainText">~/geant4/geant4.9.2.p02/.config/bin/Linux-g++/g4make.log</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">An example of how this log file should look can be found in
+this same web directory as:</p>
+
+<p class="MsoNormal"><span class="MsoHyperlink"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/Geant4Make.txt">Geant4Make.txt</a><o:p></o:p></span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Eventually, you will see messages stating that libname.map
+has been built, then you will see messages about successful completion:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Libmap
+stage. Searching for GNUmakefiles and sorting ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Weeding
+out paths and files ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+libname.map starter file ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+libname.map ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>Reading library name map file...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>Reading dependency files...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>Checking for circular dependencies...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>Reordering according to dependencies...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>Writing new library map file...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Libraries
+installation completed !<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">####################################################<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">#
+Your Geant4 installation seems to be successful!<span style="mso-spacerun:yes">&nbsp; </span><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">#
+To be sure please have a look into the log file:<span style="mso-spacerun:yes">&nbsp; </span><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">#
+/u/ey/perl/geant4/geant4.9.2.p02/.config/bin/Linux-g++/g4make.log<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">####################################################<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">While the Geant4 collaboration works hard to support a large
+variety of different Linux systems, there may be special things you need to do
+to make it work for your particular Linux.<span style="mso-spacerun:yes">&nbsp; </span>If you have a problem in the above build procedure, such as
+if your build fails to find some of the OpenGL libraries (error messages about
+this may include references to <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">libXmu</span>),
+look for hints in the Geant4 Installation and Configuration User Forum:</p>
+
+<p class="MsoNormal"><a href="http://geant4-hn.slac.stanford.edu:5090/Geant4-HyperNews/index">http://geant4-hn.slac.stanford.edu:5090/Geant4-HyperNews/index</a><o:p></o:p></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">Linux users are generally very helpful about documenting
+such issues for each other.<span style="mso-spacerun: yes">&nbsp; </span>Your
+question has very likely already been documented in that forum.<span style="mso-spacerun: yes">&nbsp; </span>If you don't find your answer there,
+post it as a question.<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<h3>Single versus Multi-User Installation</h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">The above instructions assumed you were doing a single-user
+installation.<span style="mso-spacerun: yes">&nbsp; </span>They had you keep
+all of the build products in the same area as your CLHEP and Geant4
+source.<span style="mso-spacerun: yes">&nbsp; </span>Note however that both of
+these packages support standard multi-user installation processes. </p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">For CLHEP, just specify a different value for "<span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">--prefix</span>".</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">When Geant4's <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">./Configure -build</span> asks you to "Specify the path
+where Geant4 libraries and source files should be installed", specify the
+area you want the code to eventually be installed.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">When Geant4's <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">./Configure -build</span> asks you about the CLHEP library, be
+sure to specify the same location that you specified during the CLHEP
+installation.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">After you finish the <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">./Configure -build</span>, issue an additional
+command to copy the libraries and header files to the installation area:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">./Configure
+-install</span>.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<h3><a name="_Creating_the_setup"></a>Creating the setup script</h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">The configure process has set up some environment variables
+that you will want to have in future sessions.<span style="mso-spacerun:yes">&nbsp; </span>Have configure make you an environment setup script by
+typing:</p>
+
+<p class="MsoPlainText">./Configure</p>
+
+<p class="MsoNormal">(that was with no options, as opposed to <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">./Configure –build</span>
+that you typed earlier).</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You will see the following:</p>
+
+<p class="MsoPlainText"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>--- Geant4 Toolkit Installation<span style="mso-spacerun: yes">&nbsp;
+</span>---</p>
+
+<p class="MsoPlainText"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>(setting environments for USER )</p>
+
+<p class="MsoPlainText">&nbsp;<o:p></o:p></p>
+
+<p class="MsoPlainText">---------------------------------------------------</p>
+
+<p class="MsoPlainText">The Geant4 toolkit installation was found.</p>
+
+<p class="MsoPlainText">The files env.[c]sh will be copied to your current
+directory.</p>
+
+<p class="MsoPlainText">For setting Geant4 environments you should make:</p>
+
+<p class="MsoPlainText">&nbsp;<o:p></o:p></p>
+
+<p class="MsoPlainText">source env.csh</p>
+
+<p class="MsoPlainText">or</p>
+
+<p class="MsoPlainText">. env.sh</p>
+
+<p class="MsoPlainText">&nbsp;<o:p></o:p></p>
+
+<p class="MsoPlainText">It will also check G4WORKDIR setting and set it to</p>
+
+<p class="MsoPlainText">your HOME if needed.</p>
+
+<p class="MsoPlainText">You can use these files also for further modifications</p>
+
+<p class="MsoPlainText">(adding your own environments).</p>
+
+<p class="MsoPlainText">---------------------------------------------------</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Your directory ~/geant4/geant4.9.2.p02 will now contain two
+scripts:</p>
+
+<p class="MsoPlainText">env.sh</p>
+
+<p class="MsoNormal">and</p>
+
+<p class="MsoPlainText">env.csh</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<h3><a name="_The_Geant4_Work"></a>The Geant4 Work Directory</h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You have now built the Geant4 toolkit.<span style="mso-spacerun: yes">&nbsp; </span>If you have learned a little about
+Geant4, you will know that Geant4 is not an application but rather a toolkit
+from which you can build any number of applications.<span style="mso-spacerun:yes">&nbsp; </span>So before you can test Geant4, you need an example
+application.<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You should create a new directory, outside of your Geant4
+installation area, where you will keep your example applications.<span style="mso-spacerun: yes">&nbsp; </span>This separation of spaces will help you
+avoid accidentally messing up your main Geant4 installation, and will insure
+that if you eventually update your main Geant4 installation (for example when a
+newer Geant4 release is available), your personal application work will not be
+disturbed.<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Create a new directory for your work, and designate it as
+your G4WORKDIR.<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">For example, if you want your work to be in <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">~/g4work</span> and you are
+using C Shell or TC Shell:</p>
+
+<p class="MsoPlainText">setenv G4WORKDIR ~/g4work</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If you are using Bourne Shell or Korn Shell:</p>
+
+<p class="MsoPlainText">export G4WORKDIR=~/g4work</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<h3><a name="_Selecting_an_Example"></a>Selecting an Example Application<o:p></o:p></h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You can try any of the Geant4 examples.<span style="mso-spacerun: yes">&nbsp; </span>Some suggested starting points are any
+of the Novice examples</p>
+
+<p class="MsoPlainText">~/geant4/geant4.9.2.p02/examples/novice</p>
+
+<p class="MsoNormal">or the analysis example</p>
+
+<p class="MsoPlainText">~/geant4/geant4.9.2.p02/examples/extended/analysis/A01</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Each example is described in a detailed README it the
+example's top level directory.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Whichever example you choose, copy it to your Geant4 work
+directory.</p>
+
+<p class="MsoNormal">For example:</p>
+
+<p class="MsoPlainText">cp -r ~/geant4/geant4.9.2.p02/examples/extended/analysis/A01
+$G4WORKDIR/A01<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<h3><a name="_Configuring_the_Environment"></a>Configuring the Environment</h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Note that this step needs to be redone any time you start a
+fresh Terminal or xterm window.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If you are using C Shell or TC Shell:</p>
+
+<p class="MsoPlainText">setenv G4WORKDIR ~/g4work<o:p></o:p></p>
+
+<p class="MsoPlainText">setenv LD_LIBRARY_PATH ~/CLHEP/lib/:$LD_LIBRARY_PATH</p>
+
+<p class="MsoPlainText">source ~/geant4/geant4.9.2.p02/env.csh<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If you are using Bourne Shell or Korn Shell:</p>
+
+<p class="MsoPlainText">export G4WORKDIR=~/g4work<o:p></o:p></p>
+
+<p class="MsoPlainText">export LD_LIBRARY_PATH=~/CLHEP/lib/:$LD_LIBRARY_PATH</p>
+
+<p class="MsoPlainText">source ~/geant4/geant4.9.2.p02/env.sh<o:p></o:p></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">It will respond:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4SYSTEM=Linux-g++<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4INSTALL=/u/ey/perl/geant4/geant4.9.2.p02<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4LIB=/u/ey/perl/geant4/geant4.9.2.p02/lib<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4LEVELGAMMADATA=/u/ey/perl/geant4/geant4.9.2.p02/data/PhotonEvaporation2.0<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the
+G4RADIOACTIVEDATA=/u/ey/perl/geant4/geant4.9.2.p02/data/RadioactiveDecay3.2<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4LEDATA=/u/ey/perl/geant4/geant4.9.2.p02/data/G4EMLOW6.2<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4NEUTRONHPDATA=/u/ey/perl/geant4/geant4.9.2.p02/data/G4NDL3.13<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4ABLADATA=/u/ey/perl/geant4/geant4.9.2.p02/data/G4ABLA3.0<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the CLHEP_BASE_DIR=/u/ey/perl/geant4/CLHEP<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the CLHEP_INCLUDE_DIR=/u/ey/perl/geant4/CLHEP/include<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the CLHEP_LIB_DIR=/u/ey/perl/geant4/CLHEP/lib<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the CLHEP_LIB=CLHEP<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4UI_USE_TCSH=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4VIS_BUILD_OPENGLX_DRIVER=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4VIS_BUILD_RAYTRACERX_DRIVER=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4VIS_USE_OPENGLX=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4VIS_USE_RAYTRACERX=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XMFLAGS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XMLIBS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XMFLAGS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XMLIBS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XAWFLAGS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the XAWLIBS=<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4LIB_BUILD_STATIC=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">On
+this machine the G4LIB_USE_GRANULAR=1<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">In
+your environment you have the G4WORKDIR=/u/ey/perl/g4work<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">A further note about the environment setup scripts:</p>
+
+<p class="MsoNormal">The env scripts do not set every environment variable that
+could be used by Geant4.<span style="mso-spacerun: yes">&nbsp; </span>They only
+set those variables that you had declared to <b>non-default</b><span style="font-weight:normal"> values in the configure process.<span style="mso-spacerun: yes">&nbsp; </span>This works fine because any variable
+that Geant4 does not find is assumed to be default.<span style="mso-spacerun:yes">&nbsp; </span>But if you are also setting some of your Geant4 environment
+variables elsewhere, such as in your .login or .cshrc file, you can end up with
+inconsistent results.<span style="mso-spacerun: yes">&nbsp; </span>That is why
+you were strongly advised to make sure you had no pre-existing Geant4 variables
+set before you began the Geant4 build.</span><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<h3><a name="_Building_an_Example"></a>Building an Example Application<o:p></o:p></h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Did you "Configure the Environment" as described
+above?<span style="mso-spacerun: yes">&nbsp; </span>Remember that you need to
+do this every time you start a new terminal session.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Build your example by typing, the following.<span style="mso-spacerun: yes">&nbsp; </span>Be sure to use <span style="font-family:&quot;Courier New&quot;">make</span> rather than <span style="font-family:&quot;Courier New&quot;">gmake</span>.</p>
+
+<p class="MsoPlainText">cd $G4WORKDIR/A01</p>
+
+<p class="MsoPlainText">make</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You will see output beginning with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file A01app.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/A01Trajectory.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/A01PrimaryGeneratorMessenger.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/A01PrimaryGeneratorAction.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Making
+dependency for file src/A01PhysicsList.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">And ending with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Creating/replacing
+object files in /u/ey/perl/g4work/tmp/Linux-g++/A01app/libA01app.a ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Compiling
+A01app.cc ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Using
+granular libraries ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Linking
+A01app ...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">...
+Done!<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">The complete output from the above command can be found in
+this same web directory as:</p>
+
+<p class="MsoNormal"><span class="MsoHyperlink"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/A01Make.txt">A01Make.txt</a><o:p></o:p></span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If the build is successful, you will see the completed
+application file in your <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">$G4WORKDIR</span>
+directory such as:</p>
+
+<p class="MsoPlainText">$G4WORKDIR/bin/Linux-g++/A01app</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<h3><a name="_Running"></a>Running<o:p></o:p></h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">As always for a new xterm or Terminal window, configure the
+environment:</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If you are using C Shell or TC Shell:</p>
+
+<p class="MsoPlainText">setenv G4WORKDIR ~/g4work<o:p></o:p></p>
+
+<p class="MsoPlainText">setenv LD_LIBRARY_PATH ~/CLHEP/lib/:$LD_LIBRARY_PATH</p>
+
+<p class="MsoPlainText">source ~/geant4/geant4.9.2.p02/env.csh<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If you are using Bourne Shell or Korn Shell:</p>
+
+<p class="MsoPlainText">export G4WORKDIR=~/g4work<o:p></o:p></p>
+
+<p class="MsoPlainText">export LD_LIBRARY_PATH=~/CLHEP/lib/:$LD_LIBRARY_PATH</p>
+
+<p class="MsoPlainText">source ~/geant4/geant4.9.2.p02/env.sh<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">This might be good time to check that your XWindows setup is
+correct for our purposes.</p>
+
+<p class="MsoNormal">If you are running Geant4 on a remote machine (using the
+machine in front of you just as a terminal), make sure you have your XWindows
+client running.</p>
+
+<p class="MsoNormal">Make sure your terminal is correctly set to accept
+connections from the machine where you are running Geant4.</p>
+
+<p class="MsoNormal">You might need to explicitly <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">set display</span> from the machine on which you are
+running Geant4 to make it display to you terminal.</p>
+
+<p class="MsoNormal">It is beyond the scope if this tutorial to advise on all
+XWindows problems, but it is always helpful to try a test with a simple
+application such as <span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">xclock</span>.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Then, to run your example, cd to the example's top level
+directory, such as:</p>
+
+<p class="MsoPlainText">cd $G4WORKDIR/A01</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">And from there, run the newly created executable:<o:p></o:p></p>
+
+<p class="MsoPlainText">$G4WORKDIR/bin/Linux-g++/A01app</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You will see a response that starts with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">*************************************************************<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp;</span>Geant4 version Name:
+geant4-09-02-patch-02<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;
+</span>(28-August-2009)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Copyright : Geant4 Collaboration<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Reference : NIM A 506 (2003), 250-303<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>WWW
+: http://cern.ch/geant4<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">*************************************************************<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Visualization
+Manager instantiating...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Visualization
+Manager initialising...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Registering
+graphics systems...<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">You
+have successfully registered the following graphics systems.<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Current
+available graphics systems are:<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>ASCIITree (ATree)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>DAWNFILE (DAWNFILE)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>G4HepRep (HepRepXML)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>G4HepRepFile (HepRepFile)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>RayTracer (RayTracer)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>VRML1FILE (VRML1FILE)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>VRML2FILE (VRML2FILE)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>OpenGLImmediateX (OGLIX)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>OpenGLStoredX (OGLSX)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp; </span>RayTracerX (RayTracerX)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">And ends with:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span>EMcalorimeterPhysical[0]
+EMcalorimeterLogical 1 CsI<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>cellPhysical[-1] cellLogical 0 CsI /EMcalorimeter<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span>HadCalorimeterPhysical[0]
+HadCalorimeterLogical 1 Lead<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>HadCalColumnPhysical[-1]
+HadCalColumnLogical 1 Lead<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>HadCalCellPhysical[-1] HadCalCellLogical 1 Lead<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>HadCalLayerPhysical[-1] HadCalLayerLogical 1 Lead<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>HadCalScintiPhysical[0] HadCalScintiLogical 0 Scintillator
+/HadCalorimeter<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Idle&gt;
+<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">The complete output from the above command can be found in
+this same web directory as:</p>
+
+<p class="MsoNormal"><span class="MsoHyperlink"><a href="http://geant4.slac.stanford.edu/tutorial/installation/Geant4.9.2.p02/Linux/A01Run.txt">A01Run.txt</a><o:p></o:p></span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If it fails to run, claiming it can't find CLHEP.so, you
+probably missed the</p>
+
+<p class="MsoPlainText">setenv LD_LIBRARY_PATH ~/CLHEP/lib/:$LD_LIBRARY_PATH</p>
+
+<p class="MsoNormal">Fix that and try to run again.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Make sure your output included a mention of the graphics
+systems:</p>
+
+<p class="MsoPlainText"><span style="mso-spacerun: yes">&nbsp;
+</span>OpenGLImmediateX (OGLIX)</p>
+
+<p class="MsoPlainText"><span style="mso-spacerun: yes">&nbsp;
+</span>OpenGLStoredX (OGLSX)</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If those didn't show up, you have missed something in the
+above instructions.</p>
+
+<p class="MsoNormal">Did you correctly answered the questions about OpenGL in the
+<span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">./Configure -build</span>
+procedure?</p>
+
+<p class="MsoNormal">Did you get error messages during that procedure?</p>
+
+<p class="MsoNormal">Did you follow the instructions in the above section, "Creating
+the setup script"?<o:p></o:p></p>
+
+<p class="MsoNormal">Did you follow the instructions above about "As always
+for a new xterm or Terminal window, configure the environment…."?<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If you still can't figure out why you don't have OpenGL, you
+can still proceed, but you will have to use some other graphics driver.<span style="mso-spacerun: yes">&nbsp; </span>See some notes a little later in this
+document about how to use the HepRepFile driver.<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">From here, we'll assume you have OpenGL successfully loaded.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">From the idle prompt, visualize the example by typing the
+following:</p>
+
+<p class="MsoPlainText">/vis/open OGLIX</p>
+
+<p class="MsoPlainText">/vis/drawVolume</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You will get the following response:</p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Got
+standard cmap<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">Window
+name: viewer-0 (OpenGLImmediateX)<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Courier New&quot;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal">And an OpenGL window will appear and the example geometry
+will be drawn, as in:</p>
+
+<p class="MsoNormal"><!--[if gte vml 1]><v:shapetype id="_x0000_t75" coordsize="21600,21600"
+ o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f"
+ stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="_x0000_i1026" type="#_x0000_t75" style='width:468pt;
+ height:283pt'>
+ <v:imagedata src="Geant4_9_2_p02_Linux_Installation_files/image001.jpg"
+  o:title="OpenGL1"/>
+</v:shape><![endif]--><img border="0" width="624" height="378" src="./Installing Geant4 Release 4.9.2.p02 on Linux_files/image002.jpg" v:shapes="_x0000_i1026"></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If you instead see nothing, it may be that you have a
+mismatch between your graphics driver and your graphics hardware.<span style="mso-spacerun: yes">&nbsp; </span>Keep going with the commands below, the
+resulting picture will help to diagnose such a problem.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">To add trajectories and hits to the visualization, and then
+run an event:</p>
+
+<p class="MsoPlainText">/vis/scene/add/trajectories</p>
+
+<p class="MsoPlainText">/vis/scene/add/hits<o:p></o:p></p>
+
+<p class="MsoPlainText">/run/beamOn 1</p>
+
+<p class="MsoPlainText">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You will then see something like:</p>
+
+<p class="MsoNormal"><!--[if gte vml 1]><v:shape id="_x0000_i1025" type="#_x0000_t75"
+ style='width:468pt;height:295pt'>
+ <v:imagedata src="Geant4_9_2_p02_Linux_Installation_files/image003.jpg"
+  o:title="OpenGL2"/>
+</v:shape><![endif]--><img border="0" width="624" height="393" src="./Installing Geant4 Release 4.9.2.p02 on Linux_files/image004.jpg" v:shapes="_x0000_i1025"></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">If you see only the trajectories, but not the geometry, this
+almost certainly means you have a mismatch between your graphics driver and
+your graphics hardware.<span style="mso-spacerun: yes">&nbsp; </span>What is
+happening is that your driver sends the hardware the correct commands to draw
+polylines (the trajectories happen to be made from polylines), but not the
+correct commands to draw polygons (the geometry happens to be made from
+polygons).<span style="mso-spacerun: yes">&nbsp; </span>Quite a few Linux users
+have had this problem.<span style="mso-spacerun: yes">&nbsp; </span>The
+solution is to find an expert on your Linux system or read around on the web
+and find out what graphics driver is actually correct for your graphics
+hardware.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">When you are finished with your Geant4 session, just type:</p>
+
+<p class="MsoPlainText">exit</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">For more details on using OpenGL for Geant4, see:</p>
+
+<p class="MsoNormal"><span class="MsoHyperlink"><a href="http://geant4.slac.stanford.edu/Presentations/vis/G4OpenGLTutorial/G4OpenGLTutorial.html">http://geant4.slac.stanford.edu/Presentations/vis/G4OpenGLTutorial/G4OpenGLTutorial.html</a><o:p></o:p></span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Here's another example.<span style="mso-spacerun:yes">&nbsp; </span>This one makes output go to a HepRep file, suitable for
+viewing in the HepRApp HepRep Browser:</p>
+
+<p class="MsoPlainText">$G4WORKDIR/bin/Linux-g++/A01app</p>
+
+<p class="MsoPlainText">/vis/open HepRepFile</p>
+
+<p class="MsoPlainText">/vis/drawVolume</p>
+
+<p class="MsoPlainText">/vis/viewer/flush</p>
+
+<p class="MsoPlainText">/vis/scene/add/trajectories</p>
+
+<p class="MsoPlainText">/vis/scene/add/hits</p>
+
+<p class="MsoPlainText">/run/beamOn 1</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">For more details on using HepRApp for Geant4, see:<o:p></o:p></p>
+
+<p class="MsoNormal"><span class="MsoHyperlink"><a href="http://geant4.slac.stanford.edu/Presentations/vis/G4HepRAppTutorial/G4HepRAppTutorial.html">http://geant4.slac.stanford.edu/Presentations/vis/G4HepRAppTutorial/G4HepRAppTutorial.html</a><o:p></o:p></span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Note: HepRApp and Geant4 do not have to run on the same
+machine.<span style="mso-spacerun: yes">&nbsp; </span>You can copy the .heprep
+file from the Geant4 machine to the machine with HepRApp, or you can simply
+make the .heprep file visible from the web, and let HepRApp pick it up via the
+url.</p>
+
+<p class="MsoNormal">Also note that the .heprep file can be zipped to about 5
+percent of original size and HepRApp can then read in the zipped version (you
+don't need to unzip the file).<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You now have Geant4 installed and have demonstrated a few
+examples using two different visualization systems.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<h3><a name="_How_to_go"></a>How to go back and change choices from<span style="font-family:&quot;Courier New&quot;">./Configure -build</span></h3>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">You can go back and re-run Geant4's <span style="font-family:&quot;Courier New&quot;">./Configure -build</span> procedure at any time to change
+various options.<span style="mso-spacerun: yes">&nbsp; </span>In general, this
+will not force a complete recompilation but will only rebuild those libraries
+that have changes.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Make sure to run <span style="font-family:&quot;Courier New&quot;">./Configure
+-build</span><span style="mso-spacerun: yes">&nbsp; </span>in a fresh session,
+one that doesn't have the G4WORKDIR environment variable set.<span style="mso-spacerun: yes">&nbsp; </span>Otherwise this difference between your
+original build environment and your new one will trigger a whole new Geant4
+build in a whole new place.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">After the build, do<span style="mso-spacerun: yes">&nbsp;
+</span><span style="font-family:&quot;Courier New&quot;">./Configure</span> (the version
+with no arguments that creates the env.sh and env.csh files) and, if you are
+doing a multi-user installation, <span style="font-family:&quot;Courier New&quot;">./Configure
+-install</span></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">Also note that even though you successfully rebuild Geant4,
+your user application will not take advantage of the change unless you
+explicitly tell it to do so.<span style="mso-spacerun: yes">&nbsp; </span>The
+standard way to do this is to update the time stamp of your application's main
+class before you rebuild the application.<span style="mso-spacerun: yes">&nbsp;
+</span>For example, use the "touch" command:</p>
+
+<p class="MsoPlainText">setenv G4WORKDIR ~/g4work<o:p></o:p></p>
+
+<p class="MsoPlainText">setenv LD_LIBRARY_PATH ~/CLHEP/lib/:$LD_LIBRARY_PATH</p>
+
+<p class="MsoPlainText">source ~/geant4/geant4.9.2.p02/env.csh<o:p></o:p></p>
+
+<p class="MsoPlainText">cd $G4WORKDIR/A01</p>
+
+<p class="MsoPlainText">touch A01app.cc</p>
+
+<p class="MsoPlainText">gmake</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal">I hope these instructions have been helpful.</p>
+
+<p class="MsoNormal">If you find any problems or can suggest corrections, please <a href="mailto:perl@slac.stanford.edu">let me know</a>.</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+<p class="MsoNormal"><a href="http://www.slac.stanford.edu/~perl/">Joseph Perl</a></p>
+
+<p class="MsoNormal"><a href="http://geant4.slac.stanford.edu/">SLAC Geant4 Team</a><o:p></o:p></p>
+
+<p class="MsoNormal">3 September 2009</p>
+
+<p class="MsoNormal">&nbsp;<o:p></o:p></p>
+
+</div>
+
+
+
+
+</body></html>

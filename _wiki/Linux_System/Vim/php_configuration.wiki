@@ -1,0 +1,4 @@
+%toc
+%title PHP's Vim Configuration
+this page is about how to configure a enviornment fit to write php code.
+

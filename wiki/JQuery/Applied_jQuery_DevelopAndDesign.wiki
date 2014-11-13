@@ -1,0 +1,60 @@
+= Applied jQuery: Develop and Design =
+
+learning a few jQuery tips:
+- cache select result.
+- troubleshooting with firebug.
+- packing up your code
+- using return false
+- jsfiddle.net
+
+jquery的使用并不是独立于css和html的，良好的网站设计通常是需要结合在html中进行适当的组织，以便于jquery可以方便的操作html，同时，某些华丽的功能依赖于html和jquery的深度结合。
+
+jquery，css，html三者是一体的，而不是分离的。
+
+将一个div放在浏览器窗口正中的方法是，先position：fixed，top：50%，left：50%，再margin-top：-height，margin-left：-width。
+
+突出显示，也就是背景变暗的方法是，先position：fixed，top：0，left：0，width：100%，height：100%，再jquery，css：opacity0.7，fadein。
+
+如果一个元素不是link，那么可以使用live函数或者delegate函数来元素和click event。
+
+想做一个自动滚动的图片栏：
+# 指定宽度，并指定overflow：hidden；
+# 子div可以比母div更宽，但母div设置了overflow，所以任意超过母div宽度的部分都不显示。不管是左边超过的（left：-340），还是右边超过的。
+# 每一张图片都指定一个宽度，3张图片都是可以显示的，其他的都不显示。
+# jquery每次做是事情是将整体向左移动一个图片的长度，这一步完成后，callback将最前面的图片放到最后面图片的后面，然后，整体再向右移动一个图片的长度。这是经过思考实验的核心。
+# 然后就是setInterval，几秒钟做一次。
+# 想要效果好一些的话：
+	# 所有图片透明度设为0.5
+	# 当鼠标位于其上之时停止setinterval，离开时再次开始
+	# 当鼠标位于其上，不透明，离开，再次透明。
+
+点击自动滚动图片栏的小图片产生大图片的方法是：
+# 在html保留一个photomodel。
+# 点击的时候，想其内部插入带有正确id和pic的img标签。
+# 对id进行操作，获得body的高度，设置图片的高度。
+# 设置阴影，居中。
+
+想实现导航栏的动画效果：
+# 设定导航栏的高度。
+# 设定导航个栏目为float，left。
+# 定义每个栏目a的背景图片
+# 定义每个栏目a下面span的背景图片
+# 上述两个图片是一样。
+# 三个栏目分别设置了栏目的background-position
+# span的位置为向上偏移30px
+# 然后就是hover的两个函数来设置其透明度，从0到1.
+
+== Chapter3 making forms pop ==
+`focus`，光标闪烁的位置。可以输入的位置。
+
+`jQuery(':input:visible').each(function(i,e){});`信息量很多。
+
+`val`，获取input的值。
+
+`test`，正则验证。
+
+`change`，input时验证。
+
+`jQuery(function(){});`在dom完成loading之后，运行函数。
+
+== Chapter4 being effective with ajax ==

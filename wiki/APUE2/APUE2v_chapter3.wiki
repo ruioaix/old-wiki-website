@@ -1,0 +1,139 @@
+= Chapter 3. File I/O =
+17 sections.
+
+== Section 3.1. Introduction ==
+file I/O的重点在于两个方面：unbuffered和atomic operation。
+
+前者unbuffered是指read和write的，没有缓存，直接进行内核调用，没有缓存空间。后者atmotic operation是指多进程的情况下，file I/O的操作应该具有的原子性，也就是file可以安全正确的读写。
+
+== Section 3.2. File Descriptors ==
+file descriptor是非负整数，从0到`OPEN_MAX`。其由`open`和`create`给出，由`read`和`write`使用。
+
+0，1，2三个file descriptor有特殊用途。
+
+这一节说着很简单的话，但另人困惑的地方还是很多的。这里注解一下。
+- file本身总是存在于硬盘上的，也是独一无二的。
+- 首先，内核保存了两个表，process table（进程表）和file table（文件表），这两个表是kernel维护的，系统中是独一无二的。
+	- file table里面每一条都是指向一个硬盘上的文件的，但file table里面可以有两个条目，甚至更多的条目指向硬盘上的同一个文件，也就是说，file table和硬盘上的file是多对一的关系。
+	- process table里面的一个条目对应于一个process，条目也是一个table，一个file descriptor的table，这个条目记录了对应process打开的所有的file descriptor。这些file descriptor是从0开始的整数，这也说明了每个process都有自己的一套file descriptor，process之间file descriptor互不干涉。每一个file descriptor都指向file table的一个条目，并且，同一个进程中的多个file descriptor可以指向file table中的同一个条目；不同进程中的多个file descriptor也可以指向file table中同一个条目。这说明了，file descriptor盒file table也是多一的关系。
+- 从以上可以看出，进程内部就可能有多个file descriptor可以对应一个硬盘上的file，就可能造成file I/O的错误。进程之间更不用多说。
+
+另外，0，1，2这三个file descriptor实在是让人迷惑。所谓的标准输入、标准输出、标准错误输出是在终端中才有意义吧，在之前的纯字符界面的系统中，这种设置的必要性我是可以理解的，但在现在图形界面的环境下，这3者的意义何在？留待后面思考吧。
+
+另外，limit *OPEN_MAX* 到底有没有意义，在linux上是1024，但具体到implementation这个constant有被使用吗？之前和这节都说：没有。
+
+== Section 3.3. open Function ==
+- `#include <fcntl.h>`
+- `int open(const char *pathname, int oflag, ...);`
+- 成功就返回file descriptor，失败就返回-1。
+
+最后一个参数是用于设置权限的。
+
+在linux中 *NAME_MAX* 是255， *PATH_MAX* 是4096。如果超过列这个范围，linux下`open`总会返回-1，并设置errno为ENAMETOOLONG。
+
+== Section 3.4. creat Function ==
+- `#include <fcntl.h>`
+- `int creat(const char *pathname, mode_t mode);`
+- 成功返回file descriptor，失败返回-1。
+
+如果文件存在，`creat`会直接将文件覆盖掉。
+
+== Section 3.5. close Function ==
+- `#include <unistd.h>`
+- `int close(int filedes)`
+- 成功返回0，失败返回-1。
+
+为啥和前面两个函数不在一个头文件里面呢？看来关闭一个file，还是有点讲究的，之后再看吧。
+
+== Section 3.6. lseek Function ==
+- `#include <unistd.h>`
+- `off_t lseek(int filedes, off_t offset, int whence)`
+- 成功返回新的offset，失败返回-1。
+
+有些file会导致`lessk`返回负的值，但这不是错误，所以，判断函数执行出错要比较-1，而不是小于0。
+
+off_t这个值是32位还是64位，现在可以不用去关心。
+
+== Section 3.7. read Function ==
+- `#include <unistd.h>`
+- `ssize_t read(int filedes, void *buf, size_t nbytes);`
+- 返回已读取的byte数目，0，-1。
+
+== Section 3.8. write Function ==
+- `#include <unistd.h>`
+- `ssize_t write(int filedes, const void *buf, size_t nbytes);`
+- 返回写入的byte数目，或-1。
+
+该函数执行的结果只有两种，要么写入了nbyte数目的数据，要么出错，不会出现写入部分数据成功返回的情况。
+
+== Section 3.9. I/O Efficiency ==
+incore是in main memory。
+
+core dump是指程序在main memory中的所有内容（镜像）被存储到了硬盘上。
+
+很多时候程序运行就会看到这个标志：core dumped。
+
+== Section 3.10. File Sharing ==
+前面也说了一些这一节的内容。
+
+两个table，process table和file table。前者有很多个（一个process一个），后者系统中仅有一个。
+
+硬盘上的文件存储，必须要有分区和文件系统，也就是partition和filesystem。不同的filesystem存储文件的方式不同，但是，可以抽象出一个i-node的概念，每个文件都有一个i-node与之相关，这个文件的各种属性都存放在i-node的结构中，但不同的文件系统filesystem中i-node的结构是不同的，所以在i-node之上出现了v-node结构，这个结构是filesystem independent的。
+
+i-node和v-node是两个概念，但implementation里面总有对应于这两个概念的具体结构。
+
+== Section 3.11. Atomic Operations ==
+atomic operation通常包含几个步骤，要么几个步骤都执行完毕，要么一个步骤都不执行。步骤之间没有空档，不会说一个步骤执行了其他步骤还没执行的情况下被调度。这还是蛮神奇的，具体如何实现的我现在也不知道。难道是system call都是不可中断的？system call之间我知道是可能被调度的，但当某一个system call执行的过程中，调度是不被允许的？
+
+这一节是三个例子，第一个是写文件时候的append问题，第二个是两个原子操作函数，第三个是创建文件之前的检测。`open`函数还是很NB的，直接占了两个。
+
+== Section 3.12. dup and dup2 Functions ==
+这两个函数是用于复制file descriptor，file descriptor不就是一个非负整数吗，其实不是，file descriptor包含了一个非负整数和一个指向file table的指针。复制file descriptor指的是得到另外一个非负整数和相同的指向file table的指针。
+
+- `#include <unistd.h>`
+- `int dup(int filedes);`
+- `int dup2(int filedes, int filedes2);`
+- 成功返回新的file descriptor的非负整数，失败返回-1。
+
+这两个函数导致的结果就是一个process table里面有两个条目指向同一个file table的条目。
+
+== Section 3.13. sync, fsync, and fdatasync Functions ==
+原来除了在kernel之外内存之中可能存在缓存之外，在kernel之内也是存在缓存（cache）的。大部分的disk I/O操作都会结果kernel中的一个cache。
+
+- `#include <unistd.h>`
+- `int fsync(int filedes);`
+- `int fdatasync(int filedes);`
+- `void sync(void);`
+- 前两个函数成功就返回0，失败返回-1。最后一个不返回。
+
+== Section 3.14. fcntl Function ==
+每一个file descriptor都对应着一个process table里的条目，一个file table里面的条目，一个v-node，一个i-node。有了file descriptor，就可以获得和设置这4个部分的信息。这就是`fcntl`做的事情。
+
+- `#include <fcntl.h>`
+- `int fcntl(int filedes, int cmd, ...);`
+- 成功的话返回值取决于cmd，失败返回-1。
+
+仅仅需要一个file descriptor就可以修改所有这些file的属性，还是很给力的。
+
+process table里面的条目里面包含的属性之后会用到，file table里面的属性就是`open`函数的第二个参数可以设置那些。v-node和i-node这章未有提及。
+
+这章里面提的最多的是通过更改file table里面的属性来改变程序性能的事情，与上一节的关系不浅。这个函数很重要吧。
+
+== Section 3.15. ioctl Function ==
+- `#include <unistd.h>`
+- `#include <sys/ioctl.h>`
+- `#include <stropts.h>`
+- `int ioctl(int filedes, int request, ...);`
+- 成功返回各种，失败返回-1。
+
+这个函数貌似是用于处理很多奇怪设备的I/O函数，这些设备通常没办法使用`read`和`write`进行充分的操作。各种设备可以定义自己的request，完成不同的任务，相应的头文件的数目会增加，这个函数的功能也根据具体使用的情况而定。
+
+== Section 3.16. /dev/fd ==
+/dev/fd/[012]的最主要的用途是shell。
+
+不明白其实现的机制，其实现在最另我疑惑的是在shell中使用0，1，2这三种的时候，这是shell相关了，再谈。
+
+== Section 3.17. Summary ==
+之后还会介绍`ioctl`和`fcntl`两个函数。
+
+虽说`read`和`write`是unbuffered I/O function，但是，内核还是会有cache，对于write就是不一定立刻写入disk，对read可能就是多读了一些，留在了cache中。

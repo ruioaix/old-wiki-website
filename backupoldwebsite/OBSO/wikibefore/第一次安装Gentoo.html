@@ -1,0 +1,518 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>第一次安装Gentoo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">第一次安装Gentoo</h1>
+<h2 id="toc_1.1">安装之前的准备</h2>
+<p>
+首先是安装方式，我所知道的有两种：
+</p>
+<ol>
+<li>
+使用livedvd，图形化安装。
+
+<li>
+使用livecd（最小光盘）和stage3。
+
+</ol>
+
+<p>
+我选择的是第二种。
+</p>
+
+<p>
+这个最小安装光盘名叫 <em>install-x86-minimal-&lt;release&gt;.iso</em> ，其中release就是发行版本号。
+</p>
+
+<p>
+这个光盘要先下载下来，我选择的是电子科大的[<a href="http://mirrors.stubome.net/gentoo/releases/x86/current-iso/">http://mirrors.stubome.net/gentoo/releases/x86/current-iso/</a> http源]，gentoo有很多[<a href="http://www.gentoo.org/main/en/mirrors2.xml">http://www.gentoo.org/main/en/mirrors2.xml</a> 源]，随意。
+</p>
+
+<p>
+下载下来之后，需要刻录光盘，由于只有100多兆，所以可以刻录cd，也可以刻录dvd，安装手册要求使用raw方式刻录，没搞清楚这是什么意思，直接以DVD ISO格式刻录到DVD光盘，证明可用。
+</p>
+
+<p>
+提前的准备就是这个DVD光盘，之后的安装所需要的东西都是联网下载的，需要了解： <strong>gentoo与网络的相关程度在linux发行版中属于很紧密的</strong> 。
+</p>
+
+<h2 id="toc_1.2">启动光盘</h2>
+<ol>
+<li>
+PC设为光盘启动。
+
+<li>
+插入光盘，启动，第一个需要交互的地方就是<code>boot:</code>，要选择加载那个内核版本；我选择默认，回车（不回测，几秒后自动选择默认）。
+
+<li>
+第二需要交互的地方是选择键盘布局，使用默认的<code>us</code>就好，回车（不回车，几秒后自动选择默认）
+
+<li>
+加载内核完毕后，在内存中就已经有一个小的linux系统了，只不过是光盘系统的。可以<code>cd /</code>查看下根目录的内容，当前是root权限。
+
+</ol>
+
+<p>
+<strong>要了解：livecd和stage3的安装方式，是在光盘linux系统中设定好硬盘linux系统的一种安装方式。</strong>
+</p>
+
+<h2 id="toc_1.3">配置有线网络</h2>
+<ol>
+<li>
+<code>/sbin/ifconfig</code>，查看一下eth0的内容，如果光盘系统加载了网卡的驱动，就应该有eth0的。
+
+<li>
+我的有eth0,但是没有自动分配ip，所以使用<code>net-setup</code>命令对eth0进行手动配置。
+
+<li>
+我的网路环境是一个连接上internet的路由，所以对eth0的设置如下：
+
+<ul>
+<li>
+ip：192.168.1.13
+
+<li>
+netmask：255.255.255.0
+
+<li>
+br：192.168.1.255
+
+<li>
+网关：192.168.1.1
+
+</ul>
+<li>
+<code>ping 202.38.64.1</code> 学校的首页，通。
+
+<li>
+<code>ping www.baidu.com</code>，不通。
+
+<li>
+<code>nano -w /etc/resolv.conf</code> 
+
+<li>
+<code>nameserver 202.38.64.1</code>  <sup><small>加入学校的DNS</small></sup>
+
+<li>
+<code>ping www.gentoo.com</code>，通。
+
+</ol>
+
+<h2 id="toc_1.4">操作硬盘</h2>
+<p>
+对硬盘进行 <strong>分区</strong> ，然后为分区指定 <strong>文件系统</strong> 。
+</p>
+<ol>
+<li>
+分区
+
+<ul>
+<li>
+<code>fdisk /dev/sda</code> <sup><small>对光盘linux系统来说，硬盘就是一个/dev/sda的文件，使用本命令对硬盘进行分区</small></sup>
+
+<li>
+删除当前所有的分区，使用<code>d</code>命令。
+
+<li>
+建立 <em>/boot</em> 分区 <em>/dev/sda1</em> ，使用<code>n</code>命令，大小+100M。
+
+<li>
+建立 <em>swap</em> 分区 <em>/dev/sda2</em> ，使用<code>n</code>命令，大小+1G。
+
+<li>
+建立 <em>/</em> 分区 <em>/dev/sda3</em> ，使用<code>n</code>命令，大小+5G。
+
+<li>
+使用<code>t</code>命令，将 <em>swap</em> 分区设置为82交换分区。
+
+<li>
+使用<code>a</code>命令，将 <em>/boot</em> 分区设置为启动分区。
+
+</ul>
+<li>
+格式化
+
+<ul>
+<li>
+<code>mke2fs /dev/sda1</code>  指定为ext2文件系统
+
+<li>
+<code>mke2fs -j /dev/sda3</code> 指定为ext3文件系统
+
+<li>
+<code>mkswap /dev/sda2 &amp;&amp; swapon /dev/sda2</code> 指定为swap分区，并激活叫喊分区。
+
+</ul>
+<li>
+挂载
+
+<ul>
+<li>
+<code>mount /dev/sda3 /mnt/gentoo</code> 将根目录挂载到 <em>/mnt/gentoo</em> 分区。
+
+<li>
+<code>mkdir /mnt/gentoo/boot</code> 在挂载后的 <em>/mnt/gentoo</em> 分区建立文件夹 <em>boot</em> , <strong>注意：是挂载后的</strong>
+
+<li>
+<code>mount /dev/sda1 /mnt/gentoo/boot</code> 将 <em>/boot</em> 分区挂载到 <em>/mnt/gentoo/boot</em> , <strong>注意：这是挂载到硬盘上，而不是光盘上</strong> 
+
+</ul>
+</ol>
+
+<h2 id="toc_1.5">安装stage3</h2>
+<ul>
+<li>
+<code>date</code>，看下时间，不对就修改下，我的是对的，就没管它。
+
+</ul>
+<p>
+下面开始下载stage3
+</p>
+<ol>
+<li>
+<code>cd /mnt/gentoo</code>  进入硬盘的根目录。
+
+<li>
+<code>links http://www.gentoo.org/main/en/mirrors.xml</code> 使用方向键中的向下键，一路向下，找一个合适的源，我使用的china的usetc的http源，不断回车，进入 <em>releases/x86/current-iso/</em> 找到需要的stage3；高亮这个源，<code>d</code>，下载，等待，完成，<code>q</code>，退出links。
+
+<li>
+<code>tar xvjpf stage3-i686-20110412.tar.bz2</code>，解压到硬盘的根目录。
+
+</ol>
+
+<h2 id="toc_1.6">安装portage</h2>
+<ol>
+<li>
+<code>cd /mnt/gentoo/usr</code>
+
+<li>
+<code>links http://www.gentoo.org/main/en/mirrors.xml</code>，同上，只不过在 <em>releases/snapshots/current/</em> 中找到 <em>portage-latest.tar.bz2</em> 文件。
+
+<li>
+<code>tar xvjf portage-latest.tar.bz2</code>，解压的硬盘的 <em>/usr</em> 目录。
+
+</ol>
+
+<h2 id="toc_1.7">切换到硬盘linux系统，并进行一些配置</h2>
+<ol>
+<li>
+<code>mirrorselect -i -o &gt;&gt; /mnt/gentoo/etc/make.conf</code>  自动选择一个比较快的镜像站点作为硬盘系统的更新源。
+
+<li>
+<code>mirrorselect -i -r -o &gt;&gt; /mnt/gentoo/etc/make.conf</code> 自动选择一个比较快的portage更新源。
+
+<li>
+<code>cp -L /etc/resolv.conf /mnt/gentoo/etc/</code> 这是将开始时为光盘系统设定的dns拷贝到硬盘系统，供硬盘系统使用。
+
+<li>
+<code>mount -t proc none /mnt/gentoo/proc</code> 
+
+<li>
+<code>mount -o bind /dev /mnt/gentoo/dev</code>
+
+<li>
+切换到硬盘系统
+
+<ul>
+<li>
+<code>chroot /mnt/gentoo /bin/bash</code>
+
+<li>
+<code>env-update</code>
+
+<li>
+<code>source /etc/profile</code>
+
+</ul>
+</ol>
+
+<p>
+虽然看起来没什么变化，但是现在已经在硬盘linux系统里了，进入更目录<code>cd /</code>，查看下，是不是发现之前下载的 <em>stage3</em> 在根目录下了。
+</p>
+
+<p>
+ 更新portage树
+</p>
+<ul>
+<li>
+<code>emerge --sync</code>
+
+</ul>
+
+<p>
+profile就是用默认的。
+</p>
+
+<h2 id="toc_1.8">配置内核</h2>
+<ol>
+<li>
+时区，使用<code>cp /usr/share/zoneinfo/GMT /etc/localtime</code>。
+
+<li>
+安装内核源代码 <code>emerge gentoo-sources</code>。
+
+<li>
+看下内核的版本 <code>ls -l /usr/src/linux</code>
+
+<li>
+开始配置内核
+
+<ul>
+<li>
+<code>cd /usr/src/linux</code>
+
+<li>
+<code>make menuconfig</code>
+
+<li>
+要注意的是内核默认没有启动ext2支持，所以要选择 <em>File systems</em> -&gt; <em>Second extended fs support</em> ，否则由于 <em>/boot</em> 分区是ext2格式的，会产生无法启动的问题。
+
+<li>
+其他的保持默认即可。
+
+<li>
+<code>make &amp;&amp; make modules_install</code>  开始编译。
+
+</ul>
+<li>
+编译完成后，<code>cp arch/i386/boot/bzImage /boot/kernel-2.6.36-gentoo-r8</code>，这里的内核名字随便起，最后在grub中对应上就可以了。
+
+<li>
+配置模块
+
+<ul>
+<li>
+<code>find /lib/modules/&lt;kernel version&gt;/ -type f -iname '*.o' -or -iname '*.ko' | less</code>
+
+<li>
+<code>nanp -w /etc/modules.autoload.d/kernel-2.6</code> 将上面命令显示的写入本文件，如果是 <em>3dfeew.ko</em> 就写 <em>3dfeew</em> 。
+
+</ul>
+</ol>
+
+<h2 id="toc_1.9">配置系统以及安装必要的系统工具</h2>
+<h3 id="toc_1.9.1">写入分区信息</h3>
+<ul>
+<li>
+<code>nano -w /etc/fstab</code> <sup><small>注意，默认的fstab是错误的，其中 /dev/ROOT</small></sup>
+
+<ul>
+<li>
+<code>/dev/sda1 /boot ext2 defaults.moatime 12</code>
+
+<li>
+<code>/dev/sda2 none  swap sw               00</code>
+
+<li>
+<code>/dev/sda3 /     ext3 noatime          01</code>
+
+<li>
+<code>/dev/cdrom /mnt/cdrom auto  moauto.user 00</code>
+
+</ul>
+</ul>
+
+<h3 id="toc_1.9.2">网络信息</h3>
+<ul>
+<li>
+<code>nano -w /etc/conf.d/hostname</code>
+
+<ul>
+<li>
+<code>HOSTNAME='thinkpad'</code>
+
+</ul>
+<li>
+<code>nano -w /etc/conf.d/net</code>
+
+<ul>
+<li>
+<code>config_eth0=( "192.168.1.13 netmask 255.255.255.0 brd 192.168.1.255" )</code>
+
+<li>
+<code>routes_eth0=( "default via 192.168.1.1" )</code>
+
+</ul>
+<li>
+<code>rc-update add net.eth0 default</code>
+
+<li>
+<code>passwd</code>
+
+<li>
+<code>nano -w /etc/conf.d/clock</code>
+
+<ul>
+<li>
+<code>CLOCK="local"</code>
+
+</ul>
+</ul>
+
+<h3 id="toc_1.9.3">安装必要的系统工具</h3>
+<ol>
+<li>
+<code>emerge syslog-ng</code>
+
+<li>
+<code>rc-update add syslog-ng default</code>
+
+<li>
+<code>emerge vixie-cron</code>
+
+<li>
+<code>rc-update add vixie-cron default</code>
+
+<li>
+<code>emerge mlocate</code>
+
+<li>
+<code>emerge dhcpcd</code>
+
+</ol>
+
+<h2 id="toc_1.10">配置引导程序</h2>
+<p>
+使用grub
+</p>
+
+<p>
+安装grub：<code>emerge grub</code>
+</p>
+
+<p>
+配置grub：
+</p>
+<ul>
+<li>
+<code>nano -w /boot/grub/grub.conf</code>
+
+<ul>
+<li>
+<code>default 0</code>
+
+<li>
+<code>timeout 10</code>
+
+<li>
+<code>splashimage=(hd0,0)/boot/grub/splash.xpm.gz</code>
+
+<li>
+<code>title Gentoo 2.6.36-r8</code>
+
+<li>
+<code>root (hd0,0)</code>
+
+<li>
+<code>kernel /boot/kernel-2.6.36-gentoo-r8 root=/dev/sda3</code>
+
+</ul>
+</ul>
+
+<p>
+安装grub：
+</p>
+<ul>
+<li>
+<code>grep -v rootfs /proc/mounts &gt; /etc/mtab</code>
+
+<li>
+<code>grub-install --no-floppy /dev/sda</code>
+
+</ul>
+
+<h2 id="toc_1.11">重启前</h2>
+<ol>
+<li>
+<code>exit</code>
+
+<li>
+<code>umount /mnt/gentoo/boot /mnt/gentoo/dev /mnt/gentoo/proc /mnt/gentoo</code>
+
+<li>
+<code>reboot</code> <sup><small>别忘记取出光盘</small></sup>
+
+</ol>
+
+<h2 id="toc_1.12">重启后</h2>
+<p>
+添加一个用户用于日常
+</p>
+<ul>
+<li>
+<code>useradd -m -G users,wheel,audio -s /bin/bash thinkpad</code>
+
+<li>
+<code>passwd thinkpad</code>
+
+</ul>
+<p>
+磁盘清理
+</p>
+<ul>
+<li>
+<code>rm /stage3-*.tar.bz2</code>
+
+<li>
+<code>rm /usr/portage-latest.tar.bz2</code>
+
+</ul>
+
+<p>
+<strong>over</strong>
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="第一次安装Gentoo";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="第一次安装Gentoo";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

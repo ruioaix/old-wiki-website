@@ -1,0 +1,23 @@
+# lfs begin
+
+## Introduction
+
+LFS系统的安装需要有一个host，也就是已经存在的linux发行版。
+
+貌似，安装过程是这个样子的。
+
+  * host的存在 
+  * 使用host建立分区 
+  * 建立toolchain，两次，first pass，second pass。 
+  * 在second pass toolchain安装完毕后，LFS就可以不依赖host了，但kernel还是host的。 
+  * 使用chroot建立新的LFS系统 
+  * 为新LFS系统建立boot等。 
+
+## Preparing for the Build
+
+  * [Preparing_a_New_Partition](Preparing_a_New_Partition.html)
+  * [Packages_and_Patches](Packages_and_Patches.html)
+  * [Final_Preparations](Final_Preparations.html)
+  * [Constructing_a_Temporary_System](Constructing_a_Temporary_System.html)
+  * [Building_the_LFS_System](Building_the_LFS_System.html)
+

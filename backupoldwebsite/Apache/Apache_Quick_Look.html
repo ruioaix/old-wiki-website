@@ -1,0 +1,377 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Apache_Quick_Look</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Quick Look on Apache2</h1>
+<p>
+一直没有仔细的研究过http server，即使是Apache，也是属于能用就不管其具体配置、以及那样配置的原因所在的程度。因为这样，越发的肤浅、困惑。为了解惑决定仔细理解一下apache2。
+</p>
+
+<p>
+apache的配置给我的感觉是繁杂和牵一发动全身。将之简单化，区分化应该会比较好，一块一块的理解。
+</p>
+
+<h2 id="toc_1.1">Binding</h2>
+<ul>
+<li>
+<code>Listen 80</code>
+
+<li>
+<code>Listen 192.0.2.1:80</code>
+
+<li>
+<code>Listen [2001:db8::a00:20ff:fea7:ccea]:80</code>
+
+</ul>
+<p>
+<strong>Listen</strong> 可以多次出现，组合。无ip，即所有ip。
+</p>
+
+<p>
+VirtualHost必须与Listen保持一致，否则不能被访问。（binding很简单，但是牵涉到了VirtualHost，暂且记忆。
+</p>
+
+<h2 id="toc_1.2">Configuration Sections</h2>
+<ul>
+<li>
+<code>&lt;IfDefine&gt;,&lt;IfModule&gt;,&lt;IfVersion&gt;</code>只在server start和restart的时候evaluated，如果评估的时候为真，那么，这3个section中的所有命令都将对每一个request执行。否则，就会被忽略。
+
+<li>
+<code>&lt;IfDefine&gt;</code>的判断在于<code>httpd</code>命令行参数。
+
+<li>
+<code>&lt;IfModule&gt;</code>的判断在于某个module是否在server上可用（可以是静态编译进server的，也可以是动态编译，并且已经<code>LoadModule</code>了的）。
+
+<li>
+<code>&lt;IfVersion&gt;</code>的判断在于server的版本。
+
+</ul>
+<p>
+上面3个是一组。
+</p>
+
+<p>
+下面的2个是另外一组。
+</p>
+<ul>
+<li>
+<code>&lt;Directory&gt;</code>里面的的directive会被应用于对应filesystem目录和所有其子目录。
+
+<li>
+<code>&lt;Files&gt;</code>里面的directive会被应用于所有指定名称的文件上，而不管文件的位置。
+
+<li>
+上面两者可以结合，从而指定某些目录下的某些文件。
+
+</ul>
+
+<p>
+下面这个自成一体。
+</p>
+<ul>
+<li>
+<code>&lt;Location&gt;</code>是作用于网址的。网址和filesystem上的文件可以有关系，但也可以完全没有关系，两者之间没有必然联系。
+
+</ul>
+
+<p>
+上面三个都可以使用shell-style wildcard。并且对应于上面三个，<code>&lt;DirectoryMatch&gt;,&lt;FilesMatch&gt;,&lt;LocationMatch&gt;</code>可以使用正则表达式。
+</p>
+
+<p>
+前面的都很清楚。后面的大多不是很清楚，但我知道的是：后面的这些也都是Configuration Section。
+</p>
+<ul>
+<li>
+<code>&lt;VirtualHost&gt;</code>
+
+<li>
+<code>&lt;Proxy&gt;,&lt;ProxyMatch&gt;</code>
+
+</ul>
+
+<p>
+各种section的执行顺序还是蛮有讲究的，优先级从前到后是<code>&lt;Directory&gt;</code>,<code>&lt;DirectoryMatch&gt;</code>,<code>&lt;Files&gt;&lt;FilesMatch&gt;</code>,<code>&lt;Location&gt;&lt;LocationMatch&gt;</code>。同级的就按顺序执行，<code>&lt;VirtualHost&gt;</code>的顺序取决于其内部的section，并仅次于其内部的section。
+</p>
+
+<p>
+<code>httpd -l</code> 显示静态编译进入httpd的模块名称。
+</p>
+
+<h2 id="toc_1.3">Directive</h2>
+<ol>
+<li>
+<code>ServerRoot</code> 内容是 <code>/etc/httpd</code>。
+
+<li>
+<code>ServerTokens</code> 返回给client的关于apache的信息，可多，可少。
+
+<li>
+<code>PidFile</code> 记录了httpd daemon的pid的file，不是绝对地址的话，就是相对于上面<code>ServerRoot</code>的位置。
+
+<li>
+<code>Timeout</code> 超时时间，具体超时的行为不清楚，但概念是明确的：不能总等你吧。
+
+<li>
+一起3个
+
+<ol>
+<li>
+<code>KeepAlive</code> 一种长久连接的特性，on或者off。
+
+<li>
+<code>MaxKeepAliveRequests</code> 上面长久链接中允许的最大request数目，100或500...
+
+<li>
+<code>KeepAliveTimeout</code> 长久链接中两个request之间的超时时间。
+
+</ol>
+<li>
+<code>&lt;IfModule prefork.c&gt;</code>
+
+<ul>
+<li>
+如果这个module存在，那么也就是说无线程，纯多进程的http server，那么，一个request就由一个进程来处理，总会存在一定的idle process，存在一个queue。合理。
+
+</ul>
+<li>
+<code>&lt;IfModule worker.c&gt;</code>
+
+<ul>
+<li>
+这个是有线程，有进程的混合http server，总会存在一定的idle thread。合理。
+
+</ul>
+<li>
+<code>Listen 80</code>
+
+<li>
+<code>LoadModule</code> 使能动态编译的模块，有了这句，该模块就处于active状态了。
+
+<li>
+<code>Include</code>  用这个可以包含其他的configure文件了，和c的处理一样吧。
+
+<li>
+<code>User</code>,<code>Group</code> 用于处理request的process的effective user id和group id。
+
+<li>
+<code>ServerAdmin</code> 这个会出现在server返回给用户的某些错误界面上，可以是email可以是url。
+
+<li>
+不太理解的几个。
+
+<ol>
+<li>
+<code>ServerName</code> 是server用来确定自己的方式，蛮复杂的。和DNS，和VirtualHost都相关，记忆。
+
+<li>
+<code>UseCanonicalName</code> 不太理解
+
+</ol>
+<li>
+<code>DocumentRoot</code> request url的后一部分会和本指令的值结合，从而找到对应的目录或文件，本指令如果不是绝对地址，那么就和<code>ServerRoot</code>结合；是绝对地址的话，就不结合了。
+
+<li>
+<code>&lt;Directory&gt;</code> 这个指令的参数总是绝对地址，不相对于任何其他的地址，当只有一个<code>/</code>的时候，指的就是linux的根目录，NB。
+
+<li>
+<code>Options</code> 某个目录支持的特性，明白了就很简单了。
+
+<li>
+<code>AllowOverride</code> 这个就是.htaccess的相关指令，其说明.htaccess中哪些指令可以执行，哪些不可以。
+
+<li>
+<code>Order</code>,<code>Allow</code>,<code>Deny</code> 这三个真是NB，简单的解释一下，理解起来还是蛮多讲究的。
+
+<ul>
+<li>
+<code>Order allow,deny</code>和<code>Order deny,allow</code>两个的意思是确定了一个基础，allow和deny的基础，前者说所有访问都deny掉，后者说所有访问都允许；这是两个基础。
+
+<li>
+上述前者之后，会先运行<code>Allow</code>的语句，再运行<code>Deny</code>的语句，这写语句的执行顺序只由上面的<code>Order</code>决定，而与在httpd.conf文件中的位置无关。
+
+<li>
+上述后者之后，会先运行<code>Deny</code>的语句，再运行<code>Allow</code>的语句，这写语句的执行顺序只由上面的<code>Order</code>决定，而与在httpd.conf文件中的位置无关。
+
+<li>
+<code>Allow</code>和<code>Deny</code>都是在上面的那两个基础上再加限制，<code>Allow</code>就是allow，<code>Deny</code>就是deny。
+
+<li>
+<code>Allow</code>和<code>Deny</code>并不需要都存在，存在一个或者都不存在都是可以的，两者只是在上面的那两个基础上再加限制而已。
+
+</ul>
+<li>
+<code>DirectoryIndex</code> 就是没有指定文件，只指定目录的情况下，找寻的文件，一般是index.html等。
+
+<li>
+<code>AccessFileName</code> 指定.htaccess的名字。
+
+<li>
+<code>Satisfy</code> 不太懂。
+
+<li>
+<code>TypesConfig</code> 指定mine type文件的位置。
+
+<li>
+<code>DefaultType</code> default MIME type
+
+<li>
+<code>ErrorLog</code>,<code>LogLevel</code>
+
+<li>
+<code>LogFormat</code>,<code>CustomLog</code>
+
+<li>
+<code>ServerSignature</code> 有点类似于<code>ServerTokens</code>，也是server输出页面上会显示的东西。
+
+<li>
+<code>Alias</code> 这个是将url映射到非<code>DocumentRoot</code>的地方的一个方法。
+
+<li>
+<code>ScriptAlias</code> 与上面很相似。
+
+<li>
+<code>IndexOptions</code> 目录下的索引建立的配置。
+
+<ul>
+<li>
+<code>AddIconByEncoding</code>,<code>AddIconByType</code>,<code>AddIcon</code>,<code>DefaultIcon</code> 目录列表的时候使用的条目图片？
+
+<li>
+<code>ReadmeName</code>,<code>HeaderName</code> 目录列表的下面和上面。
+
+<li>
+<code>IndexIgnore</code> 目录列表不显示的文件等
+
+</ul>
+<li>
+<code>AddLanguage</code>,<code>LanguagePriority</code>,<code>ForceLanguagePriority</code> 语言相关。
+
+</ol>
+
+<h2 id="toc_1.4">当前我PC的apache配置理解</h2>
+<ul>
+<li>
+<code>DocumentRoot "/var/www/html/xxxx/yyyy"</code>
+
+<ul>
+<li>
+也就是说，这是我被访问的时候的对应filesystem。
+
+<li>
+localhost/xxx就会到对应的地方去。
+
+</ul>
+<li>
+我定义了userdir，所以，localhost/~me/就会到filesystem中的userdir去。
+
+<li>
+上述两个不冲突。
+
+</ul>
+
+<h2 id="toc_1.5">Name-based Virtual Host</h2>
+<p>
+首先，这种功能依赖于client要将目标hostname作为HTTP header的一部份。这是前提。
+</p>
+<ul>
+<li>
+<code>NameVirtualHost *.80</code>
+
+<li>
+<code>&lt;VirtualHost *:80&gt;</code>
+
+</ul>
+
+<h2 id="toc_1.6">Mapping URLs to Filesystem Locations</h2>
+<p>
+apache的default行为是从url取出url-path，放在<code>DocumentRoot</code>之后。
+</p>
+<ul>
+<li>
+每个virtualhost可以有自己的<code>DocumentRoot</code>。
+
+</ul>
+
+<p>
+<code>Alias</code>是另一种对应filesystem到web的方法。
+</p>
+
+<p>
+UserDir是另一种。
+</p>
+
+<p>
+<code>Redirect</code>是另一种。
+</p>
+
+<p>
+<code>ProxyPass</code>和上面的类似，但区别是上面的会导致浏览器的url变化，但本directive不会。
+</p>
+
+<p>
+<code>Rewriting Engine</code>是另一种，强大的一种。
+</p>
+
+<p>
+<code>ErrorDocument</code>搞定404，500等等。
+</p>
+
+<p>
+总共也就这么几种。
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Apache_Quick_Look";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Apache_Quick_Look";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

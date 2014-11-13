@@ -1,0 +1,453 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>文件和目录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">文件和目录</h1>
+<p>
+本章讨论的中心是三个stat函数以及它们所返回的信息。
+</p>
+
+<p>
+<code>#include &lt;sys/stat.h&gt;</code>
+</p>
+
+<p>
+<code>int stat(const char *restrict pathname, struct stat *restrict buf);</code>
+</p>
+
+<p>
+<code>int fstat(int filedes, struct stat *buf);</code>
+</p>
+
+<p>
+<code>int lstat(const char *restrict pathname, struct stat *restrict buf);</code>
+</p>
+
+<p>
+目录文件，目录在linux里面也是文件，文件包含了其他文件的名字以及对应指针。对目录具有读权限，就可以看目录的内容，同样的，普通文本文件如果你有读权限，你也可以读。
+</p>
+
+<p>
+块特殊文件：提供对设备的带缓冲的访问，每次访问以固定长度的单位进行。
+</p>
+
+<p>
+字符特殊文件：提供对设备的不带缓冲的访问。
+</p>
+
+<p>
+系统中的所有设备，要么是字符特殊文件，要么是块特殊文件。
+</p>
+
+<p>
+FIFO：用于进程间通信。
+</p>
+
+<p>
+socket：用于进程间的网络通信。也可以用于进程间的非网络通信。
+</p>
+
+<p>
+st_mode区分上述文件类型。
+</p>
+
+<p>
+与一个进程有关的ID有6个或更多
+</p>
+<ul>
+<li>
+实际用户ID，实际组ID 我们实际上是谁
+
+<li>
+有效用户ID，有效组ID，附加组ID 用于文件访问权限检查
+
+<li>
+保存的设置用户ID，保存的设置组ID 由exec函数保存
+
+</ul>
+
+<p>
+每个文件都有一个所有者和组所有者，st_uid和st_gid表示。
+</p>
+
+<p>
+<strong>当执行一个程序文件时，进程的有效用户ID通常就是实际用户ID，有效组ID通常是实际组ID。但是可以在文件模式字（st_mode）中设置一个特殊标志，其含义是“当执行此文件时，将进程的有效用户ID设置为文件所有者的用户ID（st_uid）”。同样，在文件st_mode中可以设置另一位，它使得将执行此文件的进程的有效组ID设置为文件的组所有者ID（st_git）。st_mode中的这两位就称为设置用户ID，设置组ID。</strong>
+</p>
+<ul>
+<li>
+程序文件，就是指linux中的可执行文件，带x的。
+
+<li>
+进程的有效用户ID，有效组ID，字面意思，最终有效的，执行时的ID就叫有效ID。
+
+<li>
+实际用户ID和实际组ID，这两个ID就是你登录linux系统时候的ID。就你自己的账户ID。
+
+<li>
+一般情况是，你运行程序文件，那么有效ID就应该是实际ID。
+
+<li>
+文件所有者ID，这个也好理解，就吃文件所有者吗。比较常见的所有者是root。
+
+<li>
+但如果文件有特殊设置，那么有效ID就可能是文件所有者ID。
+
+<li>
+这其实对应了linux系统文件权限里面的s和t。
+
+</ul>
+
+<p>
+st_mode很NB啊，文件类型它负责，设置ID也是它负责。文件的访问权限也是它负责。
+</p>
+
+<p>
+所有文件类型都有访问权限。
+</p>
+<ul>
+<li>
+9种权限
+
+<li>
+打开一个文件，文件名是一个绝对路径，那么对文件名中包含的目录，都必须具有执行权限。
+
+<li>
+在一个目录中建立一个新文件，必须对目录具备写权限和执行权限。
+
+<li>
+为了删除一个文件，必须对目录具有写权限和执行权限。（我本以为有执行权限就够了呢，但确实需要两者，同时，即使没有读权限也没有关系，只是你删除的时候得记住目录中的文件名，因为你读不出目录下有啥文件）
+
+<li>
+用exec执行文件，文件必须具有执行权限，还必须是一个普通文件。
+
+</ul>
+
+<p>
+进程的有效ID，就是其最终的ID，这个进程要对某个文件进行操作，那么，内核就开始检查是否让其执行，如果有效ID是root，那么没啥说的，随便干，如果不是root，那么如果有效ID是文件的所有者ID，那么看前三个rwx，如果也不是所有者ID，但组ID一致，那么中间三个rwx，如果再不是，看后三个rwx。
+</p>
+
+<p>
+使用open或create函数创建新文件的时候，新文件的用户ID设置为进程的有效用户ID。至于新文件的用户组ID，则要看当前的目录是否设置的设置组ID位，如果设置了，那么新文件的用户组ID就是目录的组ID，否则就是进程的有效组ID。
+</p>
+
+<p>
+在linux中，如果一个目录具有设置组ID，那么在这个目录下使用mkdir建立的新目录都就具有设置组ID。
+</p>
+
+<p>
+access函数用来测试实际用户对文件的权限，这里的实际用户就是你，你登录了linux，你就是那个实际用户。设置了设置用户ID的程序文件，如果这个设置用户ID为root，那么当你执行这个程序，然后这个程序的进程的有效用户ID就是root，但是如果这个程序中有access函数，那么access测试的实际用户ID，也就是你，而不是root。
+</p>
+<ul>
+<li>
+怎么感觉我说的这么麻烦呢。
+
+<li>
+就是说，你登录进入了linux，然后任意一个程序中包含了access函数，不管这程序本身是否具有各种乱七八糟的属性，access测试的都是你对某个文件的操作权限。而不管这个程序运行产生的有效ID是否是你。
+
+</ul>
+
+<p>
+<code>mode_t umask(mode_t cmask);</code>
+</p>
+<ul>
+<li>
+更改进程的屏蔽字并不影响父进程的屏蔽字。
+
+</ul>
+
+<p>
+<code>int chmod(const char *pathname, mode_t mode);</code>
+<code>int fchmod(int filedes, mode_t mode);</code>
+</p>
+<ul>
+<li>
+为了改变一个文件的权限位，进程的有效用户ID必须等于文件的所有者ID，或者该进程必须具有超级用户权限。
+
+</ul>
+
+<p>
+在程序文件，可执行文件设置了粘住位，则文件的机器指令部分保持在交换区中。在目录设置了站住位，那么用户只能删除目录总属于自己的文件。当然如果你拥有目录或者你是root除外。
+</p>
+
+<p>
+若_POSIX_CHOWN_RESTRICTED对指定的文件起作用，则
+</p>
+<ol>
+<li>
+只有root能更改文件的用户ID
+
+<li>
+非root用户
+
+<ol>
+<li>
+进程有效用户ID等于该文件的用户ID
+
+<li>
+参数owner不变，参数group为进程的有效组ID或进程的附加组ID之一。
+
+</ol>
+</ol>
+
+<p>
+st_size表示文件长度，只对普通文件，目录文件，符号链接有意义。
+</p>
+
+<p>
+st_blksize 表示对文件I/O较合适的块长度。
+</p>
+
+<p>
+st_blocks 表示文件所分配的实际512字节块数量。
+</p>
+
+
+<p>
+i节点是UNIX文件系统的文件点，这么说有点别扭，首先，一个i节点可以对应多个文件，这些文件的内容完全相同，因为i节点就是内容。同时i节点记录了本节点所对应的文件数目。i节点可以指向数据块，也可以指向目录块，目录块里的内容就是i节点号和文件名，i节点号和文件名连在一起就是目录项。
+</p>
+
+<p>
+文件的连接计数包含在st_nlink成员中，这种链接是硬链接。
+</p>
+
+<p>
+i节点包含了大多数与文件相关的信息：文件类型、权限、长度等，这些和stat结构中的对应。事实上，stat结构中的大多数信息都取自i节点。只有两项数据放在目录项中，文件名和i节点编号。
+</p>
+
+<p>
+每个文件系统各自对它们的i节点进行编号，目录项中的i节点编号其意思只有本文件系统可以正确理会，如果其他文件系统也可以理会，那也没用，肯定是错的。
+</p>
+
+<p>
+任何一个叶目录（没有子目录的目录）其链接计数都是2。
+</p>
+
+<p>
+<code>int link(const char *existingpath, const char *newpath);</code>
+</p>
+<ul>
+<li>
+可以用于文件建立新的目录项
+
+<li>
+也可以用于目录建立新的目录项，但只有超级用户才可以这么做，避免文件系统出现循环。
+
+<li>
+linux是允许目录的硬链接的。在RHEL6中就是，/etc/init.d/和/etc/rc.d/init.d/就是两个硬链接的目录项。但是RHEL6中，即使是root也不可以建立目录的硬链接，上面的两者估计是安装过程中出现的特殊例子了。（至少root使用<code>ln a b</code>是不可以的。）
+
+</ul>
+
+<p>
+<code>int unlink(const char *pathname);</code>
+</p>
+<ul>
+<li>
+关闭文件时，内核会检查文件的进程数，如果是0，则检查文件的链接数，如果也是0，则删除文件。
+
+<li>
+如果pathname是符号链接，那么unlink删除该符号链接，而不会删除由该链接所引用的文件。
+
+<li>
+没有一个函数可以直接删除符号链接所引用的文件。
+
+<li>
+pathname可以是目录，但这时候只有root可以调用，而且，root应该调用rmdir函数，而不是本函数。
+
+<li>
+所以一般，本函数用来解除文件的链接。
+
+</ul>
+
+<p>
+<code>int remove(const char *pathname);</code>
+</p>
+<ul>
+<li>
+pathname是文件，则与unlink相同。
+
+<li>
+pathname是目录，则与rmdir相同。
+
+</ul>
+
+<p>
+<code>int rename(const char *oldname, const char *newname);</code>
+</p>
+<ul>
+<li>
+如果oldname是文件，那么newname不能是存在的目录；进程应该对newname包含的路径目录具有写权限；newname如果是存在的文件，则删除已存在的目录项，然后将oldname更名为newname。
+
+<li>
+如果oldname是目录，那么如果newname存在，其必须是一个空目录。且不恩纳个包含oldname作为路径前缀。
+
+<li>
+如果oldname或newname是符号链接，那么处理符号链接本身，而不是它指向的文件。
+
+<li>
+如果oldname和newname同一个文件，则函数不做任何更改而成功返回。
+
+<li>
+本函数需要删除oldname，创建newname，所以其需要对两者包含的路径目录具有写和执行的权限。
+
+</ul>
+
+<p>
+硬链接要求文件和链接位于同一文件系统。只有root才能创建对目录的硬链接。符号链接没有任何文件系统限制。
+</p>
+
+<p>
+open是跟随符号链接的，也就是说一个符号链接作为open的参数时，open会打开符号链接指向的文件。但当O_CREAT和O_EXCL同时存在时，若路径名引用符号链接，open将出错返回。这是一种特殊的处理方式。
+</p>
+
+<p>
+<code>int symlink(const char *actualpath, const char *sympath);</code>
+</p>
+<ul>
+<li>
+并不要球actualpath存在
+
+</ul>
+
+<p>
+<code>ssize_t readlink(const char* restrict pathname, char *restrict buf, size_t bufsize);</code>
+</p>
+<ul>
+<li>
+open会跟踪符号链接，所以无法打开符号链接。
+
+<li>
+所以本函数出现。
+
+</ul>
+
+<p>
+文件的时间：
+</p>
+<ul>
+<li>
+st_atime 文件数据的最后访问时间 read 对数据块访问的时间。
+
+<li>
+st_mtime 文件数据的最后修改时间 write 文件内容被修改，也就是i节点指向的数据块修改。
+
+<li>
+st_ctime i节点状态的最后更改时间 chmod.chown 该文件i节点最后一次被修改。
+
+</ul>
+
+<p>
+access和stat函数并不更改这三个时间中的任一个。
+</p>
+
+<p>
+<code>int utime(const char *pathname, const struct utimbuf *times);</code>
+</p>
+<ul>
+<li>
+不能修改st_ctime，但这个会自动修改为调用函数的时间。
+
+</ul>
+
+<p>
+<code>int mkdir(const char *pathname, mode_t mode);</code>
+<code>int rmdir(const char *pathname);</code>
+</p>
+
+<p>
+目录项的具体实现与系统有关，所以特别提供了一些函数用来读目录，隐藏底部细节。
+</p>
+<ul>
+<li>
+<code>#include &lt;dirent.h&gt;</code>
+
+<li>
+<code>DIR *opendir(const char *pathname);</code>
+
+<li>
+<code>struct dirent *readdir(DIR *dp);</code>
+
+<li>
+<code>void rewinddir(DIR *dp);</code>
+
+<li>
+<code>int closedir(DIR *dp);</code>
+
+<li>
+<code>long telldir(DIR *dp);</code>
+
+<li>
+<code>void seekdir(DIR *dp, log loc);</code>
+
+</ul>
+
+<p>
+<code>int chdir(const char *pathname)</code>
+<code>int fchdir(int filedes);</code>
+<code>char *getcwd(char *buf, size_t size);</code>
+</p>
+
+<p>
+st_dev是包含了当前文件的文件系统的设备号。
+</p>
+
+<p>
+只有字符特殊文件和块特殊文件才有st_rdev值，此值包含实际设备的设备号。
+</p>
+
+
+<h1 id="toc_2">OVER</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="文件和目录";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="文件和目录";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

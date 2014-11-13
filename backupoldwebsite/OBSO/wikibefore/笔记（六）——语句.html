@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>笔记（六）——语句</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">笔记（六）——语句</h1>
+<ul>
+<li>
+空语句，就一个<code>;</code>。
+
+<li>
+cpp中，对象或类的定义或声明，叫做声明语句。
+
+<li>
+复合语句，就是快，<code>{}</code>。
+
+<li>
+早期的cpp版本处理for语句中定义的变量的作用域的方式不同：
+
+<ul>
+<li>
+认为for语句头定义的变量视为在for语句之前定义。
+
+<li>
+更旧的，允许在for作用域外访问控制变量。
+
+</ul>
+<li>
+if else中，else是与最后出现的尚未匹配的if配套。
+
+<li>
+使用花括号是一个比较好的做法。
+
+<li>
+goto labal；这种语句已经不建议使用了。
+
+</ul>
+
+<h2 id="toc_1.1">try块和异常处理</h2>
+<ul>
+<li>
+语句块是下面这样的：
+
+<li>
+<code>try {;throw runtime_error("xxx");} catch (runtime_error err){}</code>
+
+<li>
+cpp标准库提供了一组异常类：
+
+<ul>
+<li>
+exception头文件定义了最常见的异常类，exception。
+
+<li>
+stdexcept头文件定义了集中常见的异常类。包括上面的runtime。
+
+<li>
+new头文件定义了bad_alloc异常类型，提供了因为无法分配内存而由new抛出的异常。
+
+<li>
+type_info头文件定义了bad_cast异常类型。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.2">使用预处理器进行调试</h2>
+<ul>
+<li>
+（待续）
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="笔记（六）——语句";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="笔记（六）——语句";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Final_Preparations</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Final Preparations</h1>
+<ul>
+<li>
+<code>export LFS=/mnt/lfs</code>
+
+<li>
+<code>mkdir -v $LFS/tools</code>
+
+<li>
+<code>ln -sv $LFS/tools /</code>
+
+<ul>
+<li>
+在/下建立了tools，软链接。
+
+</ul>
+</ul>
+
+<ul>
+<li>
+<code>useradd -m -k /dev/null lfs</code>
+
+<li>
+<code>passwd lfs</code>
+
+<li>
+<code>chown -v lfs $LFS/tools</code>
+
+<li>
+<code>chown -v lfs $LFS/sources</code>
+
+<ul>
+<li>
+这两步只分配了owner，而不包括group。也就是说tools和sources的group还是root。
+
+</ul>
+<li>
+<code>su - lfs</code>
+
+</ul>
+
+<p>
+分配一个user是正确的选择。
+</p>
+
+<p>
+在<code>su - lfs</code>之后，就进入了lfs的用户，修改或着说是添加两个文件 <strong>.bash_profile</strong> 和 <strong>.bashrc</strong> 。
+</p>
+
+<p>
+在.bash_profile中，一句话<code>exec env -i HOME=\(HOME TERM=\)TERM PS1='\u:\w\$ ' /bin/bash</code>，先是exec，执行后面的命令用来取代当前的shell；接着env，设置一个全新的环境来执行后面的/bin/bash命令；结合在一起就是建立一个非常干净的环境变量空间，然后在这个环境中运行bash，以替代虚拟终端中的bash。
+</p>
+
+<p>
+上面的打开的新的bash是一个non-login shell，其会读取.bashrc中的内容。
+</p>
+<ul>
+<li>
+<code>set +h</code> <sup><small>效果就是每次在bash中输入命令，都会从$PATH中进行完全查找，而不去记忆曾经运行过的命令</small></sup>
+
+<li>
+<code>umask 022</code> 
+
+<li>
+<code>LFS=/mnt/lfs</code>
+
+<li>
+<code>LC_ALL=POSIX</code> <sup><small>地区化的变量，设置为POSIX是一种保险的选择</small></sup>
+
+<li>
+<code>LFS_TGT=$(uname -m)-lfs-linux-gnu</code> 
+
+<li>
+<code>PATH=/tools/bin:/bin:/usr/bin</code>
+
+<li>
+<code>export LFS LC_ALL LFS_TGT PATH</code>
+
+</ul>
+
+<p>
+最后，<code>source .bash_profile</code>，重新产生一个读取.bashrc的bash。
+</p>
+
+<p>
+到这一步，就要开始编译东西了。如果我现在关闭电脑，然后明天开始，没有任何问题，我所要做的：
+</p>
+<ul>
+<li>
+<code>su -</code>
+
+<li>
+<code>mount -v -t ext4 /dev/sda9 /mnt/lfs</code>
+
+<li>
+<code>mount -v -t ext4 /dev/sda8 /mnt/lfs/boot</code> <sup><small>这一行和下一行在目前可要可不要</small></sup>
+
+<li>
+<code>mount -v -t ext4 /dev/sda10 /mnt/lfs/home</code>
+
+<li>
+<code>su - lfs</code>
+
+</ul>
+
+<p>
+<code>su - lfs</code>这一步意味着什么，我在执行这一步的时候，我的角色是root还是其他的用户没有任何关系，这只是切换用户的命令，进入lfs之后，我就是lfs了，我所有的能力都是bash给予的，新的bash给予的，我所能操作的文件也只有那些我能操作的文件。我被限制在了很小的范围内部，/home/lfs是我的地盘，/tools是我的地盘，/mnt/lfs/sources是我的地盘，/mnt/lfs/tools就是/tools。这3个地方，加上一个bash，以及PATH中的/bin，/usr/bin目录下的我可以执行的命令，这就是我的所有。
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Final_Preparations";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Final_Preparations";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

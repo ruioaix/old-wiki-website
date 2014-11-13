@@ -1,0 +1,840 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>RHCE_Two</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">RHCE Part Two</h1>
+<p>
+Red Hat Certified Engineer.
+</p>
+
+<h2 id="toc_1.1">Unit 1 Installation</h2>
+<ul>
+<li>
+linux内核支持大部分的硬件，同时，现在linux有dynamically loadable kernel modules功能。
+
+<li>
+可以使用 <strong>User Mode Access</strong> 来存取内核。
+
+<ul>
+<li>
+system calls and signals
+
+<li>
+filesystem device nodes
+
+<li>
+network interfaces
+
+</ul>
+<li>
+多重开机，必定存在boot loader。
+
+<li>
+block device和character device的不同
+
+<ul>
+<li>
+一个以block为存取单位，可能是512/1024bytes；另一个以1byte来存取。
+
+</ul>
+<li>
+dmesg 查看系统信息
+
+<li>
+/var/log/dmesg 查看系统信息
+
+<li>
+/var/log/messages 系统出现错误的时候，系统错误信息都会记录在这个文件中
+
+<li>
+/root/install.log 安装过程会记录在这个文件中
+
+<li>
+system-config-*命令可以做蛮多事情。
+
+</ul>
+
+<h2 id="toc_1.2">Unit 2 System Initialization and Services</h2>
+<ul>
+<li>
+bios-&gt;mbr-&gt;kernel-&gt;init
+
+<ul>
+<li>
+mbr只能挂在 <strong>/</strong> 这个根目录所在的分区，所以一些目录必须在这个分区中，比如/etc等。
+
+<li>
+init是第一个运行的程序。
+
+</ul>
+<li>
+kernel开机时的工作
+
+<ul>
+<li>
+device detection
+
+<li>
+device driver 初始化
+
+<li>
+挂载root filesystem
+
+<li>
+load inital process（init）
+
+</ul>
+<li>
+<strong>init</strong> 程序，首先读取 <code>/etc/inittab</code>这个设定文件。
+
+<li>
+<code>/etc/rc.d/rc.sysinit</code>是系统初始化脚本，这一点在upstart中也是如此。
+
+<li>
+<code>/etc/rc.d/rc 5</code> 和 <code>/etc/rc.d/rc5.d/</code> 在runlevel在5的时候，也是会执行的。后者目录中的脚本也是<code>/etc/rc.d/init.d/</code>里面脚本的link。
+
+<li>
+<code>/etc/rc.d/init.d/</code>中的d都是daemon的意思，rc.d里面也是。
+
+<li>
+在<code>/etc/rc.d/rc5.d/</code>中的服务要么是k开头，要么是s开头。k代表kill，s代表start。先执行k，后执行s，k和s之中则按照数字从小到大来。
+
+<li>
+daemon分两种：standalone和transient。
+
+<ul>
+<li>
+在standalone中又分两种，一种是init直接启动的，一种是system V daemon类型。
+
+<li>
+system V daemon都在<code>/etc/rc.d/init.d/</code>、
+
+<li>
+<code>/etc/init.d/</code>和<code>/etc/rc.d/init.d/</code>其实是一个目录。两者是link。
+
+</ul>
+<li>
+<code>rc.local</code>在几个<code>rcX.d</code>目录下都有。而是是S99打头。
+
+<li>
+<code>chkconfig</code>的作用就是将/etc/init.d下面的script放到对应的rcX.d目录下。
+
+<li>
+<code>service</code> run a system V init script. 这个还不如直接<code>/etc/init.d/xxx start</code>呢。
+
+</ul>
+
+<h2 id="toc_1.3">Unit 3 Kernel Services and Configuration</h2>
+<ul>
+<li>
+kernel Modules
+
+<ul>
+<li>
+kernel modules是额外挂载在kernel上的。
+
+<li>
+存放在/lib/modules目录下
+
+<li>
+lsmod显示当前载入的modules
+
+<li>
+modprobe临时载入modules
+
+<li>
+modinfo命令可以看module的信息。
+
+<li>
+module的设定在/etc/modprobe.d/目录下
+
+<li>
+insmod和modprobe类似，但modprobe可以自动载入依赖module
+
+<li>
+rmmod移除module
+
+</ul>
+<li>
+/proc是虚拟文件系统，不在硬盘里，在内存里。
+
+<ul>
+<li>
+/proc/cpuinfo
+
+<li>
+/proc/scsi
+
+<li>
+<code>echo "1" &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all</code>
+
+<li>
+使用sysctl修改/proc/sys
+
+<ul>
+<li>
+sysctl：configure kernel parameters at runtiome.
+
+</ul>
+</ul>
+<li>
+<code>/var/log/dmesg</code>
+
+<li>
+lspci查看目前有什么插在pci插槽中
+
+<li>
+free和vmstat显示内存的使用情况
+
+<li>
+<code>kill -l</code>和<code>kill -9 pid</code>
+
+</ul>
+
+<h2 id="toc_1.4">Unit 4 Filesystem Management</h2>
+<ul>
+<li>
+<code>fdisk -l /dev/sda</code>查看disk
+
+<li>
+<code>mke2fs</code>格式化分区为ext2/3/4。
+
+<li>
+<code>df -h</code>硬盘使用情况。
+
+<li>
+<code>fuser -v /home/xxx/</code>可以查看有那些程序在操作文件，当不能umount的时候可用。
+
+<li>
+<code>fsck -V /dev/sda1</code>检查分区
+
+<li>
+add a disk
+
+<ul>
+<li>
+插入硬盘
+
+<li>
+建立分区
+
+<li>
+使用partprobe重新读入disk table
+
+<li>
+建立filesystem
+
+<li>
+建立mount point。
+
+<li>
+将记录写入/etc/fstab中。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.5">Unit 5 Network Configuration</h2>
+<ul>
+<li>
+所有网卡的驱动都是以module的方式建立的。
+
+<li>
+如果设定在开机时网络enabled，那么network interface modules会在启动时加载。
+
+<li>
+<code>ifconfig</code>通常用来查看，也可以设置。
+
+<li>
+<code>ifup</code>,<code>ifdown</code>
+
+<li>
+可以通过<code>/etc/sysconfig/network-scripts/ifcfg-xxx</code>来修改对应网卡的信息。
+
+<li>
+<code>/etc/sysconfig/network</code>中的hostname如果修改了，需要reboot才可以完全生效。
+
+<li>
+<code>route</code>已经过时了，现在使用<code>ip</code>代替;<code>ip route list</code>。
+
+<li>
+每台pc都有hostname（主机名称），主机名称和主机ip的对应关系叫做name resolution。
+
+<ul>
+<li>
+从hostname到ip的解析叫做forward lookup
+
+<li>
+从ip到hostname的解析叫做reverse lookup
+
+<li>
+pc和pc之间是使用ip通信的。
+
+<li>
+hostname在<code>/etc/rc.sysinit</code>和<code>/etc/sysconfig/network</code>中设置和存储。
+
+<li>
+<code>/etc/rc.sysinit</code>是<code>/etc/rc.d/rc.sysinit</code>的link。
+
+<li>
+每台pc中都已经储存了一些hostname和ip的对应关系，在<code>/etc/hosts</code>文件中。
+
+<li>
+当name resolution发生时，系统都会先查看<code>/etc/hosts</code>文件，这里面不存在的时候，才会找网络上的DNS。
+
+<li>
+<code>/etc/nsswitch.conf</code>中定义了先找<code>/etc/hosts</code>再找网络，在这个文件中可以修改这一先后顺序。
+
+<li>
+<code>/etc/resolv.conf</code>中定义了使用那一台机器作为name server。
+
+<ul>
+<li>
+其中的search和domain其实是相同的。作用都是使用没有小数点的短名时会自动的添加上search和domain后面的域名。
+
+<li>
+比如: <code>ping www</code> 就会导致 <code>ping www.xxx.com</code>。
+
+</ul>
+<li>
+<code>host</code>用来测试dns。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.6">Unit 6 RPM and Kickstart</h2>
+<ul>
+<li>
+RPM最早是redhat提出的，“red hat parkage manager“。
+
+<li>
+rpm components
+
+<ul>
+<li>
+<code>/var/lib/rpm/</code>
+
+<li>
+<code>rpm</code> command
+
+<li>
+package files：name-version-release.architectures.rpm
+
+</ul>
+<li>
+<code>rpm -i</code> 安装，新旧版本都留下
+
+<li>
+<code>rpm -U</code> 安装，旧版本删除。
+
+<li>
+<code>rpm -F</code> 没有旧版本就不安装，安装之后旧版本删除。
+
+<li>
+<code>rpm -e</code> 删除
+
+<li>
+<code>-v, -h</code> 详细信息和安装进度条。
+
+<li>
+更新内核，记得使用<code>rpm -i</code>
+
+<li>
+已经安装的软件查询
+
+<li>
+<code>rpm -qa</code>
+
+<ul>
+<li>
+<code>rpm -qf /bin/gzip</code> 查看这个命令从那个rpm中安装的。
+
+<li>
+<code>rpm -qi gzip</code> 查看gzip rpm的信息。
+
+<li>
+<code>rpm -ql gzip</code> 列出gzip rpm里面的文件列表。
+
+</ul>
+<li>
+未安装的软叫查询
+
+<ul>
+<li>
+<code>rpm -qip package_file.i686.rpm</code>
+
+<li>
+<code>rpm -qlp package_file.i686.rpm</code>
+
+</ul>
+<li>
+<code>rpm -V initscripts</code>
+
+<li>
+<code>rpm -Vp package_file.i686.rpm</code>
+
+<li>
+red hat在发布rpm包时都会包含一个GPG key。
+
+<ul>
+<li>
+<code>rpm --import /xxx/RPM-GPG-KEY</code>
+
+<li>
+<code>rpm -qa gpg-pubkey</code>
+
+<li>
+<code>rpm -checksig /dir/gzip-1.3.12-18.el6.x86_64</code>
+
+</ul>
+<li>
+<code>rpm2cpio</code> 和 <code>cpio -id &lt; xx.cpio</code>
+
+<li>
+<code>up2date</code>是rhn的指令。
+
+<li>
+<code>kickstart</code>成批安装redhat。配合network installation server。
+
+</ul>
+
+<h2 id="toc_1.7">Unit 7 User Administrator</h2>
+<ul>
+<li>
+User Policy Considerations
+
+<ul>
+<li>
+the amount of access on system files and resources
+
+<li>
+whether to limit logins at certain times and places
+
+<li>
+whether to force periodic password changes
+
+<li>
+whether to enforce CPU and memory limits
+
+<li>
+whether to enable disk quotas
+
+</ul>
+<li>
+<code>/etc/passwd</code>——user account db。
+
+<ul>
+<li>
+第二列的 <strong>x</strong> 表示使用密码，如果为空，则表示不需要密码。
+
+<li>
+root的uid一定是0，1-499是系统使用的uid，用户从500开始。
+
+<li>
+最后一列，如果是<code>/bin/bash</code>，则用户登录启动的第一个程序是bash shell。如果是<code>/sbin/nologin</code>，那么代表这个帐号只能通过特殊的方式（ftp？）登录。如果是<code>/bin/false</code>，则表明这个账户只能收发email而不能登录。
+
+<li>
+该文件的权限应该是 <strong>-rw-r--r--</strong> 。
+
+</ul>
+<li>
+<code>useradd username</code>
+
+<ul>
+<li>
+上面的命令导致编辑：<code>/etc/passwd</code>,<code>/etc/shadow</code>,<code>/etc/group</code>。
+
+<li>
+create home dir。
+
+<li>
+set homedir的permission。
+
+<li>
+将<code>/etc/skel/</code>下的隐藏文件拷贝到user homedir。
+
+<li>
+<code>passwd user</code>
+
+<li>
+<code>newusers</code>可以批量搞。
+
+</ul>
+<li>
+在redhat中，当user account开始时，一个对应的private group也会被create。
+
+<ul>
+<li>
+不同的系统，user homedir的权限是不相同的。
+
+<li>
+redhat是 <strong>rwx------</strong> 。
+
+<li>
+unix和suse是 <strong>rwxr-xr-x</strong> 。
+
+<li>
+不同的系统，user accout开始时所属群组也是不同的。
+
+</ul>
+<li>
+<code>groupadd</code>，<code>groupmod</code>，<code>groupdel</code>，加，rename，删。
+
+<li>
+<code>usermod</code>
+
+<li>
+remove user
+
+<ul>
+<li>
+手动<code>/etc/passwd</code>,<code>/etc/shadow</code>,<code>/etc/group</code>,<code>/var/spool/mail/username</code>。
+
+<li>
+或者，使用<code>userdel -r username</code>
+
+</ul>
+<li>
+user passwd 过期时间
+
+<ul>
+<li>
+默认不会过期。
+
+<li>
+<code>chage</code>
+
+<li>
+<strong>99999</strong> 就说明不需要更换密码。
+
+<li>
+在<code>/etc/shadow</code>修改。
+
+</ul>
+<li>
+user login shell scripts
+
+<ul>
+<li>
+<code>/etc/profile</code>
+
+<ul>
+<li>
+ <code>/etc/profile.d/xx.sh</code>
+
+</ul>
+<li>
+<code>~/.bash_profile</code>
+
+<ul>
+<li>
+<code>~/.bashrc</code>
+
+<ul>
+<li>
+<code>/etc/bashrc</code>
+
+</ul>
+</ul>
+</ul>
+<li>
+user non login shell scripts (使用su user，就是non login）
+
+<ul>
+<li>
+<code>~/.bashrc</code>
+
+<ul>
+<li>
+<code>/etc/bashrc</code>
+
+<ul>
+<li>
+<code>/etc/profile.d/xx.sh</code>
+
+</ul>
+</ul>
+</ul>
+<li>
+profile类型的文件：设置variable。只有login才执行。
+
+<li>
+bashrc类型的文件：配置bash。在login和subshell都执行。
+
+<li>
+switching accounts
+
+<ul>
+<li>
+<code>su [-] [user]</code>
+
+<li>
+<code>-</code>表示login shell，不带表示non login shell。
+
+</ul>
+<li>
+<code>sudo</code>与<code>/etc/sudoers</code>
+
+<ul>
+<li>
+<code>visudo /etc/sudoers</code>
+
+</ul>
+<li>
+file ownership: <code>chown</code>
+
+<li>
+file permissions
+
+<ul>
+<li>
+r:cat/ls -l
+
+<li>
+w:vim/mv,rm
+
+<li>
+x:script/cd
+
+</ul>
+<li>
+suid只能用在文件上。
+
+<li>
+sgid可以文件可以目录。
+
+<li>
+sticky只能用在目录上。
+
+<li>
+对于可执行文件，suid和sgid分别表示run with the owner‘s uid or gid。
+
+<li>
+对于sticky的目录，在目录中的文件，只有文件的owner才能删除文件。
+
+<li>
+对于sgid的目录，目录中建立的文件的group是目录的group。
+
+<li>
+一般用户的umask是0002
+
+<li>
+root的umask是0022
+
+<li>
+Access Control Lists(ACLs)可以用来设置个别user对个别dir的访问权限。
+
+<ul>
+<li>
+<code>setfacl -m u:user2:r-x /project1</code>
+
+</ul>
+</ul>
+
+<h2 id="toc_1.8">Unit 8 Printing and Administration Tools</h2>
+<ul>
+<li>
+cups(common unix printing system)
+
+<ul>
+<li>
+cupsd是<code>/etc/init.d/cups</code>。
+
+<li>
+<code>/etc/cups/cupsd.conf</code>
+
+<li>
+<code>/etc/cups/printers.conf</code>
+
+<li>
+<code>http://localhost:631</code>
+
+<li>
+<code>lpadmin</code>
+
+</ul>
+<li>
+cron
+
+<ul>
+<li>
+<code>/etc/cron.allow</code> 和 <code>/etc/cron.deny</code>
+
+<li>
+<code>/etc/crontab</code>
+
+<li>
+<code>/etc/cron.daily/tmpwatch</code>用于将长时间未使用的文件删除。
+
+<ul>
+<li>
+当然这些都是在各种tmp目录下的文件。
+
+</ul>
+<li>
+<code>/etc/cron.daily/logrotate</code>压缩并mail系统的log文件。
+
+</ul>
+<li>
+log
+
+<ul>
+<li>
+<code>/var/log/</code>
+
+<li>
+<code>/etc/rsyslog.conf</code>
+
+</ul>
+<li>
+<code>tar cvf /var/home.tar /home</code>
+
+<li>
+<code>du -h /var/home.tar</code>
+
+<li>
+<code>tar tf /var/home.tar</code>
+
+<li>
+<code>tar xzf /var/home.tar.gz</code>
+
+<li>
+<code>dump</code>备份整个partion。
+
+<li>
+<code>cpio</code>
+
+<li>
+<code>tar -czvf root@example1:/var/home.tar.gz /home</code>
+
+<li>
+<code>dump -0uf root@example1:/var/home.tar.gz /home</code>
+
+</ul>
+
+<h2 id="toc_1.9">Unit 9 The X Window System</h2>
+<ul>
+<li>
+XOrg组织使用x protocol开发出叫做X11的应用程序。
+
+<li>
+X11就是用来与硬件沟通。
+
+<li>
+X Client必须安装gui工具。
+
+<li>
+X server通过X11与邮件沟通。
+
+</ul>
+
+<h2 id="toc_1.10">Unit 10 Advanced Filesystem Management</h2>
+<p>
+略
+</p>
+
+<h2 id="toc_1.11">Unit 11 Troubleshooting</h2>
+<ul>
+<li>
+收集信息
+
+<li>
+check log
+
+<li>
+备份
+
+<li>
+Things to Check：X
+
+<ul>
+<li>
+不要在level 5下检查。
+
+<li>
+<code>system-config-display</code>
+
+<li>
+<code>X -probeonly</code>
+
+<li>
+检查/home和/tmp是否没有空间了。
+
+<li>
+检查xfs有没有启动。
+
+</ul>
+<li>
+Things to Check：Networking
+
+<ul>
+<li>
+<code>dig hostname</code>
+
+<li>
+<code>ifconfig</code>
+
+<li>
+<code>ip route -n</code>
+
+<li>
+<code>cat /etc/modprobe.conf</code>
+
+</ul>
+</ul>
+
+<h2 id="toc_1.12">over</h2>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="RHCE_Two";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="RHCE_Two";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>General_Security_Issues</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">General Security Issues</h1>
+
+<h2 id="toc_1.1">Security Guidelines</h2>
+<p>
+当运行MySQL的时候，要遵循以下规则：
+</p>
+<ul>
+<li>
+不可以将 <code>mysql</code> database中的<code>user</code>table的访问权交给除了 <strong>root</strong> 之外的任何人。
+
+<li>
+理解MySQL access Privilege system的工作方式，使用 <strong>grant</strong> 和 <strong>revoke</strong> 语句来控制MySQL的访问。
+
+<ul>
+<li>
+不要授予超过需求的权限。
+
+<li>
+不要所有权限给all hosts。
+
+<li>
+<code>show grants;</code>查看账户和对应权限。
+
+</ul>
+<li>
+不要明文存储密码，应该使用<code>sha2(),sha1(),md5(0</code>等单向加密算法。
+
+<li>
+不要使用字典中的密码。
+
+<li>
+建立防火墙。MySQL的默认端口是3306。
+
+<li>
+使用MySQL的应用不应该相信用户的输入，用户的输入应该经过一些处理。
+
+<li>
+不要在internet使用明文传递信息，应该使用ssh这种加密通道。
+
+<li>
+学习使用 <strong>tcpdump</strong> 和 <strong>strings</strong> 工具来查看你的MySQL数据流是否加密过。
+
+<ul>
+<li>
+<code>tcpdump -l -i wlan0 -w - src or dst port 3306|strings</code>
+
+</ul>
+</ul>
+
+<h2 id="toc_1.2">Keeping Passwords Secure</h2>
+<p>
+MySQL用户应该使用以下方针来保证密码安全：
+</p>
+<ul>
+<li>
+不要该直接在command line中使用密码，即直接在<code>-p</code>options之后写入密码。
+
+<li>
+在command line的<code>-p</code>后不接密码，而在之后的交互中输入；这种很安全，但是在运行script的时候，可能不方便，或者出现因为没有密码中断script的情况。
+
+<li>
+使用options file。安全。
+
+<li>
+将密码存入 <strong>MYSQL_PWD</strong> 环境变量。极度不安全。
+
+<li>
+<strong>.my.cnf</strong> 和 <strong>.mysql_history</strong> 和 <strong>.bash_history</strong> 这种可能记录有你密码的文件应该设置成严格的权限。比如600，400。
+
+</ul>
+
+<p>
+有一些SQL语句会记录密码明文，比如 <strong>create user</strong> ， <strong>grant</strong> ， <strong>set password</strong> 。这些语句会被记录进入MySQL的日志文件，所以这些日志文件的访问权限应该被严格控制。
+</p>
+
+<p>
+MySQL 在mysql database中的user表中记录用户账户，包括用户的密码，这些密码是被加密过的。
+</p>
+<ul>
+<li>
+MySQL通过两步来使用密码
+
+<ul>
+<li>
+client programs首先提供一个hash加密的值，这个值必须和user table中对应账户的一个密码加密值所匹配（相等）。
+
+<li>
+当连接好之后，clients可以设置或者改变密码，clients可以使用password()这种函数来产生一个加密密码值。
+
+<li>
+换句话说，server在验证用户的时候，使用hash值来验证；当client使用password()或者其他密码语句时，server会产生一个hash值。
+
+</ul>
+</ul>
+
+<p>
+MySQL中密码加密的方法是在不断变化的。
+</p>
+<ul>
+<li>
+具体描述暂且不管。
+
+</ul>
+
+<h2 id="toc_1.3">Making MySQL Secure Against Attackers</h2>
+<p>
+为了使MySQL更安全，你应该很慎重的考虑一下建议：
+</p>
+<ul>
+<li>
+每个MySQL账户都应该有密码。
+
+<li>
+不要该使用 <strong>root</strong> 用户来启动MySQL，这样的话，任何拥有<code>FILE</code>权限的人都可以像root一样的建立文件，比如<code>/root/.bashrc</code>。
+
+<ul>
+<li>
+<code>mysqld</code>除非使用<code>--user=root</code>选项，否则不会以root身份运行。
+
+<li>
+<code>mysqld</code>有其自己的身份， <strong>mysql</strong> 用户。在<code>/etc/my.cnf</code>文件中就有：
+<pre>
+    [mysqld]
+    user=mysql
+</pre>
+
+<li>
+这就是mysqld的启动身份。
+
+<li>
+<strong>User names for MySQL accounts have nothing to do with user names for Unix accounts.</strong>
+
+<li>
+上面的话是说，运行mysqld的是Unix账户，而mysqld里面存储的账户和Unix账户是没有关系的。
+
+<li>
+比如<code>mysql -uroot -p</code>，说的是使用mysqld里面的root用户来登录mysqld，这个root和Unix系统里面的root没有任何关系。
+
+</ul>
+<li>
+等等
+
+</ul>
+
+<h1 id="toc_2">OVER</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="General_Security_Issues";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="General_Security_Issues";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+#!/bin/bash
+if [ $# == 0 ];then
+	echo "Usage: generateAllwiki /path/to/mdtext"
+else
+	cd $1
+fi
+
+
+find . -type f |grep -E [.]md$ |while read line
+do
+#echo $line
+line_relative=$(echo ${line/.md/.html} | awk  '{print substr($0, 3, length($0))}') #echo $title
+line_dir=$(echo $line_relative | awk -F'/' '{if(NF>1) {print $1 }else if(NF>2) {print $1 "/" $2}}')
+if [ ! -d ../$line_dir ];then
+mkdir -p ../$line_dir;
+echo "mkdir ../$line_dir"
+fi
+
+#%root_path%
+root_level=$(echo $line | awk -F"/" '{print NF}') #echo $root_level
+root_path="";
+if [ $root_level == 2 ];then
+root_path="./";
+else
+for (( i=3; i<=$root_level; i=i+1 )) do
+root_path="../$root_path"
+done
+fi #echo $root_path
+
+#%content
+content=$(perl ../script/Markdown.pl --html4tags $line) #echo $content
+
+#%title%
+title=$(echo $content | awk -F">" '{if(/<h1>/) print substr($2, 0, length($2)-4)}') #echo $title
+
+#produce html
+cat ../script/default.template | awk -v "TITLE=$title" -v "ROOT_PATH=$root_path" -v "CONTENT=$content" -f ../script/script.awk >  ../$line_relative
+done

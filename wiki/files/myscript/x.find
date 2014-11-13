@@ -1,0 +1,15 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+	echo "there is no string message."
+	exit 0
+fi
+#find . |xargs grep -ri $1 -l |sort | uniq -c
+find . -type f |while read line
+do
+	cat $line |grep $1 
+	if [ $? == 0 ];then 
+		echo "===========================>>>>>>>>>>>>>>>>>>>>>>>File $line has this word."
+	fi
+	echo 
+done
+

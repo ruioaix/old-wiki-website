@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Web_Design_with_JavaScript_and_the_Document_Object_Model</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">DOM Scripting: web Design with JavaScript and the Document Object Model</h1>
+<p>
+this is a book, you can find pdf from internet. I am reading the this book with 2005 version.
+</p>
+
+<h2 id="toc_1.1">A Brief History of JavaScript</h2>
+<p>
+web design就是三个部分：html，css，javascript。
+</p>
+<ul>
+<li>
+html负责将web page的内容表述成为一个一个的element。
+
+<li>
+css复杂在web page上有型的放置这些element。
+
+<li>
+javascript负责这些element的交互。
+
+</ul>
+
+<p>
+world object model和document object model的解释太精辟了。
+</p>
+
+<p>
+DOM是API，这种解释也是很好的。
+</p>
+
+<h2 id="toc_1.2">JavaScript Syntax</h2>
+<ul>
+<li>
+statement，每行一个statement，同一行多个statement需要<code>;</code>分开，单行一个statement不需要<code>;</code>，但为了更好的编程风格，每行加上<code>;</code>是推荐的。
+
+<li>
+注释是<code>//</code>，<code>/**/</code>都是可以的，同c；<code>&lt;!-</code>和<code>//</code>是相同的。同c的两个注释符号足够，避免使用html风格的那个注释符号。
+
+<li>
+<code>var my_mood="happy", age=10;</code>
+
+<li>
+<code>var age="xxx"; age=3;</code>
+
+</ul>
+
+<p>
+这一章介绍的还是极好的，总的来说，javascript集合了php和c的语法，就是怎么舒服怎么用。
+</p>
+
+<p>
+值得注意的有两点：
+</p>
+<ol>
+<li>
+变量的作用域，使用<code>var</code>的变量才是local的，这点很不一样。
+
+<li>
+object中的两种已经存在的，一个是native object，比如date等，一个是host object，比如doc等，前者是javascript提供的，后者是浏览器提供的。
+
+</ol>
+
+<p>
+array也是一种已经存在的native object。
+</p>
+
+<h2 id="toc_1.3">The Document Object Model</h2>
+<p>
+javascript中的三种对象：
+</p>
+<ul>
+<li>
+user-defined的对象
+
+<li>
+native object，比如array，math，date等，js提供的。
+
+<li>
+host object，browser提供的。
+
+</ul>
+
+<p>
+在DOM中有3种node：element node，text node，attribute node；attribute node必定包含在element node中，纯文本就是text node。
+</p>
+
+<p>
+在DOM中每一个element node都是一个object，有两个函数可以获取：<code>getElementById</code>,<code>getElementsByTagName</code>。使用这两个函数的是<code>document</code>对象。
+</p>
+
+<p>
+<code>getAttribute</code>是element object使用的，不同于上面的两个函数。
+</p>
+
+<p>
+js中<code>if(xxx != null)</code>和<code>if(xxx)</code>是一样的。
+</p>
+
+<h2 id="toc_1.4">A JavaScript Image Gallery</h2>
+<p>
+很不错的一章
+</p>
+
+<h2 id="toc_1.5">Best Practices</h2>
+<p>
+最佳实践，就是编写js应该符合的最好的规则或者原则。
+</p>
+
+<p>
+BOM：bowser object model。
+</p>
+
+<p>
+没有js使能的bowser也可以正常访问的网站。
+</p>
+
+<p>
+很不错，说明了window.onload的问题。
+</p>
+
+<h2 id="toc_1.6">Image Gallery Revisited</h2>
+<p>
+@TODO
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Web_Design_with_JavaScript_and_the_Document_Object_Model";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Web_Design_with_JavaScript_and_the_Document_Object_Model";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

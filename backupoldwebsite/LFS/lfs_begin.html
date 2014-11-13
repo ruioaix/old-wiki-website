@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>lfs_begin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">lfs begin</h1>
+
+<h2 id="toc_1.1">Introduction</h2>
+<p>
+LFS系统的安装需要有一个host，也就是已经存在的linux发行版。
+</p>
+
+<p>
+貌似，安装过程是这个样子的。
+</p>
+<ul>
+<li>
+host的存在
+
+<li>
+使用host建立分区
+
+<li>
+建立toolchain，两次，first pass，second pass。
+
+<li>
+在second pass toolchain安装完毕后，LFS就可以不依赖host了，但kernel还是host的。
+
+<li>
+使用chroot建立新的LFS系统
+
+<li>
+为新LFS系统建立boot等。
+
+</ul>
+
+<h2 id="toc_1.2">Preparing for the Build</h2>
+<ul>
+<li>
+<a href="Preparing_a_New_Partition.html">Preparing_a_New_Partition</a>
+
+<li>
+<a href="Packages_and_Patches.html">Packages_and_Patches</a>
+
+<li>
+<a href="Final_Preparations.html">Final_Preparations</a>
+
+<li>
+<a href="Constructing_a_Temporary_System.html">Constructing_a_Temporary_System</a>
+
+<li>
+<a href="Building_the_LFS_System.html">Building_the_LFS_System</a>
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="lfs_begin";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="lfs_begin";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

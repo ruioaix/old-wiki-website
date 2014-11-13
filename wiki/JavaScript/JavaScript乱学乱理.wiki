@@ -1,0 +1,21 @@
+= JavaScript 乱学乱理 =
+- javascript的发展从网景时代就开始了，并且在那个时代就已经是浏览器必备组建了。
+- 虽然发展中出现了不同标准，但现在来说ECMAScript标准就是javascript实现的基础。
+- 一个完整的javascript实现由以下3个不同部分组成：
+    - 核心——ECMAScript
+    - 文档对象模型——DOM
+    - 浏览器对象模型——BOM
+- ECMAScript并不与任何具体浏览器相绑定。
+    - ECMAScript仅仅是一个描述，定义了脚本语言的所有属性、方法和对象。
+    - 其他语言可以实现ECMAScript来作为功能的基准，javascript就是这样。还有ActionScript，ScriptEase也都是以ECMAScript为功能基准。
+    - 每个浏览器都有它自己的ECMAScript接口的实现。
+- 所有的主流的web浏览器都遵守ECMA-262第三版。
+- DOM（文档对象模型）是HTML和XML的应用程序接口（API）。
+    - DOM将把整个页面规划成由节点层级构成的文档。
+    - HTML或XML页面的每个部分都是一个节点的衍生物。
+    - DOM不是javascript专有的，事实上许多其他语言都实现了它。
+    - 不过，web浏览器中的DOM已经用ECMAScript实现了，现在是javascript语言的一个很大组成部分。
+- BOM只是javascript的一个部分，没有任何相关的标准。
+    - BOM主要处理浏览器窗口和框架。
+    - 由于没有相关的BOM标准，每种浏览器都有自己的BOM实现。
+- [[ECMAScript]]

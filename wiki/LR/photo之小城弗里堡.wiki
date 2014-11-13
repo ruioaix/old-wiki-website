@@ -1,0 +1,7 @@
+= Fribourg photo =
+
+<div class="PhotoAndIntro">{{../files/LRphoto/fribourg001.jpg||class="photo"}} *弗里堡火车站* </div>
+<div class="PhotoAndIntro">{{../files/LRphoto/fribourg002.jpg||class="photo"}} *ST.NICHOLAS Festival* </div>
+<div class="PhotoAndIntro">{{../files/LRphoto/fribourg003.jpg||class="photo"}} *Fribourg某位的画展* </div>
+<div class="PhotoAndIntro">{{../files/LRphoto/fribourg004.jpg||class="photo"}} *热气球* </div>
+<div class="PhotoAndIntro">{{../files/LRphoto/fribourg005.jpg||class="photo"}} *清晨* </div>

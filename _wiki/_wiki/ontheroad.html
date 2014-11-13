@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>%title%</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="%root_path%css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="%root_path%css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" type="text/css" href="%root_path%css/bootstrap-image-gallery.min.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="%root_path%css/favicon.ico"/>
+    <script type="text/javascript" src="%root_path%js/jquery.min.js"></script>
+    <script type="text/javascript" src="%root_path%js/bootstrap.min.js"> </script> 
+    <script type="text/javascript" src="%root_path%js/load-image.js"> </script> 
+    <script type="text/javascript" src="%root_path%js/bootstrap-image-gallery.min.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+<div id="modal-gallery" class="modal modal-gallery hide fade" tabindex="-1">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body"><div class="modal-image"></div></div>
+    <div class="modal-footer">
+        <a class="btn btn-primary modal-next">Next <i class="icon-arrow-right icon-white"></i></a>
+        <a class="btn btn-info modal-prev"><i class="icon-arrow-left icon-white"></i> Previous</a>
+        <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000"><i class="icon-play icon-white"></i> Slideshow</a>
+        <a class="btn modal-download" target="_blank"><i class="icon-download"></i> Download</a>
+		</div>
+		</div>
+<div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
+    <a href="%root_path%jpg/fribourg001.jpg" title="Banana" data-gallery="gallery">
+		<img src="%root_path%/jpg/001.jpg">
+	</a>
+    <a href="%root_path%jpg/fribourg002.jpg" title="Apple" data-gallery="gallery">
+		<img src="%root_path%/jpg/002.jpg">
+	</a>
+    <a href="%root_path%jpg/fribourg005.jpg" title="Orange" data-gallery="gallery">
+		<img src="%root_path%/jpg/005.jpg">
+	</a>
+</div>
+    <div id="pic">
+        %content%
+    </div>
+</body>
+</html>

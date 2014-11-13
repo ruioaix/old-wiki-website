@@ -1,0 +1,93 @@
+%toc
+= 导航 =
+这是我个人的wiki，由vimwiki(2.0.1)和github搭建。
+
+== MyExperiences(wishToBeUseful) ==
+=== RHEL6(6.3) ===
+    - [[RHEL6/安装RHEL_6-3]]
+    - [[RHEL6/RHEL6软件仓库问题解决]]
+    - [[RHEL6/在RHEL6配置LAMP_fordevelopment]]
+    - [[RHEL6/在RHEL6上安装SKYPE]]
+    - [[RHEL6/Upstart_Process_Management_daemon]]
+    - [[RHEL6/RHEL6下面的一些小技巧]]
+    - [[RHEL6/Automating_System_Tasks]]
+    - [[RHEL6/RHCE_One]]
+    - [[RHEL6/RHCE_Two]]
+
+=== Geant4(4.9.2.p02) ===
+    - [[Geant4/Geant4.9.2.p02在Ubuntu10.04上的安装]]
+    - [[Geant4/Geant4学习资料]]
+ 
+=== Tips ===
+    - [[Tips/T430小黑搭配RHEL6时硬盘Load_unload声音不断的问题]]
+    - [[Tips/UEFI认识]]
+    - [[Tips/T430小黑UEFI+GPT安装Windows7+RHEL6过程简述]]
+    - [[Tips/Vim_tips]]
+    
+=== Apache(2.2.15) ===
+    - [[Apache/Apache_SSL_TLS]] 
+    - [[Apache/Apache_Review]] 
+    - [[Apache/Apache_Order_Allow_Deny]] 
+     
+=== Reprint(good enough) ===
+    - [[http://www.linuxde.net/2013/02/12264.html|程序员学习能力提升三要素]]
+    
+== Read&Study(justForMyself) ==
+
+=== Css ===
+	- [[Css/Positioning]]
+
+=== JQuery ===
+	- [[JQuery/Applied_jQuery_DevelopAndDesign]]
+
+=== Ajax ===
+	- [[Ajax/JavaScript_Ajax]]
+	- [[Ajax/jQuery_Ajax]]
+
+=== Cookies,Sessions ===
+	- [[CookiesSession/Cookies_Sessions_Presistence]]
+	- [[CookiesSession/Cookies_Sessions_Maintaining_State_InHTTP]]
+	- [[CookiesSession/PHP_Cookies_Sessions_SessionVariables]]
+
+=== Firebug ===
+	- [[Firebug/Firebug_1.5_Editing_DebuggingandMonitoring_web_pages]]
+	
+=== GNU Make(3.81) ===
+    - [[Make/Managing_Projects_with_GNU_Make]]
+
+=== Redis(2.6.10) ===
+    - [[Redis/How_To_Use_Redis]]
+    - [[Redis/Redis_Makefile]] 
+    - [[Redis/Redis_Cookbook]] 
+
+=== LFS(7.2) ===
+    - [[LFS/ReadDocument]] 
+    - [[LFS/lfs_begin]] 
+    - [[LFS/Prerequisites]] 
+
+=== APUE(v2) ===
+    - [[APUE2/APUE2v_chapter2]]
+    - [[APUE2/APUE2v_chapter3]]
+    - [[APUE2/APUE2v_chapter4]]
+    - [[APUE2/APUE2v_chapter5]]
+    - [[APUE2/APUE2v_chapter6]]
+    - [[APUE2/APUE2v_chapter7]]
+    - [[APUE2/APUE2v_chapter8]]
+   
+=== MySQL5(5.5) ===
+    - [[MySQL5/MySQL5的认识]]
+    - [[MySQL5/MySQL5_5_Reference_Manual]]
+
+=== Drupal7 ===
+    - [[Drupal7/Coding_standards]]
+    - [[Drupal7/Clean_urls_with_Apache_userdir]]
+    - [[Drupal7/Pro_drupal_development_2010]]
+   
+== LifeRecord(onTheRoad) ==
+    - [[LR/Photo]]
+ 
+== Obsoleted(useless) ==
+    - [[OBSO/2013.02.21.obsoleted]]
+    - [[OBSO/2012.12.31.obsoleted]]
+    - [[OBSO/wikibefore/before]]
+%title XRfind的个人wiki

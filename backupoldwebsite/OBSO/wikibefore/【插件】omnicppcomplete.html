@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>【插件】omnicppcomplete</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">omnicppcomplete</h1>
+
+<h2 id="toc_1.1">vim中的补全</h2>
+<ul>
+<li>
+vim中有多种补全，这里的omni只是其中一种，每一种的补全命令都类似：&lt;C-x&gt;&lt;C-n&gt;是当前文件中关键字补全（就是当前文件出现过的关键字），&lt;C-x&gt;&lt;C-l&gt;一行补全（跟一行复制差不多），&lt;C-x&gt;&lt;C-o&gt;就是omni completion补全的命令（包括omnicppcomplete），其他的可以使用<code>:h ins-completion</code>查看。
+
+</ul>
+
+<h2 id="toc_1.2">omnicppcomplete 下载</h2>
+<ul>
+<li>
+下载地址：[<a href="http://www.vim.org/scripts/script.php?script_id=1520">http://www.vim.org/scripts/script.php?script_id=1520</a> OmniCppComplete]
+
+</ul>
+
+<h2 id="toc_1.3">OmniCppComplete安装</h2>
+<p>
+安装就一条，之前将omnicppcomplete-0.41.zip放入.vim文件夹中，然后
+</p>
+<ul>
+<li>
+<code>unzip omnicppcomplete-0.41.zip</code>
+
+</ul>
+
+<h2 id="toc_1.4">omnicppcomplete 配置</h2>
+<ul>
+<li>
+对omnicppcomplete在vimrc中的设置如下：
+
+<ul>
+<li>
+set completeopt=menu,longest
+
+<ul>
+<li>
+这个menu就是在补全可能超过一个的时候，会出现一个下拉页面。
+
+<li>
+不带longest，那么&lt;C-x&gt;&lt;C-o&gt;之后，就直接将第一个选择带入，比如输入pr，补全，出现下拉页面，第一个是pread，那么pr就编程pread，我不太喜欢；加入longest后pr还是pr。
+
+</ul>
+<li>
+let OmniCpp_MayCompleteDot = 1 		<sup><small>autocomplete with .</small></sup>
+
+<li>
+let OmniCpp_MayCompleteArrow = 1 	<sup><small>autocomplete with -&gt;</small></sup>
+
+<li>
+let OmniCpp_MayCompleteScope = 1   	<sup><small>autocomplete with ::</small></sup>
+
+</ul>
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="【插件】omnicppcomplete";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="【插件】omnicppcomplete";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

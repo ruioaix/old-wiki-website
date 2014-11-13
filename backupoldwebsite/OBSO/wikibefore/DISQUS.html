@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>DISQUS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">DISQUS 网络评论平台</h1>
+
+<h2 id="toc_1.1">DISQUS和vimwiki的配合</h2>
+<ul>
+<li>
+vimwiki在1.2版本中使用的template不再是header.htm和footer.htm，取而代之，是一个单独的文件，我就命名为default.html，在template中可以使用的变量或者说替换词更合适些）有这三个：
+
+<ul>
+<li>
+<code>%title%</code> ：如果在wiki文件中定义了<code>%title somename</code>的话，这个变量的值就是<code>somename</code>；没有定义的话，值就是该文件的名字。
+
+<li>
+<code>%root_path%</code> ：根路径，用处就在css文件的指定。
+
+<li>
+<code>%content%</code> ：wiki文件的内容。
+
+</ul>
+<li>
+DISQUS对于很多系统是有现成的实现的，如drupal，wordpress等等，但对于vimwiki或者说单纯的html是没有的，有的是叫做 <strong>Universal Code</strong> 的一段javascript代码，如下：
+
+</ul>
+
+<pre>
+    somecode.....
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'example'; // required: replace example with your forum shortname
+     
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    somecode...
+</pre>
+
+<ul>
+<li>
+上面这段是官方给出的代码，就这段代码来说要修改的只有一点，就是<code>example</code>，这个要修改为你注册的那个shortname。
+
+<li>
+修改之后将上面这段内容放在html文件中（这里也就是default.html模板文件中）<code>&lt;/body&gt;</code>上面，并放入在官方网站上你所写域名对应的空间里，然后就可以在你的网站上看到评论系统了。
+
+<li>
+但是这里还不完善，DISQUS系统的每一条评论都对应着一个标志，我们希望的是每一条评论都对应着一篇文章（我是这么想的），那么这个标志和这个文章是一一对应的吗？
+
+<ul>
+<li>
+如上的代码，这个标志就是网址URL，URL和文章是一一对应的吗？虽然大多数情况下是，但有一个例外，首页的index.html，比如本wiki，当你访问<a href="http://ray-x.me">http://ray-x.me</a> 的时候，对应的是<a href="http://ray-x.me/index.html">http://ray-x.me/index.html</a> ，但是在这两个网址下的评论是两个系列，相互独立的。这很让人郁闷。
+
+</ul>
+<li>
+保险的方法是将标志和文章一一对应起来，方法是：
+
+<ul>
+<li>
+在上述的<code>var disqus_shortname = 'example';</code>语句下方加入<code>var disqus_identifier="%title%";</code>这条语句，这里的<code>disqus_identifier</code>就是评论对应着的标志，这个标志的值就是<code>%title%</code>，也就是文章的标题（对于wiki文件是文章的标题，对于浏览器就是html里的title），在这个情况下，上面的两个URL的评论只有一个系列。
+
+</ul>
+<li>
+到这里，系统已经适合我的使用了，因为我只有一个wiki位面，所有wiki文件都在一个文件夹下，不会出现同名文件的问题。
+
+<li>
+最后，注意，如果修改了现有文章的标题，那么之前的评论在修改的文章下就看不到了。
+
+</ul>
+<li>
+<strong>That's all.</strong> 
+
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="DISQUS";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="DISQUS";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Apache_Review</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Review Apache</h1>
+<p>
+回顾应该有个主线，沿着主线思考，应该想出自己困惑的地方，然后解决，使自己有个完整的正确的认识。
+</p>
+
+<p>
+主线就是Apache整个服务的流程。
+</p>
+
+<p>
+从client端开始，user、浏览器、DNS&amp;hosts，这三个是client端。
+</p>
+<ul>
+<li>
+user负责在浏览器地址栏写入hostname或者IP。
+
+<li>
+hostname的话，会从user PC的hosts中或者DNS中取得对应的IP，这种情况下，对于不是太老的所有浏览器来说，http request header里面包含的不只是IP，还包括了hostname。
+
+<li>
+IP的话，http request header里就只有IP。
+
+<li>
+浏览器发出request。
+
+</ul>
+
+<p>
+从server端来看，最前端（离client最近的部分）是网卡，或者说network interface。一个网卡，一个IP，server可以有很多网卡，很多个IP。
+</p>
+
+<p>
+client的request到达server的方式只是依靠于IP和port的。hostname对于request在网络上的传输是没有意义的。
+</p>
+
+<p>
+apache可以监听所有网卡的所有端口，也可以只监听某一网卡的某一端口，随意，通过<code>Listen</code>来实现。
+</p>
+
+<p>
+server端所有网卡总会源源不断的将收到各种各样的request，被监听的网卡的对应端口的request都将被汇总到apache那里。apache如果忙呢，就放在queue里，如果不忙呢就直接生个进程或线程处理了这个request。
+</p>
+
+<p>
+apache可以支持纯进程的、也支持多线程的处理request的方式，但不管方式，对于每个request的处理的流程都是一样的。
+</p>
+
+<p>
+我对这个流程的理解：
+</p>
+<ol>
+<li>
+从request剥离出IP，port，hostname（如果有的话），通过这三者，唯一的对应到apache的一个<code>DocumentRoot</code>下面去。
+
+<li>
+从这个<code>DocumentRoot</code>获得对应的数据返回给client。
+
+</ol>
+
+<p>
+就这两步，两步是两个对应关系：
+</p>
+<ul>
+<li>
+第一步——apache是如何使用IP，port，hostname(如果有的话)唯一的对应到某个<code>DocumentRoot</code>的？
+
+<li>
+第二步——apache是如何对应url（IP，port，hostname之后的部分）和filesystem上的数据的？
+
+</ul>
+
+<h2 id="toc_1.1">第一次对应</h2>
+<p>
+对应左方：IP，port，hostname（如果有的话）。
+对应右方：某个<code>DocumentRoot</code>。
+</p>
+
+<p>
+对应的方式有两种：main server和VirtualHost。前者可以有一个，或者没有；后者可以有N个。
+</p>
+
+<p>
+在所有VirtualHost外面的那个<code>DocumentRoot</code>就是main server；VirtualHost外面没有<code>DocumentRoot</code>的话，那么就没有main server。
+</p>
+
+<p>
+当<code>NameVirtualHost</code>后面接了确切的IP+port，比如： <em>1.2.3.4：5</em> ，那么所有从这个网卡的这个port进入的request都必须由这个<code>NameVirtualHost</code>对应的<code>VirtualHost</code>来处理。
+</p>
+
+<p>
+当没有<code>NameVirtualHost</code>或者，<code>NameVirtualHost</code>后面的IP或port含有通配符的话，那么apache来进行匹配选出最合适的，如果有多个同等合适的匹配项，那么选择在httpd.conf中位置最靠前的。
+</p>
+
+<p>
+main server是在VirtualHost之外的，而其他各种配置也都散落在VirtualHost之外，main server在httpd.conf的位置也不重要，VirtualHost总是会继承main server的配置的。
+</p>
+
+<p>
+hostname的价值体现，只发生在 <strong>name-based VirtualHost</strong> 中，对于IBVH和main server来说，IP和port是有意义的，hostname无意义。
+</p>
+
+<p>
+如果在NBVH中没有<code>ServerName</code>，那么这个NBVH就是符合对应的<code>NameVirtualHost</code>的default。
+</p>
+
+<p>
+任何使用 <code>_default_</code>的vhost的<code>ServerName</code>都使用main server的值。
+</p>
+
+<p>
+Apache有一个hash table，这个里面记录了VirtualHost的信息，即某个IP下有那些VirtualHost。通过IP下是否有VirtualHost来判断是IBVH还是NBVH。main server是不记录在这个hash table的。
+</p>
+<ul>
+<li>
+在<code>NameVirtualHost</code>中存在确切IP（非通配符）的话，那么这个IP被记录在hash table中，所有与此<code>NameVirtualHost</code>对应的VirtualHost也都记录在这个IP之下。
+
+<li>
+在IBVH中，IP也会记录在hash table中，但此IP下没有额外的记录。
+
+</ul>
+
+<p>
+client发过来的request总是有确切IP的。
+</p>
+
+<p>
+Apache对应过程：
+</p>
+<ol>
+<li>
+IBVH，最先判断。
+
+<li>
+NBVH，第二
+
+<li>
+request的header里面没有hostname，或者有hostname但匹配不上，那么第一个匹配的VirtualHost处理。
+
+<li>
+request的header里面的hostname匹配上了，交给第一个匹配的VirtualHost处理。
+
+<li>
+<code>_default_</code> VirtualHost，第三。
+
+<li>
+main server, 第四。
+
+</ol>
+
+<p>
+按照上面的4点，那么可以得出以下结论：
+</p>
+<ul>
+<li>
+如果request的IP匹配了IBVH或者NBVH，那么就轮不到<code>_default_</code> VirtualHost和main server来处理了。
+
+<li>
+main server处理的是连<code>_default_</code> VirtualHost都不能处理的，一般<code>_default_</code>使用的是<code>_default_:*</code>，这种情况下，main server什么也干不了。
+
+</ul>
+
+<p>
+基于以上理解，看下<a href="http://httpd.apache.org/docs/2.2/vhosts/examples.html">这些例子</a>，基本上没啥不能理解的了。
+</p>
+
+<h2 id="toc_1.2">第二次对应</h2>
+<p>
+第二次对应，是在第一次对应完成的前提下，进行的url和server端文件之间的对应关系。
+</p>
+
+<p>
+对应方式有几种：
+</p>
+<ol>
+<li>
+直接将url加在<code>DocumentRoot</code>后面。最常见，最多应用，最简单。
+
+<li>
+<code>Alias Url /path/to/somewhere</code>
+
+<li>
+UserDir module这个功能其实完全可以由Alias替代的。
+
+<li>
+<code>Redirect permanent /DIRURLunderDocumentRoot/ http://newwebsit.me/xx/</code>
+
+<li>
+<code>ProxyPass /DIRURLunderDocumentRoot/ http://origin.me/xx/</code>
+
+<li>
+Rewriting Engine，这是最强大的，上面4个其实就3种，这3种都可以使用rewrite来实现。
+
+<ul>
+<li>
+drupal的clean url就是使用rewrite实现的。
+
+</ul>
+<li>
+404，<code>ErrorDocument</code>。
+
+</ol>
+
+<p>
+所有的第二次对应的方式都在上面，也就这几种。最常用的第一种。
+</p>
+
+<h1 id="toc_2">OVER</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Apache_Review";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Apache_Review";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

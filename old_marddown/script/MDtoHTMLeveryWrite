@@ -1,0 +1,38 @@
+#!/bin/bash
+
+pathtofile=$1
+filename=$2
+pathtoMDdir=$3
+#echo $filename echo $pathtofile echo $pathtoMDdir
+
+cd $pathtoMDdir
+
+lastCharOfpathtoMDW=$(echo ${pathtoMDdir} | awk '{print substr($0, length($0)-1, 1)}') #echo $title
+if [ $lastCharOfpathtoMDW != '/' ];then 
+	pathtoMDdir="$pathtoMDdir/"
+fi
+
+pathtoHTMLdir="../$(echo ${pathtofile} | awk -F"$pathtoMDdir" '{print $2}' )" #echo $title echo "html: $pathtoHTMLdir"
+if [ ! -d $pathtoHTMLdir ];then
+	mkdir -p $pathtoHTMLdir;
+	echo "mkdir $pathtoHTMLdir"
+fi
+
+#%root_path%
+root_level=$(echo $pathtoHTMLdir | awk -F"/" '{print $2}') #echo $root_level
+root_path="";
+if [ "x$root_level" == "x"  ];then
+	root_path="./";
+else
+	root_path="../$root_path"
+fi #echo $root_path echo $root_path
+
+#%content
+content=$(perl ../script/Markdown.pl --html4tags $pathtofile/$filename) #echo $content
+
+#%title%
+title=$(echo $content | awk -F">" '{if(/<h1>/) print substr($2, 0, length($2)-4)}') #echo $title
+
+#produce html
+htmlfile=$pathtoHTMLdir/$filename
+cat ../script/default.template | awk -v "TITLE=$title" -v "ROOT_PATH=$root_path" -v "CONTENT=$content" -f ../script/script.awk >  ${htmlfile/.md/.html}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Upstart process management daemon</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link type="image/x-icon" rel="shortcut icon" href="../cssjs/css/favicon.ico"/>
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/css/custom.css" rel="stylesheet">
+	<script type="text/javascript" src="../cssjs/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../cssjs/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../cssjs/js/custom.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+
+</head>
+
+<body>
+	<div class="row-fluid">
+		<div id="left-side"  class="span4"> <div class="row-fluid">
+			<div class="navbar navbar-fixed-top visible-desktop">
+				<div class="navbar-inner">
+					<a class="brand" href="#"></a> 
+					<ul class="nav">
+						<li class="active"><a href="../index.html">home</a></li>
+					</ul>
+				</div>
+			</div><!--navbar --!>
+
+			<div id="myCarousel" class="carousel slide span12 img-polaroid  hidden-phone">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+					<li data-target="#myCarousel" data-slide-to="6"></li>
+					<li data-target="#myCarousel" data-slide-to="7"></li>
+					<li data-target="#myCarousel" data-slide-to="8"></li>
+					<li data-target="#myCarousel" data-slide-to="9"></li>
+					<li data-target="#myCarousel" data-slide-to="10"></li>
+					<li data-target="#myCarousel" data-slide-to="11"></li>
+					<li data-target="#myCarousel" data-slide-to="12"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item">		 <img src="../file/LRphoto/fribourg001.jpg"></div> 
+					<div class="item">       <img src="../file/LRphoto/fribourg002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg003.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg004.jpg"></div>
+					<div class="active item"><img src="../file/LRphoto/fribourg005.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/hangzhou001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/kunming001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/shanghai001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/someplace001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zhoushan001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zurich001.jpg"></div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+
+			<div class="span12" id="profile"><div class="row-fluid">
+				<div class="span4 offset1">
+					<a href="http://github.com/xrfind"><img src="http://s.gravatar.com/avatar/c273e7c0a671536c4d122bc39d67c3d2?s=512" id="avatar" class="img-polaroid"></a>
+				</div>
+				<div class="span6 offset1 hidden-phone">
+					<strong><i class="icon-user"></i> xrfind</strong><br />
+					<span><i class="icon-home"></i><a href="http://wiki.rrrui.com"> wiki.rrrui.com</a></span><br />
+					<span><i class="icon-envelope"></i> xrfind@gmail.com</span><br />
+					<span><i class="icon-heart"></i><abbr title="c, c++, Linux"> System Engineer</abbr></span><br />
+					<span><i class="icon-tasks"></i><abbr title="php, html/css/javascript, LAMP, Redis"> Web Developer</abbr></span><br />
+					<span><i class="icon-road"></i> Complex Network</span>
+				</div>
+			</div></div>
+
+			<div class="span12 hidden-phone" id="disqus">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				var disqus_title="Upstart process management daemon";
+				var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+				var disqus_identifier="Upstart process management daemon";
+
+				(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+
+
+
+		</div></div><!-- left-side --!>
+
+		<div id="right-side" class="span8" >
+			<div id="content">
+			<h1>Upstart process management daemon</h1>
+
+<p>linux内核启动的第一个process就是init。</p>
+
+<p>init负责启动所有其他的process。</p>
+
+<p>所有init管理的process都称为job，并且在/etc/init目录中定义。</p>
+
+<p>现在RHEL6中的init和RHEL5以及之前的init是完全不同的。两种架构。这里说的都是RHEL6的upstart init。</p>
+
+<h2>Init in Fedora and RHEL</h2>
+
+<ul>
+<li>SysVinit 
+<ul>
+<li>Fedora &lt; 9 </li>
+<li>RHEL &lt; 6 </li>
+</ul></li>
+<li>upstart 
+<ul>
+<li>Fedora 9-14 </li>
+<li>RHEL 6 </li>
+</ul></li>
+<li>systemd 
+<ul>
+<li>Fedora 15(Rawhide) </li>
+</ul></li>
+</ul>
+
+<h2>upstart startup</h2>
+
+<ul>
+<li>startup event 
+<ul>
+<li>/etc/init/rcS.conf 
+<ul>
+<li>/etc/rc.d/rc.sysinit </li>
+<li>exec telinit $runlevel </li>
+</ul></li>
+</ul></li>
+<li>runlevel event 
+<ul>
+<li>/etc/init/rc.conf -> /etc/rc.d/rc $runlevel </li>
+</ul></li>
+</ul>
+
+<h2>Event</h2>
+
+<ul>
+<li>init是基于event的。 </li>
+<li>也就是说，发生在系统中的改变会直接的导致job的启动和停止。 
+<ul>
+<li>job的启动和停止本身就是一种发生在系统中的改变，也就是event的一种。 </li>
+<li>了解更多的event，可以查看 <strong>initctl</strong> 。 </li>
+<li>主要的event是 <strong>startup</strong> ，在init读取自己的配置文件之后就会导致该event的产生。 </li>
+<li>其他有用的event有： <strong>starting</strong> ， <strong>started</strong> ， <strong>stopping</strong> ， <strong>stopped</strong> 。 </li>
+</ul></li>
+<li>init不再自己去追踪runlevel，而是有相应的工具去做，而且有一个 <strong>runlevel</strong> event。可以查看。 </li>
+<li>init应该具有pid=1，如果不是，那么可以查看 <strong>telinit</strong> 。 </li>
+</ul>
+
+<h2>/etc/init/</h2>
+
+<ul>
+<li>在机器启动时，init会读取它的配置文件，就在 <strong>/etc/init</strong> 目录中 。可以查看 <strong>inotify</strong> 。 </li>
+<li>在该目录下的文件，要么以 <strong>.conf</strong> 结尾，要么以 <strong>.override</strong> 结尾。 </li>
+<li>conf文件是主要的配置文件，override则具有更高的优先级，也就是像它的名字一样覆盖conf文件的对应配置。override不是必须的。 </li>
+<li>每个/etc/init/中的配置文件都定义了一个single service（lng-running process or daemon）或者task（short-lived process）， </li>
+<li>job是/etc/init目录下配置文件的运行实例。 </li>
+<li>/etc/init目录下的配置文件的名字就是去后缀，比如/etc/init/rc-sysinit.conf名字就是rc-sysyinit；/etc/init/net/apache.conf名字是net/apache。 </li>
+<li>system adminstrator可以使用start和stop来启动和停止job，但使用init可以自动的进行管理。 </li>
+<li>init自动管理是通过指定哪些event会引起job开始，哪些event会导致job停止。 </li>
+<li>最开始的时候，init会发出 <strong>startup</strong> event。 
+<ul>
+<li>这会启动执行兼容system v的job，并发出 <strong>runlevel</strong> event。 
+<ul>
+<li>随着之后的job启动和停止，init会发出 <strong>starting</strong> ， <strong>started</strong> ， <strong>stopping</strong> 和 <strong>stopped</strong> event。 </li>
+</ul></li>
+</ul></li>
+<li><code>start on EVENT</code></li>
+<li><code>stop on EVENT</code></li>
+<li><code>exec COMMAND [ARG]</code>和<code>script ... end script</code>是main process。在一个job中，这两个只能存在一个。 </li>
+<li>以下四个是辅助process。 
+<ul>
+<li><code>pre-start exec|script ...</code> 在job starting event完成之后，在main process开始之前，执行。 </li>
+<li><code>pre-stop exec|script...</code> job遭遇到了会导致stop的event，然后在main process被kill和stopping event发出之前，执行。 </li>
+<li><code>post-stop exec|script...</code> 在main process已经挂了之后，再job stopped event发出之前，执行。 </li>
+<li><code>post-start exec|script...</code> 在main process已经产生，但是started event还没有发出去的时候，执行。 </li>
+</ul></li>
+<li>这里四个辅助的process 
+<ul>
+<li>两个start，两个stop。 </li>
+<li>一个start在main process开始之前，一个start在main process开始之后。 </li>
+<li>一个stop在main process停止之前，一个stop在main process停止之后。 </li>
+<li>一个start在starting之后，一个start在started之前。 </li>
+<li>一个stop在stopping之前，一个stop在stopped之前。 </li>
+<li>一个job先要starting，然后就是started，然后stopping，然后stopped。 </li>
+<li>starting的时候，main process还没开始，这之间有一个空位，就是pre-start。字面可以这么解释：main process开始之前。 </li>
+<li>main process产生之后，started之前，这之间有一个空位，就是post-start。 </li>
+<li>main process结束之前，stopping之前，但已经有event导致马上就要发生stop了，这个时候，是pre-stop，在stop开始之前。 </li>
+<li>main process结束了，stopped之前，有一个空位，就是post-stop。字面就是main process结束之后。 </li>
+</ul></li>
+</ul>
+
+<h2>Ubuntu Startup Process</h2>
+
+<ul>
+<li>开机之后到initramfs搞完之前，不管。 </li>
+<li>initramfs启动/sbin/init，其pid=1。 </li>
+<li>upstart（就是上面的/sbin/init）完成自己本身的初始化。 </li>
+<li>upstart发出一个event <strong>startup</strong> 。 </li>
+<li>在/etc/init中有一些conf文件里面有 <code>start on startup</code>这样的语句。/sbin/init就会启动这些job。 
+<ul>
+<li>这些job会做mount各分区等等的行为。 </li>
+</ul></li>
+<li>这些被启动的job又会发出额外的event。比如virtual-filesystems event。 
+<ul>
+<li>virtual-filesystems event：启动udev job。 
+<ul>
+<li>udev job又发出event使得upstart-udev-brideg job启动。 </li>
+<li>…… </li>
+</ul></li>
+</ul></li>
+<li>当上面这些job完成之后，最后会发出filesystem event。 </li>
+<li>rc-sysinit job因此被启动。 </li>
+<li>rc-sysinit job调用telinit命令，并将runlevel作为参数发给它。 </li>
+<li>telinit命令发出runlevel event。 </li>
+<li>runlevel event又会导致其他的job启动，包含/etc/init/rc.conf，这个文件就是启动SystemV init system。 </li>
+</ul>
+
+<h2>RHEL6 upstart init启动流程分析</h2>
+
+<ul>
+<li>先在/etc/init中搜寻包含startup event的conf。 
+<ul>
+<li>rcS.conf </li>
+<li>readahead-collector.conf </li>
+<li>readahead.conf </li>
+<li>readahead-disable-services.conf </li>
+</ul></li>
+<li>rcS.conf 
+<ul>
+<li>main process是 <code>exec /etc/rc.d/rc.sysinit</code> 。这个和system v init script的时候是一样的。 </li>
+<li>pre-start是看情况是否启动rcS-emergency。 </li>
+<li>然后发出runlevel event。 </li>
+</ul></li>
+<li>runlevel event导致的最重要的job就是rc.conf。在这个里面执行了<code>/etc/rc.d/rc $RUNLEVEL</code>。对应system v init。 </li>
+<li>然后当rc 5 stopped的时候，prefdm.conf执行。就是启动x11，桌面环境。 </li>
+<li>其实吧，启动过程不一样，但做的事情是一样的。 </li>
+</ul>
+
+<h1>OVER</h1>
+
+<p>事实上，也许在RHEL7中upstart又会被systemd替代。</p>
+
+<p>还有一点要分清楚，job的控制和daemon的控制是两回事。job控制的是启动的流程。启动之后的system v init
+script还和以前的控制方法一样，比如chkconfig和/etc/init.d/xxx start等。</p>
+			</div><!-- content --!>
+		</div><!-- right-side span8 --!>
+	</div> <!--row-fluid --!>
+</body>
+</html>

@@ -1,0 +1,16 @@
+#!/bin/bash
+i=0
+j=0
+find .|grep -E [.]html$ |while read line
+do
+	echo $line |grep " " >/dev/null 
+	if [ $? != 0 ];then
+		python ~/.myscript/html2text.py "$line" > "$line.md"
+		i=`expr $i + 1`
+		echo "$i	$line"
+		rm $line
+	else 
+		j=`expr $j + 1`
+		echo "$j	======has spaces====== $line"
+	fi
+done

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chapter 4. Files and Directories</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link type="image/x-icon" rel="shortcut icon" href="../cssjs/css/favicon.ico"/>
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/css/custom.css" rel="stylesheet">
+	<script type="text/javascript" src="../cssjs/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../cssjs/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../cssjs/js/custom.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+
+</head>
+
+<body>
+	<div class="row-fluid">
+		<div id="left-side"  class="span4"> <div class="row-fluid">
+			<div class="navbar navbar-fixed-top visible-desktop">
+				<div class="navbar-inner">
+					<a class="brand" href="#"></a> 
+					<ul class="nav">
+						<li class="active"><a href="../index.html">home</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> index <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li class="dropdown-submenu"><a href="../">MyExperiences(wishToBeUseful)</a>
+									<ul class="dropdown-menu">
+									<li><a href="./index.html">RHEL6(6.3)</a>
+									<li><a href="#toc_1.1.2">Geant4(4.9.2.p02)</a>
+									<li><a href="#toc_1.1.3">Tips</a>
+									<li><a href="#toc_1.1.4">Apache(2.2.15)</a>
+									<li><a href="#toc_1.1.5">Reprint(good enough)</a>
+									</ul></li>
+								<li class="dropdown-submenu"><a href="#toc_1.2">Read&amp;Study(justForMyself)</a>
+									<ul class="dropdown-menu">
+									<li><a href="#toc_1.2.1">Css</a>
+									<li><a href="#toc_1.2.2">JQuery</a>
+									<li><a href="#toc_1.2.3">Ajax</a>
+									<li><a href="#toc_1.2.4">Cookies,Sessions</a>
+									<li><a href="#toc_1.2.5">Firebug</a>
+									<li><a href="#toc_1.2.6">GNU Make(3.81)</a>
+									<li><a href="#toc_1.2.7">Redis(2.6.10)</a>
+									<li><a href="#toc_1.2.8">LFS(7.2)</a>
+									<li><a href="#toc_1.2.9">APUE(v2)</a>
+									<li><a href="#toc_1.2.10">MySQL5(5.5)</a>
+									<li><a href="#toc_1.2.11">Drupal7</a>
+									</ul></li>
+								<li class="dropdown-submenu"><a href="#toc_1.3">LifeRecord(onTheRoad)</a></li>
+								<li class="dropdown-submenu"><a href="#toc_1.4">Obsoleted(useless)</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div><!--navbar --!>
+
+			<div id="myCarousel" class="carousel slide span12 img-polaroid  hidden-phone">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+					<li data-target="#myCarousel" data-slide-to="6"></li>
+					<li data-target="#myCarousel" data-slide-to="7"></li>
+					<li data-target="#myCarousel" data-slide-to="8"></li>
+					<li data-target="#myCarousel" data-slide-to="9"></li>
+					<li data-target="#myCarousel" data-slide-to="10"></li>
+					<li data-target="#myCarousel" data-slide-to="11"></li>
+					<li data-target="#myCarousel" data-slide-to="12"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item">		 <img src="../file/LRphoto/fribourg001.jpg"></div> 
+					<div class="item">       <img src="../file/LRphoto/fribourg002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg003.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg004.jpg"></div>
+					<div class="active item"><img src="../file/LRphoto/fribourg005.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/hangzhou001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/kunming001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/shanghai001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/someplace001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zhoushan001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zurich001.jpg"></div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+
+			<div class="span12" id="profile"><div class="row-fluid">
+				<div class="span4 offset1">
+					<a href="http://github.com/xrfind"><img src="http://s.gravatar.com/avatar/c273e7c0a671536c4d122bc39d67c3d2?s=512" id="avatar" class="img-polaroid"></a>
+				</div>
+				<div class="span6 offset1 hidden-phone">
+					<strong><i class="icon-user"></i> xrfind</strong><br />
+					<span><i class="icon-home"></i><a href="http://wiki.rrrui.com"> wiki.rrrui.com</a></span><br />
+					<span><i class="icon-envelope"></i> xrfind@gmail.com</span><br />
+					<span><i class="icon-heart"></i><abbr title="c, c++, Linux"> System Engineer</abbr></span><br />
+					<span><i class="icon-tasks"></i><abbr title="php, html/css/javascript, LAMP, Redis"> Web Developer</abbr></span><br />
+					<span><i class="icon-road"></i> Complex Network</span>
+				</div>
+			</div></div>
+
+			<div class="span12 hidden-phone" id="disqus">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				var disqus_title="Chapter 4. Files and Directories";
+				var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+				var disqus_identifier="Chapter 4. Files and Directories";
+
+				(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+
+
+
+		</div></div><!-- left-side --!>
+
+		<div id="right-side" class="span8" >
+			<div id="content">
+			<h1>Chapter 4. Files and Directories</h1>
+
+<p>25 sections.</p>
+
+<h2>Section 4.1. Introduction</h2>
+
+<p>nothing to say.</p>
+
+<h2>Section 4.2. stat, fstat, and lstat Functions</h2>
+
+<ul>
+<li><code>#include &lt;sys/stat.h&gt;</code></li>
+<li><code>int stat(const char *restrict pathname, struct stat *restrict buf);</code></li>
+<li><code>int fstat(int filedes, struct stat *buf);</code></li>
+<li><code>int lstat(const char *restrict pathname, struct stat *restrict buf);</code></li>
+<li>成功返回0，失败返回-1。 </li>
+</ul>
+
+<p>struct stat { mode<em>t st</em>mode; ino<em>t st</em>ino; dev<em>t st</em>dev; dev<em>t st</em>rdev;
+nlink<em>t st</em>nlink; uid<em>t st</em>uid; gid<em>t st</em>gid; off<em>t st</em>size; time<em>t st</em>atime;
+time<em>t st</em>mtime; time<em>t st</em>ctime; blksize<em>t st</em>blksize; blkcnt<em>t st</em>blocks; }</p>
+
+<p>这几个函数就是获取一个文件的属性，这些属性本来存储在i-node中吧。</p>
+
+<h2>Section 4.3. File Types</h2>
+
+<p>7种file type。不用一一说明了，判断一个文件的type的方法是使用<code>sys/stat.h</code>中的macro。参数是struct
+stat中的st_mode。</p>
+
+<p>还存在另外3种文件，分别是message queue，semaphore，shared memory
+object，这三种文件类型的判断也是使用<code>sys/stat.h</code>中的macro，但参数是struct stat指针。</p>
+
+<p>也就是说，UNIX中也就这10种文件了。是这样吗？</p>
+
+<h2>Section 4.4. Set-User-ID and Set-Group-ID</h2>
+
+<p>先分辨两个不同的事物：文件和进程，file and process。</p>
+
+<p>file有两个ID，st<em>uid和st</em>gid。这两个记录了文件的所有者ID和所在组ID。</p>
+
+<p>process有6个，甚至更多的ID。</p>
+
+<p>人，用户，也有2个，uid和gid。这两个ID就是process中的两个。real uid和real gid。</p>
+
+<p>由用户我执行的程序，首先一条，这个程序的process的两个ID确定了，real uid和real gid确定了。</p>
+
+<p>当我执行一个程序，也就是一个可执行的文件，的时候，这个程序的process的effective uid和effective
+gid一般就是我的uid和gid，也就是real uid和real gid。</p>
+
+<p>file里面有st_mode，前面说了是用于辨别file type的，但除此之外，其还包含了另外两个信息位，set-user-ID和set-group-
+ID。</p>
+
+<p>当我执行一个程序，也就是一个可执行的文件，的时候，如果这个文件的st<em>mode里面有设置上述的两个bit，那么，这个程序的process的effective
+uid是这个文件的st</em>uid，effective gid是这个文件st_gid。</p>
+
+<p>set-user-ID和set-group-ID的检测也是通过<code>sys/stat.h</code>里面的macro。</p>
+
+<p>这一节很容易混乱，关键是ID太多了，不过仔细看也是很好区分的，三个对象：人，文件，进程，各有ID。</p>
+
+<p>一个进程的effective uid/gid决定了这个进程的权限，但这个权限能做到什么程度还是挺让人困惑的，如果root建了一个程序，给了set-user-
+ID，程序的作用是<code>rm -rf /</code>，那么任何人都可以让系统崩溃。这很危险，而passwd是一个root建立的具有set-user-
+ID的程序，为什么不用担心其会造成安全问题呢？passwd不能加参数，这里有一个判断，passwd的real uid还是我的，所以从real
+uid判断下，如果不是root，那么就不允许带参数，恩，权限还是要和程序本身的功能联系在一起才有意义。</p>
+
+<h2>Section 4.5. File Access Permissions</h2>
+
+<p>这一节回答了我上一节最后的问题。</p>
+
+<p>file被操作，只能被process操作，在PC上没有其他东西了，就只有process。file只会被process操作。</p>
+
+<p>process上面说了有7个，甚至更多的ID。其中与file操作相关的是3个，effective uid/gid和supplementary
+gid。file本身的ID就两个st<em>uid和st</em>gid。</p>
+
+<ol>
+<li>如果process的effective uid是root，那么这个进程可以做任何事，无视file本身的9项，file access总是被允许的，也就是说，没有process不能进入的目录，没有process不能删除的文件，没有process不能读的文件，没有process不能写的文件…… </li>
+<li>如果process的effective uid不是root，那么瞬间process的能力打上大折扣： <strong>file的9项开始起作用</strong> 。对于st_uid等于effective uid的文件，process具有最大的自由度 <strong>file的9项的前三项起作用</strong> ，只要文件能读，那么process就可以读，如果文件能写，那么process就可以写，如果文件可以执行，那么process就可以执行，如果file不能读不能写不能执行，那么process什么都做不了，过程依赖于file的9项中的前面3项。 </li>
+<li>如果process的effective uid既不是root，也不等于file的st<em>uid，那么就要看effective gid或者supplementary gid是不是等于file的st</em>gid了，是的话，process对这个file具有第二等的自由度， <strong>file的9项的中三项起作用</strong> ，process根据file的9项中的中间三项来进行操作。 </li>
+<li>如果process的effective uid不是root，不是file的st<em>uid，且，process的effective gid或supplementary gid不是file的st</em>gid，那么，process根据 <strong>file的9项的最后三项</strong> 来进行操作。 </li>
+</ol>
+
+<p>非常清楚。但还是有没注意到的地方：</p>
+
+<ol>
+<li>上面的第一条，root，还是root，没有任何改变。 </li>
+<li>第二、三、四条中，有个要注意的地方，上面的file包含了目录，目录也是file的一种吗，而process处理的file必然是一个包含file名字的路径名，在路径名中可能有一层一层的目录，我相信，上面的后3条，会先对第一个目录进行一次，如果结果是能进入，然后再对第二层目录来一次，如果能进入，再向下，一直到最后的file，如果某一层目录进不去，那么也就是process对file没有权限，file access会被禁止掉。 </li>
+<li>当然，如果文件就在process的当前目录，默认的包含了本目录的进入权限，然后就真的是按照上面的步骤进行了。 </li>
+</ol>
+
+<p>目录本身的rwx权限理解还是小古怪的，r是获取目录文件列表，w是修改目录文件列表，x是进入目录。</p>
+
+<ul>
+<li>修改目录中文件的内容，只需要x。 </li>
+<li>修改目录中文件的名字，需要wx。（目录文件列表改变了） </li>
+<li>在目录中建立文件，需要wx。 </li>
+<li>在目录中删除文件，需要wx。 </li>
+</ul>
+
+<p>最后，上述的检测过程都是kernel进行的，process只要进行file access相关的活动，都会导致kernel进行这个检测。</p>
+
+<h2>Section 4.6. Ownership of New Files and Directories</h2>
+
+<p>只有process会建立一个file，首先file的st_uid肯定是process的effective uid。</p>
+
+<p>在RHEL6中，我使用<code>touch</code>的时候，<code>touch</code>并没有set-user-ID，所以，其effective uid是real
+uid，而其建立的文件的st<em>uid自然就是real uid，也就是我了。同时effective gid也是real
+uid，也就是file的st</em>gid，所以建立的file是我的。如果在设置了set-group-
+ID的目录里面使用<code>touch</code>，首先，st<em>uid还是不变的，但是，st</em>gid就是目录的st<em>gid了。
+在RHEL6中，建立目录和建立文件是一样的，使用<code>mkdir</code>的时候，st</em>uid是real uid。如果在设置了set-group-
+ID的目录里面使用<code>mkdir</code>，那么建立的目录的st<em>gid就是上一层目录的st</em>gid，同时为了保持传递性，<code>mkdir</code>必须使新建立的目录的set-
+group-ID位也被设置。</p>
+
+<h2>Section 4.7. access Function</h2>
+
+<ul>
+<li><code>#include &lt;unistd.h&gt;</code></li>
+<li><code>int access(const char *pathname, int mode);</code></li>
+<li>成功返回0，失败返回-1。 </li>
+</ul>
+
+<p>process的real uid/gid总是登录的那个人的，这里检测的就是那个人对pathname的访问权限。</p>
+
+<p>看不出这个函数的意义，安全性？</p>
+
+<p>突然想到，我的process如果想执行root的一个可执行文件，那么，除非我和root一个组且这个文件的中间3项有个x，或者，这个文件最后3项有个x。</p>
+
+<p>我草，RHEL6里面 <strong>/sbin/reboot</strong> 是rwxr-xr-x，刚才用非root的我的帐号试了下，真的重启了……（幸好，先 <strong>:w</strong>
+了一下）， <strong>/sbin/halt</strong> 也是可以使用的，但 <strong>/sbin/init</strong> 同样是rwxr-
+xr-x，但会提示只有root可以启动。看来，程序的内部逻辑和程序文件的9项是合作的。</p>
+
+<h2>Section 4.8. umask Function</h2>
+
+<p>process建立一个文件的时候，根据两个事物来确定一个文件的9项。建立文件只能使用<code>open</code>和<code>create</code>，两个都有mode参数，这就是其一，其二就
+是umask。如果process中没有使用<code>umask</code>，那么，process使用其父进程的umask。使用了<code>umask</code>函数，就使用新的。</p>
+
+<ul>
+<li><code>#include &lt;sys/stat.h&gt;</code></li>
+<li><code>mode_t umask(mode_t cmask);</code></li>
+<li>返回之前的mask值。无错误返回。 </li>
+</ul>
+
+<p>一个函数没有错误返回是啥意思？意味着什么？一个函数又为什么会出错？致命性的错误对任何函数都是不可抵御的，这里是断电之类的错误；除了这一类的错误，函数所有的出
+错返回意味着这个函数结束返回了，这个函数成功的执行完毕了，从 <strong>成功执行完毕</strong> 这一点上来说，函数是没有发生问题的，所谓的函数出错返回是指函数没有完成我
+们希望它完成的任务。和程序的复杂性有关，如果一个程序非常的复杂，那么，其不能完成指定任务的可能性就大的多，如果程序简单，那么不能完成指定任务的可能性就小很多
+，没有错误返回，只能说，这个函数的任务非常之简单，不可能完不成任务。</p>
+
+<p>同时，如果一个函数在执行过程中被中断了，比如信号什么的，这个时候，函数没有出错返回，也没有正确的返回，它只是被中断了，就像断电一样，那么这个时候会发生什么？
+后面会说的，再谈。</p>
+
+<h2>Section 4.9. chmod and fchmod Functions</h2>
+
+<ul>
+<li><code>#include &lt;sys/stat.h&gt;</code></li>
+<li><code>int chmod(const char *pathname, mode_t mode);</code></li>
+<li><code>int fchmod(int filedes, mode_t mode);</code></li>
+<li>成功返回0，失败返回-1。 </li>
+</ul>
+
+<p>process像使用这两个函数，那么process的effective uid要么是root，要么是file的st_uid。否则可以遇见返回-1。</p>
+
+<p>这两个函数影响的都是file的st_mode，这个里面包含的真是不少东西：file type，9项，set-user-ID，set-group-
+ID，sticky bit。蛮多的内容。</p>
+
+<p>这一节最后的两个部分让我有些混乱，讲述的是sticky bit和set-group-ID。使用touch命令和mkdir命令在RHEL6上进行测试的时候，得
+出的与最后部分不符合，或许是我对这段话理解不到位，或许是touch命令和mkdir命令与在process执行chmod是很不同的。再谈。</p>
+
+<h2>Section 4.10. Sticky Bit</h2>
+
+<p>这里有一个地方我有疑问，前面说过了要想删除一个目录的文件，必须至少拥有对目录wx的权限，而这里只说w的权限，这应该是省略，应该是wx的权限，同时，除了wx的
+权限要求外，还需要额外的条件才能删除加了sticky bit的目录里面的文件。</p>
+
+<p>这么理解我比较理解。</p>
+
+<h2>Section 4.11. chown, fchown, and lchown Functions</h2>
+
+<ul>
+<li><code>#include &lt;unistd.h&gt;</code></li>
+<li><code>int chown(const char *pathname, uid_t owner, gid_t group);</code></li>
+<li><code>int fchown(int filedes, uid_t owner, gid_t group);</code></li>
+<li><code>int lchown(const char *pathname, uid_t owner, gid_t group);</code></li>
+<li>成功返回0，失败返回-1。 </li>
+</ul>
+
+<p>这三个函数都是针对一个特定的文件，我想，如果这个文件被设置了<em>POSIX</em>CHOWN_RESTRICTED，那么，执行这3个函数的process要么是roo
+t，要么只能修改file的gid到可到的gid。这还是蛮严格的限制的。</p>
+
+<p>中间也说过，linux总是enforce the chown restriction的，我在RHEL6做了测试，可以看到对于<code>/</code>目录，limit
+<strong><em>PC</em>CHOWN_RESTRICTED=1</strong> ，所以，linux总是启用限制的，也就是上面的限制。</p>
+
+<h2>Section 4.12. File Size</h2>
+
+<p>在这一节之前，讲的竟然主要都是file的 <strong>st_mode</strong> ，可见，这个属性是多么NB。</p>
+
+<p>这一节说的是st_size，只适用三到四种文件，regular，dir，symbolic，和不确定的pipe。</p>
+
+<p>dir在RHEL6的ext4上，总是4096。</p>
+
+<p>st_size就是<code>ls -l</code>显示的，对于有hole和没hole的文件是不区别的，要区别这种文件，可以使用<code>ls
+-ls</code>看第一行。那是使用的block数目。</p>
+
+<p>有hole的文件，cp之后，block数目就变成和没hole一样了，mv的话，block数目是不变的，虽然如果使用vim看文件还是一个一个的占位符。</p>
+
+<h2>Section 4.13. File Truncation</h2>
+
+<ul>
+<li><code>#include &lt;unistd.h&gt;</code></li>
+<li><code>int truncate(const char *pathname, off_t length);</code></li>
+<li><code>int ftruncate(int filedes, off_t length);</code></li>
+<li>成功返回0，失败返回-1。 </li>
+</ul>
+
+<p>文件的size如果大于length，那么这是正常的截断；如果size比length还小，那么函数执行的结果就随implementation决定了，我想大部分
+应该是加大吧，有个hole罢了。</p>
+
+<h2>Section 4.14. File Systems</h2>
+
+<p>经常说一个partition分出来之后要给其一个filesystem，这张讲的也就是一种filesystem，具有代表意义的filesystem：UFS。</p>
+
+<p>需要记住的概念之一是 <strong>i-node</strong>
+，这是一个文件的核心，不，应该说这是一个文件的本体，我们在gnome里面看到的，在终端里面ls看到的，都是文件的外在表现形式，一个文件的灵魂在i-
+node上面，i-node记录了文件的绝大部分信息。其中一个重要的信息就是link_count，它记录了有多少个directory entry指向该i-
+node。这里是第二个需要记住的概念： <strong>directory entry</strong> 。</p>
+
+<p><strong>directory entry</strong> 是directory block的一个条目，directory block和data block都是block，是实际存储数据的地方，不，准确的说只有data block是真正存储数据的地方，而directory block就是存储重要概念directory entry的地方。 <strong>directory entry</strong> 的作用是对应inode和文件的外在表现filename。 </p>
+
+<p>有个问题：directory entry对应一个i-node和一个filename，这个i-node会指向一个block，可以是data
+block，也可以是directory block，如果是data，那么到此为止，如果directory呢？那么，这个i-
+node指向了一坨directory entry，如果本行出现的第一个directory entry是这一陀中的一个，这是可以的，每个目录中的 <strong>.</strong>
+就是这么一个情况。</p>
+
+<p>还有个问题：关于根目录的 <strong>/</strong> ，哦，知道了，根目录下的 <strong>.</strong> 会指向根目录。</p>
+
+<p>directory entry和i-node之间的关系叫做hard link；而symbokic link指的仅仅是data block里面存储了一个路径。</p>
+
+<p>本质区别啊。</p>
+
+<p>这一节里面说一个filesystem里面的directory entry不可能指向另一个filesystem里面的i-
+node，这是对的，在RHEL6上的确如此，会<code>ln: creating hard link xxxx: Invalid cross-device
+link</code>。不过symbolic link是可以跨越filesystem的。</p>
+
+<h2>Section 4.15. link, unlink, remove, and rename Functions</h2>
+
+<p>本节的link函数建立的link都是hard link。</p>
+
+<p>在RHEL6 ext4上，即不允许跨filesystem，也不允许建立目录的hard
+link，这可能是RHEL6的<code>ln</code>命令的原因，但也可能就是不允许。但在RHEL6上是存在目录的hard link的，这些在初始安装之后就存在了。</p>
+
+<p>对于symbolic link，unlink只会unlink sysbolic link本身。这也是很好理解的，因为unlink作用的是directroy
+entry和i-node，而不去关系data block。</p>
+
+<p>4个函数用时再找，重要的是上面的概念。</p>
+
+<h2>Section 4.16. Symbolic Links</h2>
+
+<p>这节需要注意的问题不是symbolic link，而是函数，有一坨函数会跟踪symbolic link，而另外的函数不会。</p>
+
+<p>跟踪symbolic link就是指函数操作的是link指向的file或dir，而不是symbolic link本身。</p>
+
+<h2>Section 4.17. symlink and readlink Functions</h2>
+
+<p>创造symbolic link和读取symbolic link文件内容的函数。</p>
+
+<h2>Section 4.18. File Times</h2>
+
+<p>与file相关的，i-node，directory entry，block。</p>
+
+<p>block的最后一次读取时间，block的最后一次修改时间。都会记录，一个是a，一个是m。 i-node最后一次修改的时间。这三个时间。</p>
+
+<p>这里对文件的修改导致父辈目录3个时间的修改还是很奇怪的。父辈目录包含的是一个一个的i-node&amp;directory entry对，这些是父辈目录的内容，当这
+些对中任意一条变化时，父辈目录的内容变化了，m时间肯定变化了，同时，如果这些对的变化会导致这些对大小的变化，那么父辈目录的内容大小就变化了，那么c时间就变化
+了。任意改变这些对所对应的block的行为都不会改变父辈目录的内容。</p>
+
+<p>重点在于是是inode&amp;directoryentry变了，还是inode&amp;directoryentry指向的block的内容变了。</p>
+
+<h2>Section 4.19. utime Function</h2>
+
+<p>修改m时间和a时间，c时间是没有办法的。</p>
+
+<h2>Section 4.20. mkdir and rmdir Functions</h2>
+
+<p>始终容易搞混linux的shell 命令和这本书里的这些函数，两者之间是完全不等价的，必然的命令会使用函数，但是命令中必然也有额外的处理。</p>
+
+<h2>Section 4.21. Reading Directories</h2>
+
+<p>又忘记了set-user-id和set-group-id的作用了。回忆下：</p>
+
+<ul>
+<li>首先的一个概念，上面的两个id是file所有的。 </li>
+<li>对于非directory的file，并且可执行的，上面两者的作用就是将由该文件产生的进程的effective uid/gid设置为文件的所有者uid/gid，而不是当前登录用户的id。 </li>
+<li>对于directory的file来说，设置set-user-id的作用看不出来，或许是无意义的。 </li>
+<li>对于directory的file来说，设置set-group-id的作用是根据实现而不同的，但本质上的作用就是：这种目录下建立的文件是否具有这个目录的group id。 </li>
+</ul>
+
+<p>以上，是对set-user-id和set-group-id的回忆。</p>
+
+<p>对于sticky bit，这也是file的一个bit。回忆下：</p>
+
+<ul>
+<li>这个bit只对目录有用。 </li>
+<li>目录有了这个bit，那么，你要删除目录下的东西，不仅需要拥有目录的wx，还需要拥有文件，或者拥有目录。的确sticky了一点。 </li>
+</ul>
+
+<p>这一章说的读目录很奇特，读的是directory entry，而不是说directory entry指向的文件。而directory
+entry的格式根据实现的不同而不同，所以才有了这节的函数。直接操作directory entry。</p>
+
+<ul>
+<li><code>#include &lt;dirent.h&gt;</code></li>
+<li><code>DIR *opendir(const char *pathname);</code></li>
+<li><code>struct dirent *readdir(DIR *dp);</code></li>
+<li><code>void rewinddir(DIR *dp);</code></li>
+<li><code>int closedir(DIR *dp);</code></li>
+<li><code>long telldir(DIR *dp);</code></li>
+</ul>
+
+<h2>Section 4.22. chdir, fchdir, and getcwd Functions</h2>
+
+<p>每个process都有一个current working directory，这是process的一个属性。</p>
+
+<p>虽然是属性，但也是目录，有目录的path，打开这个path可以得到一个文件的描述符，这些都是一样的。某个进程中调用这个函数，改变到了一个新的dir，然后，可
+以以这个dir为起点进行其他的操作，主要的还是搜索文件吧。</p>
+
+<p>这个dir是搜索相对路径的起点，理解这一点很重要。</p>
+
+<p>其实这个函数调用的必要不是那么多，但存在即合理，可能有必须用到这种函数才能解决的问题吧。</p>
+
+<h2>Section 4.23. Device Special Files</h2>
+
+<p>一个file的st_dev存储的是放置这个file的filesystem的device number。</p>
+
+<p>st<em>dev和st</em>rdev是平等的，两个都分别包含了major和minor。</p>
+
+<p>只有character和block file才有st_rdev值。</p>
+
+<h2>Section 4.24. Summary of File Access Permission Bits</h2>
+
+<p>这一节很好，非常好。</p>
+
+<ul>
+<li>set-user-id果然对dir没有意义。 </li>
+</ul>
+
+<h2>Section 4.25. Summary</h2>
+
+<p>stat中的数据都是从i-node获得的，不可以给stat.xxx直接复制，所有修改stat的行为都有一个单独额system call来完成
+，可以说本章存在的意义就是将修改文件i-
+node的函数描述出来。如果可以直接修改stat当然简单，但是内核和应用就直接关联了，interface的出现的原因就是隔离吗。</p>
+
+<p><strong>OVER</strong></p>
+			</div><!-- content --!>
+		</div><!-- right-side span8 --!>
+	</div> <!--row-fluid --!>
+</body>
+</html>

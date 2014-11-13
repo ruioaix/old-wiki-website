@@ -1,0 +1,33 @@
+body {
+	margin-top: 50px;
+}
+
+#left-side {
+}
+
+.carousel-indicators {
+	display: none;
+}
+
+.carousel-control {
+	display: none;
+}
+
+.carousel-inner img{
+}
+
+#avatar {
+}
+
+#profile {
+	margin-bottom: 40px;
+}
+
+#right-side {
+	padding-right:20px;
+}
+
+#right-side .hero-unit {
+	padding:10px 0 10px 40px;
+}
+

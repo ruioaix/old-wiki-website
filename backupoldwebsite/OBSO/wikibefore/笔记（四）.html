@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>笔记（四）</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">笔记（四）</h1>
+<ul>
+<li>
+设计良好的程序只有在强调速度时才在类实现的内部使用数组和指针。
+
+<li>
+现代cpp程序应尽量使用vector和迭代器类型，而避免使用低级的数组和指针。
+
+</ul>
+
+<h2 id="toc_1.1">数组</h2>
+<ul>
+<li>
+除了引用之外，数组元素的类型可以是任意符合类型，内置类型，类类型。（没有所有元素都是引用的数组）
+
+<li>
+非const变量以及要到运行阶段才知道其值的const变量都不能用于定义数组的维数。
+
+<li>
+数组的初始化中，就数类比较有意思。
+
+<li>
+数组和vector的区别可以说就在于是否可以动态添加。这是本质。
+
+<li>
+数组下标的正确类型是size_t。其在cstddef头文件中，这个文件是c标准库的头文件stddef.h的cpp版本。是与机器相关的unsigned类型。
+
+</ul>
+
+
+<h2 id="toc_1.2">指针</h2>
+<ul>
+<li>
+指针用于指向单个对象，而迭代器只能用于访问容器内的元素。
+
+<li>
+<code>string* p1,p2;</code>这里p1是指针，而p2是string类对象。
+
+<li>
+<code>string *p1;</code>也是可以的。
+
+<li>
+<code>int *p=0;</code>对的，编译器会知道。
+
+<li>
+<code>int *p;</code>对的，危险的。
+
+<li>
+NULL是在从C语言继承下来的，在cstdlib头文件中定义，其值为0.
+
+<li>
+所有的预处理器变量都不可以用来命名。包括NULL。
+
+<li>
+<code>void *</code>,可以保存任何类型对象的地址。
+
+<li>
+两个指针剑法操作的结果是标准库类型ptrdiff_t的数据。也是在cstddef中定义。是signed类型。
+
+<li>
+<code>int *p=&amp;ia[2];int k=p[-2];</code>是正确的。
+
+</ul>
+
+<h3 id="toc_1.2.1">指针和const限定符</h3>
+<ul>
+<li>
+cpp强制规定，指向const变量的指针也具有是const特性。
+
+<li>
+指针分两类，一类普通指针，一类const类型的指针。
+
+<li>
+普通的指针，不可以指向const类型的变量。包括viod*。const viod* 可以。普通指针对普通变量当然是可以的。
+
+<li>
+const类型的指针，可以指向const类型的变量，也可以指向普通类型的变量，但是有一个共同点，就是通过这类型的指针不允许更改对象的值。否则编译错误。
+
+<li>
+以上的const类型的指针是值：<code>const double *a</code>;
+
+<li>
+这种<code>double *const p</code>指针，p是不可修改的，必须初始化。任何const量都必须在定义的时候初始化。
+
+<li>
+总结来讲：
+
+<ul>
+<li>
+const int *p; p是指针，指向const int对象，但p也不是普通指针，不允许通过p来更改其对象的值。p可以指向const int对象，这是当然的，但同时p可以指向int类型的，这时候，p也不可以更改其对象的值。
+
+<li>
+int *const p; p是const指针，指向int对象，可以知道p不可以指向别的对象，所以必须在定义的时候初始化，可以通过p修改int对象的值。
+
+<li>
+const int *const p; p是const指针，指向const int对象，其定义时初始化，且不可以通过p修改其对象。
+
+</ul>
+</ul>
+	
+<h2 id="toc_1.3">c风格字符串</h2>
+<ul>
+<li>
+字符串字面值就是该类型的实例。其末尾是<code>’\0'</code>，或者说<code>null</code>。
+
+<li>
+c标准库提供的一系列处理c风格字符串的库函数，string.h。在cpp中重写为cstring。
+
+<li>
+用string类提供的操作符处理c风格字符串貌似不可以。
+
+<ul>
+<li>
+cp1，cp2是一个c风格字符串的首地址，也就是指针；如果使用string的符号cp1&lt;cp2则比较的是两个地址，而不是地址里面的字符串。
+
+</ul>
+<li>
+strlen（）不会计算null，是其余字符的长度。
+
+<li>
+尽量使用string来处理字符。
+
+</ul>
+
+<h3 id="toc_1.3.1">动态数组</h3>
+<ul>
+<li>
+每一个程序在执行时都占用一块可用的内存空间，用于动态分配的对象，称为程序的自由存储区，或堆。
+
+<li>
+c语言使用了一对标准库函数malloc和free在自由存储区中分配存储空间。
+
+<li>
+cpp中使用new和delete来实现相同的功能。
+
+<li>
+<code>int *p=new int[10];</code>new表达式返回数组的第一个元素的指针。
+
+<li>
+在自由存储区中创建的数组对象是没有名字的，程序员只能通过其地址间接的访问堆中的对象。
+
+<li>
+<code>int *p=new int[10]();</code>这里的圆括号就代表了10个元素都初始化为0，对于动态分配的数组，其元素只能初始化为元素类型的默认值，而不能像数组变量一样，用初始化列表为数组提供各不相同的初值。
+
+<li>
+之所以要动态的数组就是编译时并不知道数组的长度。
+
+<li>
+<code>delete [] p;</code>，p消耗的相应内存都返还给了自由存储区。中间的<code>[]</code>是必须的，这个代表删除的是自由存储区中的数组，不加的话，编译会通过，但是运行会出错。
+
+<li>
+如果没有上面的语句，那么，就是内存泄露，memory leak。
+
+</ul>
+
+<h2 id="toc_1.4">多维数组</h2>
+<ul>
+<li>
+<code>int *p[4]；</code>这是说，<code>p[4]</code>是一个数组，其元素是int指针。
+
+<li>
+<code>int (*p)[4];</code>这是说p是指针，<code>int[4]</code>类型的指针。
+
+</ul>
+
+<h2 id="toc_1.5">总结</h2>
+<ul>
+<li>
+现在cpp程序不应该使用c风格字符串。
+
+<li>
+数组和指针往往在低级程序中必须使用，但总体来说，应该避免使用，应该优先使用标准库抽象类。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="笔记（四）";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="笔记（四）";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

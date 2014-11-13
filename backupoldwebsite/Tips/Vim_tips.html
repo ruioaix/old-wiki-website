@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Vim_tips</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Tips for Vim</h1>
+<ul>
+<li>
+<code>set compatible?</code> 这一句不是设置，是确定，注意后面有一个问号，所有的vim设置都可以这么查看。
+
+<li>
+<code>%</code> 会在<code>（）[] {}</code>这三种括号的两个标号之间来回跳。
+
+<li>
+<code>33G</code>和<code>:33</code>都到33行。
+
+<li>
+<code>50% 60% 70%</code>分别到文件中间，60%处，70%处。
+
+<li>
+<code>c-e</code>和<code>c-y</code>，前者是上滚，一行一行的，后者是下滚，一行一行的。
+
+<li>
+<code>*</code>和<code>#</code>，当前光标在xxx，按*则光标移动到下一个xxx，#移动到上一个。
+
+<li>
+<code>/^xxx</code>查找一行开头的xxx，<code>/xxx$</code>查找一行结尾的xxx。
+
+<li>
+<code>/x.x</code>查找3个字符，左右x，中间是一个任意字符。
+
+<li>
+<code>''</code>两个单引号，回到使用G命令跳走的那个行。<code>c-o</code>跳到更老的地方。<code>c-i</code>跳到新的地方。
+
+<li>
+<code>ma</code>标记当前行为a，<code>'a</code>跳到标记为a的行。
+
+<li>
+<code>v</code>是行选择，<code>c-v</code>是列选择。
+
+<li>
+<code>~/.vim/plugin/</code>是全局插件的目录，所有这个目录下的插件，在打开vim时就启用。
+
+<li>
+<code>filetype plugin on</code>是使用针对不同文件类型的插件所必须的。
+
+<li>
+<code>~/.vim/ftplugin</code>是文件类型插件的放置目录。
+
+<li>
+<code>:options</code>显示选项，set xxx中的xxx。
+
+<li>
+<code>set list</code>将tab显示为^I，$显示在每行的结尾。
+
+<li>
+<code>z+.</code>将当前行移动到终端中间。
+
+<li>
+<code>z+ENTER</code>将当前行移动至终端顶部。
+
+</ul>
+
+<h2 id="toc_1.1">vim的比较好的学习资料</h2>
+<ul>
+<li>
+<a href="http://vimcdoc.sourceforge.net/doc/help.html">vim中文help</a>.
+
+<li>
+<a href="http://wiki.rrrui.com/files/Vim/byte_of_vim_v051.pdf">a byte of vim 语言风格很体贴</a>
+
+<li>
+<a href="http://wiki.rrrui.com/files/Vim/Packtpub.Hacking.Vim.7.2.Apr.2010.pdf">Hacking VIM 2010 版（希望合法）</a>
+
+<li>
+<a href="http://wiki.rrrui.com/files/Vim/vim-hacks.pdf">台湾某位的著作</a>
+
+<li>
+<a href="http://wiki.rrrui.com/files/Vim/vim_advanced_usage.pdf">国人翻译的HackingVIM，不全，但翻译的很好</a>
+
+<li>
+<a href="http://wiki.rrrui.com/files/Vim/programmers_print.png">vim的键位图片</a>
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Vim_tips";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Vim_tips";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

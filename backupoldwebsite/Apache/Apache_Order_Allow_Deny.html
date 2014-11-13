@@ -1,0 +1,331 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Apache_Order_Allow_Deny</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Order Directive</h1>
+<p>
+这个命令和<code>Deny</code>和<code>Allow</code>组成了一个访问限制。
+</p>
+
+<p>
+虽然只有三个，但我混乱了很久。
+</p>
+
+<p>
+这是基本的，核心的思想是：
+</p>
+<ul>
+<li>
+<code>Order</code>产生了一个域，之后的每一条作用于这个域，这个域要么是deny all，要么是allow all。
+
+<li>
+<code>Order</code>后面的<code>Allow</code>和<code>Deny</code>的执行顺序安装<code>Order</code>中指定的顺序执行。
+
+<li>
+不断修改域，直到结束。
+
+</ul>
+
+<h2 id="toc_1.1">看例子，例子才是王道。</h2>
+<ul>
+<li>
+Order deny,allow
+
+<li>
+allow from all
+
+<li>
+deny from 219.204.253.8
+
+<li>
+先是Order指定了allow all的域，然后先执行Deny，后执行Allow，结果：allow all。
+
+</ul>
+
+<ul>
+<li>
+Order deny,allow
+
+<li>
+deny from 219.204.253.8
+
+<li>
+allow from all
+
+<li>
+同上。先是Order指定了allow all的域，然后先执行Deny，后执行Allow，结果：allow all。
+
+</ul>
+
+<ul>
+<li>
+Order allow,deny
+
+<li>
+deny from 219.204.253.8
+
+<li>
+allow from all
+
+<li>
+先是Order指定了deny all的域，然后Allow将域改变为allow all，最后Deny对allow all进行修改，结果：allow all except 219.204.253.8
+
+</ul>
+
+<ul>
+<li>
+Order allow,deny
+
+<li>
+allow from all
+
+<li>
+deny from 219.204.253.8
+
+<li>
+同上。先是Order指定了deny all的域，然后Allow将域改变为allow all，最后Deny对allow all进行修改，结果：allow all except 219.204.253.8
+
+</ul>
+
+<ul>
+<li>
+Order allow,deny
+
+<li>
+deny from all
+
+<li>
+allow from 219.204.253.8
+
+<li>
+先是Order指定了deny all的域，然后Allow将域改变为deny all except 219.204.253.8，最后Deny又deny all，结果：deny all
+
+</ul>
+
+<ul>
+<li>
+Order allow,deny
+
+<li>
+allow from 219.204.253.8
+
+<li>
+deny from all
+
+<li>
+同上。先是Order指定了deny all的域，然后Allow将域改变为deny all except 219.204.253.8，最后Deny又deny all，结果：deny all
+
+</ul>
+
+<ul>
+<li>
+Order deny,allow
+
+<li>
+allow from 219.204.253.8
+
+<li>
+deny from all
+
+<li>
+先是Order指定了allow all的域，然后先执行Deny，将域改变为deny all，后执行Allow，结果：deny all except 219.204.253.8
+
+</ul>
+
+<ul>
+<li>
+Order deny,allow
+
+<li>
+deny from all
+
+<li>
+allow from 219.204.253.8
+
+<li>
+同上。先是Order指定了allow all的域，然后先执行Deny，将域改变为deny all，后执行Allow，结果：deny all except 219.204.253.8
+
+</ul>
+
+<ul>
+<li>
+Order deny,allow
+
+<li>
+直接一个allow all的域，结果：allow all
+
+</ul>
+ 
+<ul>
+<li>
+Order allow,deny
+
+<li>
+直接一个deny all的域，结果：deny all
+
+</ul>
+
+<ul>
+<li>
+Order allow,deny
+
+<li>
+deny from all
+
+<li>
+先是Order指定deny all的域，然后又deny all一次，结果：deny all。
+
+</ul>
+
+<ul>
+<li>
+Order deny,allow
+
+<li>
+deny from all
+
+<li>
+先是Order知道allow all的域，然后deny修改为deny all，结果：deny all。
+
+</ul>
+
+<ul>
+<li>
+對於上面兩種情況，如果将deny from all換成allow from all，則全部都可以通行！
+
+</ul>
+
+<ul>
+<li>
+Order deny,allow
+
+<li>
+deny from 219.204.253.8
+
+<li>
+先是Order指定allow all的域，然后deny修改，结果：allow all except 219.204.253.8
+
+</ul>
+
+<ul>
+<li>
+Order allow,deny
+
+<li>
+deny from 219.204.253.8
+
+<li>
+先是Order指定deny all的域，然后deny某一个（这是没有意义的），结果：deny all
+
+</ul>
+
+<ul>
+<li>
+Order allow,deny
+
+<li>
+allow from 219.204.253.8
+
+<li>
+先是Order指定deny all的域，然后allow某一个，结果：deny all except 219.204.253.8
+
+</ul>
+ 
+<ul>
+<li>
+Order deny,allow
+
+<li>
+allow from 219.204.253.8
+
+<li>
+先是Order指定allow all的域，然后再allow某一个（这是没有意义的），结果：allow all
+
+</ul>
+
+<ul>
+<li>
+order deny,allow
+
+<li>
+allow from 218.20.253.2
+
+<li>
+deny from 218.20
+
+<li>
+先使用Order指定allow all的域，然后deny 218.20.*.*，这时候是allow all except 218.20，最后Allow修改了，结果：代表拒絕218.20開頭的IP，但允許218.20.253.2通過；而其它非218.20開頭的IP也都允許通過。
+
+</ul>
+ 
+<ul>
+<li>
+order allow,deny
+
+<li>
+allow from 218.20.253.2
+
+<li>
+deny from 218.20
+
+<li>
+先使用Order指定deny all的域，然后Allow，这时候是deny all except 218.20.253.2，最后Deny 218.20.*.*（这个也同时deny掉了刚刚allow的218.20.253.2），所以结果是：deny all。
+
+</ul>
+
+<h1 id="toc_2">OVER</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Apache_Order_Allow_Deny";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Apache_Order_Allow_Deny";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

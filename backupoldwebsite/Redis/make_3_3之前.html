@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>make_3_3之前</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">make_3_3之前</h1>
+
+<p>
+rule的三个部分：target，prerequisites，recipe。前两者一行，第三者下一行。没有prerequisites，之后target的target叫做phony target。
+</p>
+
+<p>
+只输入<code>make</code>的时候，从第一条非<code>.</code>开头的target开始。其他rule的执行是因为他们的target出现在了第一条非<code>.</code>开头的target rule的prerequisites中。一层一层的先到最底部，然后检测看看是否需要执行最底部的那个rule，然后一层一层的检测着，返回着，直到本来的那个最高层的rule。
+</p>
+
+<p>
+<strong>variable</strong> 的例子
+</p>
+<ul>
+<li>
+<code>objects = main.o kdb.o display.o</code>
+
+<li>
+<code>edit : $(objects)</code>
+
+<li>
+<code>     cc -o edit $(objects)</code>
+
+</ul>
+
+<p>
+<strong>cc -c main.c -o main.o</strong> 的缩写。
+</p>
+<ul>
+<li>
+<code>main.o : main.c defs.h</code>
+
+<li>
+<code>     cc -c main.c</code>
+
+<li>
+上面两句可以写为下面一句。
+
+<li>
+<code>main.o : defs.h</code>
+
+</ul>
+
+<p>
+target和prerequisites的组合，本来，是1对多的，但在.h的时候，也是可以多对1的，这是makefile的另一种style。
+</p>
+
+<p>
+<strong>.PHONY : clean</strong> 的意思是说明clean并非一个文件，而是一个phony target。从而避免clean文件存在并且存在于某个prerequisites中所导致的问题。我的理解是这样的。
+</p>
+
+<p>
+makefile包含了五种：explicit rules，implicit rules，variable，directives，comments。
+</p>
+
+<p>
+make先找<code>GNUmakefile</code>，再找<code>makefile</code>，再找<code>Makefile</code>。使用<code>-f</code>或<code>--file</code>的时候，上面的3个不会被make寻找。
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="make_3_3之前";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="make_3_3之前";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

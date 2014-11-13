@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>LAMP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">LAMP</h1>
+
+<h2 id="toc_1.1">在不同版本linux下lamp的安装</h2>
+<ul>
+<li>
+ubuntu10.04
+
+<ol>
+<li>
+在新立得--编辑--使用任务分组标记软件包--LAMP--安装过程中需要设置mysql的密码--12345
+
+<li>
+测试 <a href="http://localhost">http://localhost</a> 看看是否ok。
+
+</ol>
+<li>
+ubuntu11.10
+
+<ol>
+<li>
+默认是没有安装synaptic的，可以在软件中心或者apt-get安装下。
+
+<li>
+安装的synaptic没有任务分组标记软件包，需要安装tasksel。
+
+</ol>
+</ul>
+
+
+<h2 id="toc_1.2">Ubuntu10.04下应用Apache2的userdir模块</h2>
+<ul>
+<li>
+userdir模块就是再/home/yourname/下建造一个用于web服务的目录。这样，在开发的时候，就可以不在/var/www/下了，就是可以不用每一次都sudo了，而且可以应用自己的vimrc等。
+
+<li>
+Ubuntu10.04下安装LAMP有一个简单的好用的方法：
+
+<ul>
+<li>
+打开新立得软件包管理器。
+
+<li>
+<strong>编辑</strong>
+
+<li>
+<strong>使用任务分组标记软件包</strong>
+
+<li>
+在其中选定LAMP，应用即可。
+
+<li>
+中间要设置下mysql的root密码。
+
+</ul>
+<li>
+Ubuntu10.04下的Apache2的配置文件夹在/etc/apache2/下。
+
+<ul>
+<li>
+其中<code>httpd.conf</code>是空文件，<code>apache2.conf</code>是全局的配置文件。
+
+<li>
+<code>conf.d</code>是附加的一些配置文件。
+
+<li>
+<code>mods-available</code>是可使用的模块，但不一定是 <strong>enabled</strong> 。
+
+<li>
+<code>mods-enabled</code>中都是上者的链接，都是 <strong>enabled</strong> 的。
+
+<li>
+上两者中的文件都是一对一对使用的，一个load文件是模块本身，一个是conf文件。
+
+</ul>
+<li>
+Userdir模块的使用
+
+<ul>
+<li>
+将<code>mods-available</code>中的文件链接到<code>mods-enabled</code>目录下。
+
+<ul>
+<li>
+<code>ln -s /etc/apache2/mods-available/userdir.load /etc/apache2/mods-enabled/userdir.load</code>
+
+<li>
+<code>ln -s /etc/apache2/mods-available/userdir.conf /etc/apache2/mods-enabled/userdir.conf</code>
+
+<li>
+其实就是<code>a2enmod userdir</code>，就可以了。
+
+</ul>
+<li>
+修改 <strong>userdir.conf</strong> 文件，将<code>AllowOverride Filexxxxxx</code>修改为<code>AllowOverride All</code>。
+
+<li>
+修改 <strong>php5.conf</strong> 文件，按照里面的提示将其中对userdir模块的部分注释掉。如果不这样，在public_html中是不会解析php文件的。
+
+</ul>
+<li>
+到这里就可以了，在/home/yourname/下建立public_html文件夹就可以了。
+
+</ul>
+
+<h2 id="toc_1.3">在Ubuntu10.04下设置phpmyadmin</h2>
+<ul>
+<li>
+首先去官网下载最新的phpmyadmin。
+
+<li>
+加压到usedir目录或者/var/www中。
+
+<li>
+<code>cp config.sample.inc.php config.inc.php</code>
+
+<li>
+修改<code>config.inc.php</code>中的cookie的auth，添加任意字符串即可。
+
+<li>
+完了（至少3.4版本是这样的）。
+
+</ul>
+
+<h2 id="toc_1.4">Ubuntu10.04下缺少php的一些扩展的时候</h2>
+<ul>
+<li>
+<code>sudo apt-get install php5-mcrypt</code>
+
+<li>
+<code>sudo apt-get install php5-gd</code>
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="LAMP";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="LAMP";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

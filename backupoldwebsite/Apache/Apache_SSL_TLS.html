@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Apache_SSL_TLS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Apache SSL/TLS Encryption</h1>
+<p>
+在RHEL6上使用yum安装的apache是没有ssl支持的，使用<code>yum install mod_ssl</code>可以得到ssl，并且通过在 <em>/etc/httpd/conf.d/</em> 下放置ssl.conf文件自动使能ssl，监听443端口。
+</p>
+
+<h2 id="toc_1.1">一些HTTPS中会用到的概念</h2>
+<ul>
+<li>
+cryptographic algorithms包括两种：对称加密，非对称加密。
+
+<li>
+Message Digests：散列算法，或者叫hash算法。可以提取任意文件的DNA。
+
+<li>
+Digital Signatures：就是使用非对称加密中的私钥对文件的DNA以及其他一些信息进行加密之后的输出。
+
+</ul>
+
+<h2 id="toc_1.2">certificate（证书）</h2>
+<p>
+certificate 的内容
+</p>
+<ul>
+<li>
+subject：public key和特定的身份特征。
+
+<li>
+issuer：CA的身份特征和CA的数字签名。
+
+<li>
+证书有效期
+
+</ul>
+
+<p>
+CA（certificate authorities）可以为其他的CA发行证书，所以在验证证书的时候，就可能需要验证这个证书的CA，以及这个证书的CA的CA，……直到遇到了一个浏览器内置的可信任的CA。
+</p>
+
+<p>
+如上，所说，总有一个最顶层的CA，这个CA没有人授予其自己的证书，所以，其是“self-signed”的，所有顶级的CA都是“self-signed”的，这些顶级的CA自己的证书中，subject和issuer是一样的。
+</p>
+
+<p>
+浏览器总是预先内置了一些可信任的顶级CA的“self-signed”的证书。
+</p>
+
+<h2 id="toc_1.3">思考一些网络验证的情况</h2>
+<p>
+情况：alice想让银行给她邮寄一些钱，alice是银行的贵宾，其帐号有个几亿的，所以alice只需要把自己家的地址告诉银行，银行就会立即邮寄钱过去。当然这是在银行确定是alice本人的情况下。
+</p>
+<ol>
+<li>
+alice不希望除了银行之外的人知道自己家的地址，所以，通过网络明文发送自己家的地址是不行的，有两个问题：
+
+<ul>
+<li>
+可能会被网络监听。
+
+<li>
+如何确认对方就是银行。
+
+</ul>
+<li>
+通过使用银行的public key，可以保证被监听也无所谓，对方不是银行也无所谓，只有真正的银行才能获取alice的信息。
+
+<li>
+但新的问题是，任何人都可以有银行的public key，所以，网络上的人可能拦下alice的信息，然后将自己的地址用public key加密，然后发给一行。
+
+<li>
+所以alice，将自己的地址加密之后，hash出了一个值，将两者都传给银行；如果网络上的xx只将alice的地址换成自己的，那么银行在hash验证的时候，就会出错，就不干了。
+
+<ul>
+<li>
+但是，这个网络上的xx，连同hash值一起换成自己的了，这样银行验证的时候也不会出错。
+
+</ul>
+<li>
+于是alice又做了一件事：将hash值用自己的private key加密，然后同加密后的地址，两个一起传出去。
+
+<ul>
+<li>
+网络上的xx傻了，即使拦截了两个，也没用，因为他没有alice的private key，他无法伪造使用alice private key加密的东西。
+
+</ul>
+<li>
+到这里为止，网络上的xx，没戏了。但是，alice还是没收到钱，为啥呢，因为她使用的所谓的银行的public key，其实不是银行的。是网络上的yy的。
+
+<li>
+网络上的yy是网络上的xx的祖师～，yy拦截了alice的家庭地址之后，直接用自己的private key破解了，虽然没办法做进一步的事情（因为alice的private key 加密的hash，他也没办法伪造），但是alice还是泄漏了家庭地址，并且没收到需要的钱。
+
+<li>
+为此，alice斥责了银行，“丫的，你们xxxxxx”，银行没办法，赶紧去CA那里办了个证书，这样，alice每次先从银行的网站上得到证书，然后CA会验证下证书，证书正确的话，就可以得到银行的public key了，正确的public key了。
+
+</ol>
+
+<h2 id="toc_1.4">Apache Certificates</h2>
+<p>
+有几个文件会存在于server端：
+</p>
+<ul>
+<li>
+RSA private key file，用来解密的；public key是放在certificate里面的。
+
+<li>
+Certificates Signing Request（CSR），server用来交给CA，从而CA可以sign这个，然后给server一个真正的certificate。
+
+<li>
+certificate，包含了server的public key，server的名字，CA的名字，CA的sign。client获得这个证书，CA解密这个证书，就得到了server的public key。
+
+</ul>
+
+<p>
+CA会用自己的private key加密其所签发的certificate。所以，CA验证的过程应该是，从certificate找到对应的CA，然后得到CA的public key，然后解密certificate，大概吧。
+</p>
+
+<p>
+在apache的httpd.conf中与ssl相关的directive：
+</p>
+<ul>
+<li>
+<code>SSLCertificateFile /path/to/this/server.crt</code>
+
+<li>
+<code>SSLCertificateKeyFile /path/to/this/server.key</code>
+
+</ul>
+
+<h2 id="toc_1.5">建立self-signed的certificate和private key</h2>
+<ul>
+<li>
+<code>openssl genrsa -out server.key 1024</code>
+
+<li>
+<code>openssl req -new -x509 -nodes -sha1 -days 365 -key server.key -out server.crt</code>
+
+</ul>
+
+<p>
+观察两者配对情况：
+</p>
+<ul>
+<li>
+<code>openssl x509 -noout -modulus -in server.crt | openssl md5</code>
+
+<li>
+<code>openssl rsa -noout -modulus -in server.key | openssl md5</code>
+
+</ul>
+
+<p>
+使用self-signed的Certificates来签发其他的证书。
+</p>
+<ul>
+<li>
+<code>openssl req -newkey rsa:1024 -nodes -out ourdomain.csr -keyout ourdomain.key</code>
+
+<li>
+<code>openssl ca -batch -config /path/to/myca.conf -notext -in req.csr -out /path/to/ourdomain.cer</code>
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Apache_SSL_TLS";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Apache_SSL_TLS";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

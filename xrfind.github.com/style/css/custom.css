@@ -1,0 +1,21 @@
+body {
+	padding-top: 70px;
+}
+
+h1 {
+	margin-top: -50px;
+	padding-top: 65px;
+}
+
+h2 {
+	margin-top: -50px;
+	padding-top: 65px;
+}
+
+p {
+	margin: 0 0 1px;
+}	
+
+#disqus {
+	margin-top: 50px;
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>笔记（三）</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">笔记（三）</h1>
+<ul>
+<li>
+没有使用using声明，而直接使用命名空间中的名字是错误的。
+
+<li>
+在头文件中必须使用完全限定的标准库名字，这是为了避免包含该头文件的文件不需要using声明。
+
+</ul>
+
+<h2 id="toc_1.1">string</h2>
+<ul>
+<li>
+string类型的输入操作符：
+
+<ul>
+<li>
+读取并忽略开头所有的空白字符。
+
+<li>
+读取字符直至再次遇到空白字符，读取终止。
+
+<li>
+空白字符包括：空格，换行符，制表符。
+
+</ul>
+<li>
+getline和输入操作符的区别是：
+
+<ul>
+<li>
+其不忽略开头的空白字符
+
+<ul>
+<li>
+如果是空格和制表符，那么原样保持。
+
+<li>
+如果是换行符，那么string对象就是空字符。（如果是输入操作符，那么就是忽略开头换行符）。
+
+</ul>
+<li>
+其不是遇到空格和制表符结束，其是遇到换行符结束。
+
+<li>
+getline和输入操作符都不会将最后一个换行符放入string对象中。
+
+<li>
+输入操纵符会保存最后遇到的空白字符在流中。（但下次的输入如果还是输入操作符，那么还是会废弃，因为空白字符变成了开头的空白字符。）
+
+<li>
+getline会废弃掉最后的一个换行符。
+
+</ul>
+</ul>
+
+<ul>
+<li>
+string::size_type,这个类型是string类型定义的，使用的时候需要加上作用域操作符。
+
+<ul>
+<li>
+这种类型，可以保证足够大能够储存任意string对象的长度，string对象的长度是可大可校的，包含一个文件的string对象，其长度很可能是几十万。那么int型搞不好就可以。
+
+<li>
+我们不知道string::size_type的确切类型，但可以直到他是unsigned型的。
+
+<li>
+保存一个string对象size的最安全的方法就是使用标准库类型string::size_type。
+
+</ul>
+<li>
+关系操作符比较两个string对象时采用了和字典排序相同的方法。
+
+<li>
+string s1="ksk"+"dfk"；这是错的。
+
+<li>
+string s2=s1+"df"+"dk";这是对的。
+
+<li>
+string a;a[0];a[a.size()-1].
+
+<li>
+string::size_type，a.size()返回的是前面的类型，可以将其给一个int，但推荐的还是size_type.
+
+<li>
+c标准库中name.h,在cpp标准库中是cname。cname中的名字是在std中的。name.h则不是。
+
+</ul>
+
+<h2 id="toc_1.2">vector</h2>
+<ul>
+<li>
+vector称为容器。
+
+<li>
+vector不是一种数据类型，而只是一个类模板。而vector&lt;int&gt;是数据类型。
+
+<li>
+string是类。
+
+<li>
+vector初始化有几种方式。
+
+<li>
+vector对象（以及其他标准库容器对象）的重要属性在于可以在运行时高效地添加元素。
+
+<ul>
+<li>
+虽然可以对给定元素个数的vector对象预先分配内存，但更有效的方式是先初始化一个空vector对象，然后再动态的添加元素。
+
+</ul>
+<li>
+vector&lt;int&gt;::size_type
+
+<li>
+cpp程序员习惯于使用<code>！=</code>而不是<code>&lt;</code>。
+
+<li>
+下标操作不添加元素。
+
+</ul>
+
+<h2 id="toc_1.3">迭代器简介</h2>
+<ul>
+<li>
+迭代器是一种检查容器内元素并遍历元素的数据类型。
+
+<li>
+所有的标准库容器都定义了相应的迭代器类型，而只有少数容器支持下标。
+
+<li>
+vector&lt;int&gt;::iterator iter;
+
+<li>
+vector&lt;int&gt;::iterator iter=ivec.begin();
+
+<li>
+这里的begin（）指ivec[0],end()指ivec最后一个元素的后一个元素，是哨兵。如果ivec为空，那么begin和end（）是一样的。
+
+<li>
+<code>*iter=0</code>
+
+<li>
+<code>++iter</code>
+
+<li>
+<code>vector&lt;int&gt;::const_iterator iter;</code>这里只可以读，不可以写。
+
+<li>
+<code>const vector&lt;int&gt;::iterator cit=nums.begin();</code>这和上面是不同的。
+
+<li>
+任何改变vector长度的操作都会使已存在的迭代器失效。
+
+<li>
+<code>iter+n</code>
+
+<li>
+<code>iter-n</code>
+
+<li>
+<code>iter1-iter2</code>
+
+<li>
+上面三者都定义了，n是size_type,3式是difference_type。
+
+<li>
+<code>iter1+iter2</code>，是错误的，未定义。
+
+</ul>
+
+<h2 id="toc_1.4">标准库bitset类型</h2>
+<ul>
+<li>
+bitset是类模板。
+
+<li>
+bitset&lt;32&gt; bitvec;
+
+<li>
+&lt;&lt;暂放&gt;&gt; 
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="笔记（三）";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="笔记（三）";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

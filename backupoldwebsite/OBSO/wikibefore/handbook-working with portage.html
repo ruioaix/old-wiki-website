@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>handbook-working with portage</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">working with portage</h1>
+<h2 id="toc_1.1">files and directories</h2>
+<ul>
+<li>
+portage有一个缺省的配置文件 <em>/etc/make.globals</em> ，这个里面都是一些变量，也就是说portage的配置是通过变量来实现的。
+
+<li>
+不要修改 <em>/etc/make.globals</em> ，对应的可以修改 <em>/etc/make.conf</em> 。
+
+<li>
+<em>/etc/make.profile</em> 是一个链接，连接到系统当前所对应的那个profile。可能是 <em>/usr/portage/profiles</em> 中的，也可以是你自己定义的。
+
+<li>
+一个profile包含了用于portage的一些特定的信息：比如一些用于当前profile的package，和一些不用于当前profile的package。
+
+<li>
+当我希望修改portage关于安装软件时候的一些行为的时候，建议修改 <em>/etc/portage/</em> 下的文件或者目录，当为目录的时候，目录下面的文件都会累积起来：
+
+<ul>
+<li>
+<em>package.mask</em> 这个目录或者文件的下面列举的都是你永远不希望安装的包。
+
+<li>
+<em>package.unmask</em> 这个目录或文件下面列举的是开发人员不建议你安装，但是你还是决定安装的包。
+
+<li>
+<em>package.accept-keywords</em> 和 <em>package.keywords</em> 可以使用任意一个，也可以两个都用，都用的时候前者覆盖后者，这个是对单一的包指定其使用什么版本，
+
+<ul>
+<li>
+比如一直使用unstable版本“~x86”或者没有不写“”
+
+<li>
+只使用稳定版本“-~x86”
+
+<li>
+额外的 <em>package.keywords</em> 支持一下keyword
+
+<ul>
+<li>
+“*”，当包对any架构稳定的时候可用。
+
+<li>
+“~*”，当包对any架构不稳定的时候可用。
+
+<li>
+“**”，包始终可用。  <sup><small>这里的可用，应该就是可以在emerge -s中找到吧</small></sup>
+
+</ul>
+</ul>
+<li>
+, <em>package.use</em> 这个是对单一包指定USE flag标志。
+
+</ul>
+<li>
+portage的files和directory的位置都是可以变化的，当然应该在 <em>/etc/make.conf</em> 中定义。
+
+</ul>
+
+<h2 id="toc_1.2">configuring through variables</h2>
+<ul>
+<li>
+在portage编译软件的时候，他会将一些信息传递给编译器和配置脚本。
+
+<ul>
+<li>
+CFLAGS &amp; CXXFLAGS 提供给C和C++编译器。
+
+<li>
+CHOST 提供给安装软件的配置脚本。
+
+<li>
+MAKEOPTS 给make命令。
+
+<li>
+USE
+
+<li>
+这些都在 <em>/etc/make.conf</em> 中定义。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.3">mixing software branches</h2>
+<ul>
+<li>
+ACCEPT_KEYWORDS变量指定使用那个branch，默认的是<code>x86</code>这个稳定的branch。
+
+<li>
+使用test版本的branch，使用<code>~x86</code>就可以了。
+
+<li>
+上面属于全局设置，可以使用 <em>package.accept-keywords</em> 这个文件对个别软件使用test branch。在这个文件里面添加是，要目录和文件都写，同时，如果保持更新就不写版本号，如果不更新，只使用特定的版本，就是用版本号和<code>=</code>等集中操作符。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="handbook-working with portage";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="handbook-working with portage";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

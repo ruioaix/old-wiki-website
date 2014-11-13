@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tips for Vim</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link type="image/x-icon" rel="shortcut icon" href="../cssjs/css/favicon.ico"/>
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/css/custom.css" rel="stylesheet">
+	<script type="text/javascript" src="../cssjs/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../cssjs/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../cssjs/js/custom.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+
+</head>
+
+<body>
+	<div class="row-fluid">
+		<div id="left-side"  class="span4"> <div class="row-fluid">
+			<div class="navbar navbar-fixed-top visible-desktop">
+				<div class="navbar-inner">
+					<a class="brand" href="#"></a> 
+					<ul class="nav">
+						<li class="active"><a href="../index.html">home</a></li>
+					</ul>
+				</div>
+			</div><!--navbar --!>
+
+			<div id="myCarousel" class="carousel slide span12 img-polaroid  hidden-phone">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+					<li data-target="#myCarousel" data-slide-to="6"></li>
+					<li data-target="#myCarousel" data-slide-to="7"></li>
+					<li data-target="#myCarousel" data-slide-to="8"></li>
+					<li data-target="#myCarousel" data-slide-to="9"></li>
+					<li data-target="#myCarousel" data-slide-to="10"></li>
+					<li data-target="#myCarousel" data-slide-to="11"></li>
+					<li data-target="#myCarousel" data-slide-to="12"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item">		 <img src="../file/LRphoto/fribourg001.jpg"></div> 
+					<div class="item">       <img src="../file/LRphoto/fribourg002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg003.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg004.jpg"></div>
+					<div class="active item"><img src="../file/LRphoto/fribourg005.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/hangzhou001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/kunming001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/shanghai001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/someplace001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zhoushan001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zurich001.jpg"></div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+
+			<div class="span12" id="profile"><div class="row-fluid">
+				<div class="span4 offset1">
+					<a href="http://github.com/xrfind"><img src="http://s.gravatar.com/avatar/c273e7c0a671536c4d122bc39d67c3d2?s=512" id="avatar" class="img-polaroid"></a>
+				</div>
+				<div class="span6 offset1 hidden-phone">
+					<strong><i class="icon-user"></i> xrfind</strong><br />
+					<span><i class="icon-home"></i><a href="http://wiki.rrrui.com"> wiki.rrrui.com</a></span><br />
+					<span><i class="icon-envelope"></i> xrfind@gmail.com</span><br />
+					<span><i class="icon-heart"></i><abbr title="c, c++, Linux"> System Engineer</abbr></span><br />
+					<span><i class="icon-tasks"></i><abbr title="php, html/css/javascript, LAMP, Redis"> Web Developer</abbr></span><br />
+					<span><i class="icon-road"></i> Complex Network</span>
+				</div>
+			</div></div>
+
+			<div class="span12 hidden-phone" id="disqus">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				var disqus_title="Tips for Vim";
+				var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+				var disqus_identifier="Tips for Vim";
+
+				(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+
+
+
+		</div></div><!-- left-side --!>
+
+		<div id="right-side" class="span8" >
+			<div id="content">
+			<h1>Tips for Vim</h1>
+
+<ul>
+<li><code>set compatible?</code> 这一句不是设置，是确定，注意后面有一个问号，所有的vim设置都可以这么查看。 </li>
+<li><code>%</code> 会在<code>（）[] {}</code>这三种括号的两个标号之间来回跳。 </li>
+<li><code>33G</code>和<code>:33</code>都到33行。 </li>
+<li><code>50% 60% 70%</code>分别到文件中间，60%处，70%处。 </li>
+<li><code>c-e</code>和<code>c-y</code>，前者是上滚，一行一行的，后者是下滚，一行一行的。 </li>
+<li><code>*</code>和<code>#</code>，当前光标在xxx，按*则光标移动到下一个xxx，#移动到上一个。 </li>
+<li><code>/^xxx</code>查找一行开头的xxx，<code>/xxx$</code>查找一行结尾的xxx。 </li>
+<li><code>/x.x</code>查找3个字符，左右x，中间是一个任意字符。 </li>
+<li><code>''</code>两个单引号，回到使用G命令跳走的那个行。<code>c-o</code>跳到更老的地方。<code>c-i</code>跳到新的地方。 </li>
+<li><code>ma</code>标记当前行为a，<code>'a</code>跳到标记为a的行。 </li>
+<li><code>v</code>是行选择，<code>c-v</code>是列选择。 </li>
+<li><code>~/.vim/plugin/</code>是全局插件的目录，所有这个目录下的插件，在打开vim时就启用。 </li>
+<li><code>filetype plugin on</code>是使用针对不同文件类型的插件所必须的。 </li>
+<li><code>~/.vim/ftplugin</code>是文件类型插件的放置目录。 </li>
+<li><code>:options</code>显示选项，set xxx中的xxx。 </li>
+<li><code>set list</code>将tab显示为^I，$显示在每行的结尾。 </li>
+<li><code>z+.</code>将当前行移动到终端中间。 </li>
+<li><code>z+ENTER</code>将当前行移动至终端顶部。 </li>
+</ul>
+
+<h2>vim的比较好的学习资料</h2>
+
+<ul>
+<li><a href="http://vimcdoc.sourceforge.net/doc/help.html">vim中文help</a>. </li>
+<li><a href="http://wiki.rrrui.com/files/Vim/byte_of_vim_v051.pdf">a byte of vim 语言风格很体贴</a></li>
+<li><a href="http://wiki.rrrui.com/files/Vim/Packtpub.Hacking.Vim.7.2.Apr.2010.pdf">Hacking VIM 2010 版（希望合法）</a></li>
+<li><a href="http://wiki.rrrui.com/files/Vim/vim-hacks.pdf">台湾某位的著作</a></li>
+<li><a href="http://wiki.rrrui.com/files/Vim/vim_advanced_usage.pdf">国人翻译的HackingVIM，不全，但翻译的很好</a></li>
+<li><a href="http://wiki.rrrui.com/files/Vim/programmers_print.png">vim的键位图片</a></li>
+</ul>
+			</div><!-- content --!>
+		</div><!-- right-side span8 --!>
+	</div> <!--row-fluid --!>
+</body>
+</html>

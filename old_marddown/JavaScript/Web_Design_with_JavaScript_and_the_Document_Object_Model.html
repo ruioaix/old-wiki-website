@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DOM Scripting: web Design with JavaScript and the Document Object Model</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link type="image/x-icon" rel="shortcut icon" href="../cssjs/css/favicon.ico"/>
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/css/custom.css" rel="stylesheet">
+	<script type="text/javascript" src="../cssjs/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../cssjs/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../cssjs/js/custom.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+
+</head>
+
+<body>
+	<div class="row-fluid">
+		<div id="left-side"  class="span4"> <div class="row-fluid">
+			<div class="navbar navbar-fixed-top visible-desktop">
+				<div class="navbar-inner">
+					<a class="brand" href="#"></a> 
+					<ul class="nav">
+						<li class="active"><a href="../index.html">home</a></li>
+					</ul>
+				</div>
+			</div><!--navbar --!>
+
+			<div id="myCarousel" class="carousel slide span12 img-polaroid  hidden-phone">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+					<li data-target="#myCarousel" data-slide-to="6"></li>
+					<li data-target="#myCarousel" data-slide-to="7"></li>
+					<li data-target="#myCarousel" data-slide-to="8"></li>
+					<li data-target="#myCarousel" data-slide-to="9"></li>
+					<li data-target="#myCarousel" data-slide-to="10"></li>
+					<li data-target="#myCarousel" data-slide-to="11"></li>
+					<li data-target="#myCarousel" data-slide-to="12"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item">		 <img src="../file/LRphoto/fribourg001.jpg"></div> 
+					<div class="item">       <img src="../file/LRphoto/fribourg002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg003.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg004.jpg"></div>
+					<div class="active item"><img src="../file/LRphoto/fribourg005.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/hangzhou001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/kunming001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/shanghai001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/someplace001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zhoushan001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zurich001.jpg"></div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+
+			<div class="span12" id="profile"><div class="row-fluid">
+				<div class="span4 offset1">
+					<a href="http://github.com/xrfind"><img src="http://s.gravatar.com/avatar/c273e7c0a671536c4d122bc39d67c3d2?s=512" id="avatar" class="img-polaroid"></a>
+				</div>
+				<div class="span6 offset1 hidden-phone">
+					<strong><i class="icon-user"></i> xrfind</strong><br />
+					<span><i class="icon-home"></i><a href="http://wiki.rrrui.com"> wiki.rrrui.com</a></span><br />
+					<span><i class="icon-envelope"></i> xrfind@gmail.com</span><br />
+					<span><i class="icon-heart"></i><abbr title="c, c++, Linux"> System Engineer</abbr></span><br />
+					<span><i class="icon-tasks"></i><abbr title="php, html/css/javascript, LAMP, Redis"> Web Developer</abbr></span><br />
+					<span><i class="icon-road"></i> Complex Network</span>
+				</div>
+			</div></div>
+
+			<div class="span12 hidden-phone" id="disqus">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				var disqus_title="DOM Scripting: web Design with JavaScript and the Document Object Model";
+				var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+				var disqus_identifier="DOM Scripting: web Design with JavaScript and the Document Object Model";
+
+				(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+
+
+
+		</div></div><!-- left-side --!>
+
+		<div id="right-side" class="span8" >
+			<div id="content">
+			<h1>DOM Scripting: web Design with JavaScript and the Document Object Model</h1>
+
+<p>this is a book, you can find pdf from internet. I am reading the this book
+with 2005 version.</p>
+
+<h2>A Brief History of JavaScript</h2>
+
+<p>web design就是三个部分：html，css，javascript。</p>
+
+<ul>
+<li>html负责将web page的内容表述成为一个一个的element。 </li>
+<li>css复杂在web page上有型的放置这些element。 </li>
+<li>javascript负责这些element的交互。 </li>
+</ul>
+
+<p>world object model和document object model的解释太精辟了。</p>
+
+<p>DOM是API，这种解释也是很好的。</p>
+
+<h2>JavaScript Syntax</h2>
+
+<ul>
+<li>statement，每行一个statement，同一行多个statement需要<code>;</code>分开，单行一个statement不需要<code>;</code>，但为了更好的编程风格，每行加上<code>;</code>是推荐的。 </li>
+<li>注释是<code>//</code>，<code>/**/</code>都是可以的，同c；<code>&lt;!-</code>和<code>//</code>是相同的。同c的两个注释符号足够，避免使用html风格的那个注释符号。 </li>
+<li><code>var my_mood="happy", age=10;</code></li>
+<li><code>var age="xxx"; age=3;</code></li>
+</ul>
+
+<p>这一章介绍的还是极好的，总的来说，javascript集合了php和c的语法，就是怎么舒服怎么用。</p>
+
+<p>值得注意的有两点：</p>
+
+<ol>
+<li>变量的作用域，使用<code>var</code>的变量才是local的，这点很不一样。 </li>
+<li>object中的两种已经存在的，一个是native object，比如date等，一个是host object，比如doc等，前者是javascript提供的，后者是浏览器提供的。 </li>
+</ol>
+
+<p>array也是一种已经存在的native object。</p>
+
+<h2>The Document Object Model</h2>
+
+<p>javascript中的三种对象：</p>
+
+<ul>
+<li>user-defined的对象 </li>
+<li>native object，比如array，math，date等，js提供的。 </li>
+<li>host object，browser提供的。 </li>
+</ul>
+
+<p>在DOM中有3种node：element node，text node，attribute node；attribute node必定包含在element
+node中，纯文本就是text node。</p>
+
+<p>在DOM中每一个element node都是一个object，有两个函数可以获取：<code>getElementById</code>,<code>getElementsByTagNam
+e</code>。使用这两个函数的是<code>document</code>对象。</p>
+
+<p><code>getAttribute</code>是element object使用的，不同于上面的两个函数。</p>
+
+<p>js中<code>if(xxx != null)</code>和<code>if(xxx)</code>是一样的。</p>
+
+<h2>A JavaScript Image Gallery</h2>
+
+<p>很不错的一章</p>
+
+<h2>Best Practices</h2>
+
+<p>最佳实践，就是编写js应该符合的最好的规则或者原则。</p>
+
+<p>BOM：bowser object model。</p>
+
+<p>没有js使能的bowser也可以正常访问的网站。</p>
+
+<p>很不错，说明了window.onload的问题。</p>
+
+<h2>Image Gallery Revisited</h2>
+
+<p>@TODO</p>
+			</div><!-- content --!>
+		</div><!-- right-side span8 --!>
+	</div> <!--row-fluid --!>
+</body>
+</html>

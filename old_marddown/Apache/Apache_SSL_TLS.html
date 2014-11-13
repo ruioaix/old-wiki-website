@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Apache SSL/TLS Encryption</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link type="image/x-icon" rel="shortcut icon" href="../cssjs/css/favicon.ico"/>
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/css/custom.css" rel="stylesheet">
+	<script type="text/javascript" src="../cssjs/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../cssjs/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../cssjs/js/custom.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+
+</head>
+
+<body>
+	<div class="row-fluid">
+		<div id="left-side"  class="span4"> <div class="row-fluid">
+			<div class="navbar navbar-fixed-top visible-desktop">
+				<div class="navbar-inner">
+					<a class="brand" href="#"></a> 
+					<ul class="nav">
+						<li class="active"><a href="../index.html">home</a></li>
+					</ul>
+				</div>
+			</div><!--navbar --!>
+
+			<div id="myCarousel" class="carousel slide span12 img-polaroid  hidden-phone">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+					<li data-target="#myCarousel" data-slide-to="6"></li>
+					<li data-target="#myCarousel" data-slide-to="7"></li>
+					<li data-target="#myCarousel" data-slide-to="8"></li>
+					<li data-target="#myCarousel" data-slide-to="9"></li>
+					<li data-target="#myCarousel" data-slide-to="10"></li>
+					<li data-target="#myCarousel" data-slide-to="11"></li>
+					<li data-target="#myCarousel" data-slide-to="12"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item">		 <img src="../file/LRphoto/fribourg001.jpg"></div> 
+					<div class="item">       <img src="../file/LRphoto/fribourg002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg003.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg004.jpg"></div>
+					<div class="active item"><img src="../file/LRphoto/fribourg005.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/hangzhou001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/kunming001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/shanghai001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/someplace001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zhoushan001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zurich001.jpg"></div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+
+			<div class="span12" id="profile"><div class="row-fluid">
+				<div class="span4 offset1">
+					<a href="http://github.com/xrfind"><img src="http://s.gravatar.com/avatar/c273e7c0a671536c4d122bc39d67c3d2?s=512" id="avatar" class="img-polaroid"></a>
+				</div>
+				<div class="span6 offset1 hidden-phone">
+					<strong><i class="icon-user"></i> xrfind</strong><br />
+					<span><i class="icon-home"></i><a href="http://wiki.rrrui.com"> wiki.rrrui.com</a></span><br />
+					<span><i class="icon-envelope"></i> xrfind@gmail.com</span><br />
+					<span><i class="icon-heart"></i><abbr title="c, c++, Linux"> System Engineer</abbr></span><br />
+					<span><i class="icon-tasks"></i><abbr title="php, html/css/javascript, LAMP, Redis"> Web Developer</abbr></span><br />
+					<span><i class="icon-road"></i> Complex Network</span>
+				</div>
+			</div></div>
+
+			<div class="span12 hidden-phone" id="disqus">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				var disqus_title="Apache SSL/TLS Encryption";
+				var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+				var disqus_identifier="Apache SSL/TLS Encryption";
+
+				(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+
+
+
+		</div></div><!-- left-side --!>
+
+		<div id="right-side" class="span8" >
+			<div id="content">
+			<h1>Apache SSL/TLS Encryption</h1>
+
+<p>在RHEL6上使用yum安装的apache是没有ssl支持的，使用<code>yum install mod_ssl</code>可以得到ssl，并且通过在
+<em>/etc/httpd/conf.d/</em> 下放置ssl.conf文件自动使能ssl，监听443端口。</p>
+
+<h2>一些HTTPS中会用到的概念</h2>
+
+<ul>
+<li>cryptographic algorithms包括两种：对称加密，非对称加密。 </li>
+<li>Message Digests：散列算法，或者叫hash算法。可以提取任意文件的DNA。 </li>
+<li>Digital Signatures：就是使用非对称加密中的私钥对文件的DNA以及其他一些信息进行加密之后的输出。 </li>
+</ul>
+
+<h2>certificate（证书）</h2>
+
+<p>certificate 的内容</p>
+
+<ul>
+<li>subject：public key和特定的身份特征。 </li>
+<li>issuer：CA的身份特征和CA的数字签名。 </li>
+<li>证书有效期 </li>
+</ul>
+
+<p>CA（certificate authorities）可以为其他的CA发行证书，所以在验证证书的时候，就可能需要验证这个证书的CA，以及这个证书的CA的CA
+，……直到遇到了一个浏览器内置的可信任的CA。</p>
+
+<p>如上，所说，总有一个最顶层的CA，这个CA没有人授予其自己的证书，所以，其是“self-signed”的，所有顶级的CA都是“self-
+signed”的，这些顶级的CA自己的证书中，subject和issuer是一样的。</p>
+
+<p>浏览器总是预先内置了一些可信任的顶级CA的“self-signed”的证书。</p>
+
+<h2>思考一些网络验证的情况</h2>
+
+<p>情况：alice想让银行给她邮寄一些钱，alice是银行的贵宾，其帐号有个几亿的，所以alice只需要把自己家的地址告诉银行，银行就会立即邮寄钱过去。当然这
+是在银行确定是alice本人的情况下。</p>
+
+<ol>
+<li>alice不希望除了银行之外的人知道自己家的地址，所以，通过网络明文发送自己家的地址是不行的，有两个问题： 
+<ul>
+<li>可能会被网络监听。 </li>
+<li>如何确认对方就是银行。 </li>
+</ul></li>
+<li>通过使用银行的public key，可以保证被监听也无所谓，对方不是银行也无所谓，只有真正的银行才能获取alice的信息。 </li>
+<li>但新的问题是，任何人都可以有银行的public key，所以，网络上的人可能拦下alice的信息，然后将自己的地址用public key加密，然后发给一行。 </li>
+<li>所以alice，将自己的地址加密之后，hash出了一个值，将两者都传给银行；如果网络上的xx只将alice的地址换成自己的，那么银行在hash验证的时候，就会出错，就不干了。 
+<ul>
+<li>但是，这个网络上的xx，连同hash值一起换成自己的了，这样银行验证的时候也不会出错。 </li>
+</ul></li>
+<li>于是alice又做了一件事：将hash值用自己的private key加密，然后同加密后的地址，两个一起传出去。 
+<ul>
+<li>网络上的xx傻了，即使拦截了两个，也没用，因为他没有alice的private key，他无法伪造使用alice private key加密的东西。 </li>
+</ul></li>
+<li>到这里为止，网络上的xx，没戏了。但是，alice还是没收到钱，为啥呢，因为她使用的所谓的银行的public key，其实不是银行的。是网络上的yy的。 </li>
+<li>网络上的yy是网络上的xx的祖师～，yy拦截了alice的家庭地址之后，直接用自己的private key破解了，虽然没办法做进一步的事情（因为alice的private key 加密的hash，他也没办法伪造），但是alice还是泄漏了家庭地址，并且没收到需要的钱。 </li>
+<li>为此，alice斥责了银行，“丫的，你们xxxxxx”，银行没办法，赶紧去CA那里办了个证书，这样，alice每次先从银行的网站上得到证书，然后CA会验证下证书，证书正确的话，就可以得到银行的public key了，正确的public key了。 </li>
+</ol>
+
+<h2>Apache Certificates</h2>
+
+<p>有几个文件会存在于server端：</p>
+
+<ul>
+<li>RSA private key file，用来解密的；public key是放在certificate里面的。 </li>
+<li>Certificates Signing Request（CSR），server用来交给CA，从而CA可以sign这个，然后给server一个真正的certificate。 </li>
+<li>certificate，包含了server的public key，server的名字，CA的名字，CA的sign。client获得这个证书，CA解密这个证书，就得到了server的public key。 </li>
+</ul>
+
+<p>CA会用自己的private
+key加密其所签发的certificate。所以，CA验证的过程应该是，从certificate找到对应的CA，然后得到CA的public
+key，然后解密certificate，大概吧。</p>
+
+<p>在apache的httpd.conf中与ssl相关的directive：</p>
+
+<ul>
+<li><code>SSLCertificateFile /path/to/this/server.crt</code></li>
+<li><code>SSLCertificateKeyFile /path/to/this/server.key</code></li>
+</ul>
+
+<h2>建立self-signed的certificate和private key</h2>
+
+<ul>
+<li><code>openssl genrsa -out server.key 1024</code></li>
+<li><code>openssl req -new -x509 -nodes -sha1 -days 365 -key server.key -out server.crt</code></li>
+</ul>
+
+<p>观察两者配对情况：</p>
+
+<ul>
+<li><code>openssl x509 -noout -modulus -in server.crt | openssl md5</code></li>
+<li><code>openssl rsa -noout -modulus -in server.key | openssl md5</code></li>
+</ul>
+
+<p>使用self-signed的Certificates来签发其他的证书。</p>
+
+<ul>
+<li><code>openssl req -newkey rsa:1024 -nodes -out ourdomain.csr -keyout ourdomain.key</code></li>
+<li><code>openssl ca -batch -config /path/to/myca.conf -notext -in req.csr -out /path/to/ourdomain.cer</code></li>
+</ul>
+			</div><!-- content --!>
+		</div><!-- right-side span8 --!>
+	</div> <!--row-fluid --!>
+</body>
+</html>

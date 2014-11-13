@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>fedora</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Fedora 发行版</h1>
+
+<h2 id="toc_1.1">RPM</h2>
+<ul>
+<li>
+<a href="My understanding of RPM.html">My understanding of RPM</a>
+
+</ul>
+  
+<h2 id="toc_1.2">Package Management</h2>
+<ul>
+<li>
+所有软件在fedora上都是RPM包。
+
+<li>
+这里介绍使用yum和packagekit来管理rpm包。
+
+</ul>
+
+<h3 id="toc_1.2.1">yum</h3>
+<ul>
+<li>
+yum 是fedora的PM。
+
+<li>
+它完成一般的PM的工作如RPM，同时，对于repo和package source有很强的灵活性。
+
+<ul>
+<li>
+查询包的信息。
+
+<li>
+从仓库下载包。
+
+<li>
+自动处理依赖关系，安装卸载包。
+
+<li>
+更新系统。
+
+<li>
+配置新的仓库，包源。
+
+<li>
+安装插件。
+
+</ul>
+<li>
+GPG貌似是一种额外的验证，使能了之后，yum不会安装没有这个标志的包。称这为安全PM。
+
+<li>
+yum比packagekit更全面和方便。
+
+<li>
+<code>yum check-update</code>
+
+<li>
+<code>sudo yum update gdb</code>
+
+<li>
+/var/log/yum.log是yum的日志文件。
+
+<li>
+<code>sudo yum update</code>
+
+<li>
+<code>sudo yum search term</code>,搜索包名字，描述，概要。
+
+<li>
+<code>yum list glob_expression</code>,就是使用*和？来代替，为了安全，在*和？之前加上反斜杠或者表达式加上双引号。
+
+<li>
+<code>yum list all</code>,安装的或者可用的。
+
+<li>
+<code>yum list installed</code>,在系统上安装的。
+
+<li>
+<code>yum list available</code>，所有使能的仓库中所有可用的包。
+
+<li>
+<code>yum groulist</code>,所有的包组。
+
+<li>
+<code>yum repolist</code>,所有的使能的仓库的信息。
+
+<li>
+<code>yum info xxxx</code>,可以使用表达式，显示一个包的一般信息。
+
+<li>
+<code>yumdb info xxxx</code>,显示包的硬件信息，如校验码等。
+
+<li>
+<code>sudo yum history</code>
+
+<li>
+<code>sudo yum install xxx</code>,安装包，以及他没有安装的依赖包。
+
+<li>
+<code>yum provides "xx"</code>
+
+<li>
+包组有一个名字和一个ID，安装一个包组，就是安装一系列的软件来完成一个工作目的。
+
+<li>
+<code>yum grouplist -v</code>
+
+<li>
+<code>yum groupinstall "完整的组名或者ID"</code>
+
+<li>
+<code>yum install @GROUPID</code>
+
+<li>
+<code>yum remove xxx</code>,删除xxx，并且，任何依赖于xxx的包也都将被删除，yum不能够只删除包，而不删除依赖于他的包（rpm可以做到，但是这将是系统处于不稳定的状态）。
+
+<li>
+<code>yum groupremove "完整的组名"</code>
+
+<li>
+<code>yum groupremove groupid</code>
+
+<li>
+<code>yum remove @groupid</code>
+
+<li>
+yum 在删除包组的时候，会删除组里所有的包，但通过设置，可以不删除那些被别的包依赖的包。
+
+<li>
+yum的配置文件是<code>/etc/yum.conf</code>。
+
+<ul>
+<li>
+<code>[main]</code>是yum全局的控制。
+
+<li>
+<code>[repository]</code>和<code>/etc/yum.repos.d/</code>下面的<code>.repo</code>文件是对仓库单独的配置。
+
+<li>
+yum变量的控制。
+
+<li>
+设置我自己的yum仓库。
+
+</ul>
+<li>
+<code>[main]</code>覆盖<code>[repository]</code>。
+
+<li>
+推荐仓库的配置放在<code>/etc/yum.repos.d/</code>下，而不是写在<code>[repository]</code>下面。
+
+<li>
+yum的插件不建议都关闭，这是不明智的。
+
+<li>
+<code>yum update --disableplugin=presto</code>
+
+<li>
+<code>yum install yum-plugin-security</code>
+
+</ul>
+
+<h3 id="toc_1.2.2">packagekit</h3>
+<ul>
+<li>
+packagekit 使用yum的仓库作为他的包源。
+
+<li>
+在packagekit中，是不可能添加或者删除yum的仓库的。
+
+</ul>
+
+<h2 id="toc_1.3"><a href="network interface.html">network interface</a></h2>
+<h2 id="toc_1.4"><a href="infrastructure services.html">infrastructure services</a></h2>
+<h2 id="toc_1.5"><a href="web server.html">web server</a></h2>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="fedora";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="fedora";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

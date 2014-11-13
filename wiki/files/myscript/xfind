@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ -z "$2" ]; then
+	echo "there is no string message or dir message."
+	exit 0
+fi
+find $1 |xargs grep -ri $2 -l |sort | uniq -c

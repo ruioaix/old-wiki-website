@@ -1,0 +1,15 @@
+%toc
+%title Vim's understand
+
+this is about my understand of vim, totally. every aspect.
+
+vim is software, it needs compilation. when you compile vim's source code, you have a lot of choices, compile options.
+
+what you choose deside what the vim looks like. almost every things can be change in vim.
+
+so when talking about vim's configuration, it always like this: "if you compile your vim with the option xxx, this feature will act like yyy. if not, the feature will act like zzz.".
+
+the point is that I just focus on the common features which most vim will have and most vim will be compiled with.
+
+- [[directories_in__vim]]
+- [[filetype_in_vim]]

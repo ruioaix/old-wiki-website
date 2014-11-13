@@ -1,0 +1,13 @@
+= 2012.12.31 obsoleted =
+
+== APUE(SecondEdition) ==
+    - [[APUE2/UNIX标准化及实现]]
+    - [[APUE2/文件I-O]]
+    - [[APUE2/文件和目录]]
+    - [[APUE2/标准I-O库]]
+    - [[APUE2/系统数据文件和信息]]
+    - [[APUE2/进程环境]]
+    - [[APUE2/进程控制]]
+    - [[APUE2/进程关系]]
+    - [[APUE2/信号]]
+ 

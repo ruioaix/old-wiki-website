@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Tips for this web</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Tips for this web</h1>
+<ul>
+<li>
+vimwiki 1.2 在执行<code>VimwikiAll2HTML</code>命令的时候，会删除没有对应<code>.wiki</code>文件的html文件，如果需要保留一些定制的特定html文件，比如<code>404.html</code>文件，就需要在<code>.vimrc</code>文件中做对应的设置：<code>let g:vimwiki_user_htmls = '404.html'</code>。
+
+<li>
+WikiSources中除了正常的<code>.wiki</code>文件外，还包含<code>template</code>目录，其中就一个文件<code>template.html</code>是wiki转html的模板。
+
+<li>
+xrfind.github.com中除了正常由<code>.wiki</code>文件生成的<code>.html</code>文件外，还有<code>404.html</code>文件和<code>css</code>、<code>files</code>两个目录。
+
+<ul>
+<li>
+<code>css</code>目录中是css文件和css文件中用到的图片，包括<code>404.html</code>。
+
+<li>
+<code>files</code>目录中是一些脚本和pdf。
+
+</ul>
+<li>
+在<code>.wiki</code>中添加文件链接，则那个文件的后缀应该是被支持的，否则将在文件的后缀后面加上<code>.php</code>，被支持的文件可以在<code>.vimrc</code>文件中设置：<code>let g:vimwiki_file_exts = 'pdf,txt,doc,rtf,xls,php,zip,rar,html,gz,myscript'</code>。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Tips for this web";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Tips for this web";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

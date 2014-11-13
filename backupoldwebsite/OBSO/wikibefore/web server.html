@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>web server</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">web server</h1>
+<ul>
+<li>
+这里指的就是apache2.2。
+
+<li>
+mod_userdir模块特别注意下，对我有用。
+
+<li>
+<code>yum install httpd</code>
+
+<li>
+<code>systemctl start httpd.service</code>
+
+<li>
+<code>systemctl enable httpd.service</code>
+
+<li>
+<code>systemctl stop httpd.service</code>
+
+<li>
+<code>systemctl disable httpd.service</code>
+
+<li>
+<code>systemctl restart httpd.service</code>
+
+<li>
+<code>systemctl reload httpd.service</code>这是重新加载配置文件。
+
+<li>
+<code>service httpd graceful</code>，在不影响访问的情况下，重新加载配置文件。
+
+<li>
+<code>systemctl status httpd.service</code>
+
+<li>
+<code>systemctl is-active httpd.service</code>
+
+</ul>
+
+<h2 id="toc_1.1">配置文件</h2>
+<ul>
+<li>
+<code>/etc/httpd/conf/httpd.conf</code>，这是主要的配置文件。
+
+<li>
+<code>/etc/httpd/conf.d/</code>，这目录下的文件被包含在了主要的配置文件中。
+
+<li>
+在主要配置文件中的directory
+
+<ul>
+<li>
+<code>&lt;Directory "/var/www/html"&gt;</code>
+
+<li>
+<code>...</code>
+
+<li>
+<code>&lt;/Directory&gt;</code>
+
+<li>
+对特定的目录使用特殊的规则。
+
+</ul>
+<li>
+ifmodule
+
+<ul>
+<li>
+<code>&lt;IfModule mod_disk_cache.c&gt;</code>
+
+<li>
+...
+
+<li>
+<code>&lt;/IfModule&gt;</code>
+
+<li>
+当一定的模块加载之后，使用规则。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.2">网络</h2>
+<ul>
+<li>
+浏览器输入的网址：&lt;协定&gt;://&lt;主机位址或主机名称&gt;[:port]/&lt;目录资源&gt;
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="web server";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="web server";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

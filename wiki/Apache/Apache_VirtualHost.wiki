@@ -1,0 +1,60 @@
+= Apache2 VirtualHost =
+
+== About NameVirtualHost Directive ==
+这个`NameVirtualHost`指令是和`<VirtualHost>`指令紧密联系的。两者的参数必须一样。
+- `NameVirtualHost 1.2.3.4:80`
+- `<VirtualHost 1.2.3.4:80>`
+- `...`
+- `</VirtualHost>`
+
+这个`NameVirtualHost`是在 *name-based virtual hosts* 时候必须的。从他的名字也可以看出，是用于name-based的。
+
+也就是说，在配置 *ip-based virtual hosts* 的时候，`NameVirtualHost`是不需要，也用不上的。
+
+但又有一点疑问：既然`NameVirtualHost`是用于name-based的，那么为什么其后的参数是ip+port呢？
+- 这是对 *name-based virtual hosts* 的一种限制，使用了`NameVirtualHost`的NBVH只能处理从该ip+port过来的指向NBVH中`ServerName`域名的请求。
+- 而且，使用`NameVirtualHost`之后，所有指向`NameVirtualHost`的IP的请求都只能被NBVH处理，而不会被default server处理。
+
+== IP-based Virtual Host Support ==
+理解这节，首先在脑海中形成一个画面：一条PC，有20个PCI/PCI-E插槽，每个上面连了一个网卡，每个网卡都接入了Internet，这台PC有20个独立静态IP。
+
+在Apache中，基于一个IP但不同port的的VirtualHost也是IBVH。
+
+`<VirtualHost>`中的参数推荐使用IP，而不是hostname，这说明这个里面是可以放hostname的。
+- 参数中确定IP和Port的VirtualHost，比参数中是wildcard类型的VirtualHost有更高的优先级，也就是说确定IP+Port和wildcard都符合的情况下，确定IP+Port的VirtualHost会处理请求。
+- 任何VirtualHost都比server base configuration有更高的优先级。
+
+*很好奇：如何区分一个VirtualHost是IP-based还是Name-based？*
+
+== Name-based Virtual Host Support ==
+NBVH是建立在client将hostname作为HTTP header的一部份发送到server这一基础之上。
+
+可以肯定，现在主流的浏览器应该都是这么做的。
+
+区分一个VirtualHost是IP-based还是Name-based的方法就是看有没有使用`NameVirtualHost`？
+
+`NameVirtualHost`指定的IP和Port，都必须是server上的可以的network interface。
+
+NBVH的几个基本组成和规则，任何NBVH都必须如此才能称为NBVH。
+- `NameVirtualHost`，有这个，才是NBVH。
+- 必定有一个`<VirtualHost>`和上面的目录对应，也就是参数一致。
+- 在`<VirtualHost>`之下，至少有一个`ServerName`和`DocumentRoot`。
+- 这里的`ServerName`就是用来决定那个NBVH来服务。
+
+这里有点需要思考的东西：
+一个`NameVirtualHost *`，可以对应N个`<VirtualHost *>`，然后通过各个VirtualHost下面的`ServerName`来判断那个NBVH来服务。
+对于一个`NameVirtualHost 1.2.3.4:80`，那么也可以有N个`<VirtualHost 1.2.3.4:90>`吗？理论上可以有的，因为`ServerName`不同，所以可以分辨。
+
+IBVH和NBVH可以共存，没啥问题。
+
+VirtualHost里面的directive会覆盖其之外的主设置。
+
+当request到达的时候，apache先是检查IP，寻找对应的`NameVirtualHost`，然后匹配hostname，然后没有找到的话，就使用第一个VirtualHost。（貌似即使不符合第一个的IP，也是第一个处理）。
+
+IBVH更像是本来VirtualHost的样子，没有任何特殊的。
+
+`NameVirtualHost`和`<VirtualHost>`的参数只应该是ip和port的组合，而不应该是hostname，应该如此的。
+
+*NBVH的本质是在IBVH确定之后进行的再深入区分，其实现是建立在IBVH的基础之上，没有IBVH就没有NBVH。*
+== An In-Depth Discussion of Virtual Host Matching ==
+

@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>信号</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">信号</h1>
+
+<p>
+信号是软件中断，必须要学会的。
+</p>
+
+<h2 id="toc_1.1">信号概念</h2>
+<p>
+linux支持31种不同的信号。linux支持应用程序额外定义的信号。
+</p>
+
+<p>
+这些信号都被定义为正整数。
+</p>
+
+<p>
+很多条件可以产生信号：
+</p>
+<ol>
+<li>
+在终端中ctrl+c，产生中断信号（SIGINT），这是停止一个已失去控制的程序的方法。
+
+<li>
+硬件异常产生信号；这些异常通常由硬件检测到，并通知内核，内核再发送SIGSEGV等信号给产生该异常的进程。
+
+<li>
+进程调用kill函数可将信号发送给另一个进程或进程组。
+
+<ul>
+<li>
+接受信号和发送信号的进程所有者必须相同
+
+<li>
+或者，发送信号进程的所有者必须是超级用户
+
+</ul>
+<li>
+用户使用kill命令，这个命令调用kill函数。
+
+<li>
+某些软件条件发生；如SIGALRM（进程所设置的闹钟时钟超时时产生）。
+
+</ol>
+
+<p>
+<strong>进程不能简单地测试一个变量来判断是否出现了一个信号，而是必须告诉内核“在此信号出现时，请执行下列操作”</strong>
+</p>
+<ul>
+<li>
+这是进程处理信号的机制
+
+<li>
+进程对信号要时刻准备着
+
+<li>
+进程对信号的处理在某种程度上是不可控的，进程必须一开始就设置好什么样的信号什么样的处理，信号来了的时候，就那么处理；而不是说，信号来了，进程再想该如何处理该信号。
+
+</ul>
+
+<p>
+内核在信号出现时的处理：
+</p>
+<ol>
+<li>
+忽略信号。
+
+<ul>
+<li>
+但有两种信号不能被忽略，SIGKILL，SIGSTOP。这使得root总能停止他需要停止的进程。
+
+</ul>
+<li>
+捕捉信号。
+
+<ul>
+<li>
+就是上面说的事先定义好函数，然后信号来了的时候，按部就班的执行。
+
+<li>
+但SIGKILL，SIGSTOP不能被捕捉。
+
+</ul>
+<li>
+执行系统的默认操作。
+
+<ul>
+<li>
+如此看来，上面的两个特殊信号就只有执行系统的默认操作了。
+
+</ul>
+</ol>
+
+<p>
+core文件在linux里是如何的？
+</p>
+<ul>
+<li>
+使用<code>ulimit -a</code>看到core size是0，貌似linux默认没有开启core文件。
+
+</ul>
+
+<p>
+可以记得的信号有：
+</p>
+<ul>
+<li>
+SIGABRT，SIGALRM，SIGCHLD，SIGINT，SIGKILL，SIGSTOP，SIGTERM，SIGUSR1，SIGUSR2。
+
+</ul>
+
+<h2 id="toc_1.2">signal函数</h2>
+<p>
+函数
+</p>
+<ul>
+<li>
+<code>#include &lt;signal.h&gt;</code>
+
+<li>
+<code>void (*signal(int signo, void (*func)(int)))(int);</code>
+
+<li>
+这里，signal是函数名，函数的返回值是一个函数指针，函数的参数是一个int和一个函数指针。
+
+<li>
+参数int就是信号
+
+<li>
+参数func对应前面的三种内核处理信号的方式，可以是SIG_IGN,SIG_DEL，和用户函数指针。
+
+<ul>
+<li>
+如果是用户函数指针，那么，这个函数就是信号处理函数。
+
+<li>
+至于SIG_IGN,SIG_DEL一般使用这样的定义：<code>#define SIG_ERR (void (*)())-1</code>。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.3">不可靠的信号</h2>
+<p>
+都是早期的信号系统的不可靠性，主要在几个方面：
+</p>
+<ul>
+<li>
+用户函数，只会处理一次信号。
+
+<li>
+……
+
+</ul>
+
+<h2 id="toc_1.4">中断的系统调用</h2>
+<p>
+系统调用分为两类：
+</p>
+<ul>
+<li>
+低速系统调用
+
+<li>
+其他系统调用
+
+</ul>
+
+<p>
+低速系统调用指可能会使进程永远阻塞的一类系统调用。
+</p>
+
+<h2 id="toc_1.5">可重入函数</h2>
+<p>
+<strong>进程捕捉到信号并对其进行处理时，进程正在执行的指令序列就被信号处理程序临时中断，它首先执行该信号处理程序中的指令</strong>
+</p>
+<ul>
+<li>
+可重入的函数，就是信号来了时候，正在执行的函数，然后这个函数被中断了，信号处理程序开始进行处理，处理完毕，从中返回，然后可以继续正确的处理之前正在执行的函数。这样的函数，是可重入函数。
+
+<li>
+malloc和free，标准I/O函数，使用静态数据结构的函数，都是不可重入的。
+
+</ul>
+
+<p>
+每个线程只有一个errno变量，信号处理函数可能改变这个变量，可以理解，所以，在可重入函数的使用上，在调用函数之前应该保存errno，在调用之后回复errno。
+</p>
+
+<h2 id="toc_1.6">SIGCLD语义</h2>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="信号";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="信号";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>use github for my personal website</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">用github做个人wiki</h1>
+<h2 id="toc_1.1">域名</h2>
+<ul>
+<li>
+在[<a href="http://godaddy.com">http://godaddy.com</a> godaddy]购买一个域名，就如当下的[<a href="http://ray-x.me]。">http://ray-x.me]。</a>
+
+<ul>
+<li>
+购买是一步，这一步网上搜索自己操作。
+
+<li>
+第二步是设置域名，对于github来说，只需要设置
+
+<ul>
+<li>
+<em>A(Host)</em> 为<code>207.97.227.245</code>
+
+<li>
+<em>CNAME(Alias)</em> 中的 <em>www</em> 为<code>yourname.github.com</code>
+
+</ul>
+</ul>
+</ul>
+	
+<h2 id="toc_1.2">github</h2>
+<ul>
+<li>
+这里建立一个仓库<code>yourname.github.com</code>，用来放置html资源。
+
+<li>
+其中需要一个 <em>CNAME</em> 文件，在其中写入<code>ray-x.me</code>即可。
+
+</ul>
+
+<h2 id="toc_1.3">评论系统</h2>
+<ul>
+<li>
+使用disqus评论系统。
+
+<li>
+其安装使用通用行，修改javascript的代码，放入vimwiki的模板中，就可以了。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="use github for my personal website";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="use github for my personal website";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

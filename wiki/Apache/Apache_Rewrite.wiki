@@ -1,0 +1,6 @@
+= Apache2 Rewrite =
+可以将任意的URL对应到我想要对应的地方去。提供无限的rule，以及每个rule中无限的条件。
+
+URL对应可以使用的条件有：server variable，environment variable等等。
+
+Rewrite rule可以用在httpd.conf（也就是整个server），也可以用在`<VirtualHost>`，也可以用在`<Directory>`中。

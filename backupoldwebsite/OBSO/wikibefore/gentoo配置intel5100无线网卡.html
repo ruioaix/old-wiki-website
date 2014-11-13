@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>gentoo配置intel5100无线网卡</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">gentoo配置intel5100无线网卡</h1>
+
+<h2 id="toc_1.1">有用的文章</h2>
+
+<p>
+[<a href="http://hi.baidu.com/%CE%C4%B3%AD%B9%AB/blog/item/f9b7ed63ff40ccdae7113a97.html">http://hi.baidu.com/%CE%C4%B3%AD%B9%AB/blog/item/f9b7ed63ff40ccdae7113a97.html</a> 介绍无线路由器加密方式的文章]
+</p>
+<ul>
+<li>
+对linux，只需要分清楚wep加密和wpa加密两种就可以了。 
+
+<li>
+如果链接失效，google：wep wpa。
+
+</ul>
+<p>
+[<a href="http://en.gentoo-wiki.com/wiki/Wireless_Networking">http://en.gentoo-wiki.com/wiki/Wireless_Networking</a> gentoo无线网络配置的权威文章]
+</p>
+<ul>
+<li>
+这里面开头就安装了三个工具：
+
+<ul>
+<li>
+wireless-tools  这个是上面的wep加密方式下使用的工具，<code>iwconfig</code>就是其命令之一。
+
+<li>
+wpa_supplicant  这个是上面的wpa加密方式下使用的工具，我是通过配置文件来使用的<sup><small>这个后面讲</small></sup>。
+
+<li>
+dhcpcd 无论上面那种情况，只要自动寻址都必装，即使手动，以后应该还是会用到的。
+
+</ul>
+</ul>
+<p>
+[<a href="http://en.gentoo-wiki.com/wiki/Iwlwifi#Kernels_.3E.3D2.6.30">http://en.gentoo-wiki.com/wiki/Iwlwifi#Kernels_.3E.3D2.6.30</a> intel-wireless-wifi使用的权威文章] 
+</p>
+<ul>
+<li>
+如果链接失效，在gentoo的wiki里面找，可能是更新了网页。
+
+<li>
+这里是不完全的[<a href="http://hi.baidu.com/goomw/blog/item/0835a6734d8d381b8601b05e.html">http://hi.baidu.com/goomw/blog/item/0835a6734d8d381b8601b05e.html</a> 中文翻译]，可以参考。
+
+</ul>
+
+<h2 id="toc_1.2">基本的概念</h2>
+<ol>
+<li>
+要想使用无线网卡，先要在编译内核的时候，将无线网卡的驱动编译到内核里面或者编译成为内核模块。
+
+<li>
+内核支持的情况下，要选择工具来搜索链接无线网络，在这个过程中，根据要链接的无线网络的加密方式，选用不同的工具。
+
+<li>
+对工具的使用，链接到网络，上网。
+
+</ol>
+
+<h2 id="toc_1.3">自己的配置过程</h2>
+<p>
+自己的小黑是intel 5100的无线网卡，下面都是针对此网卡进行的说明。
+</p>
+
+<h3 id="toc_1.3.1">livecd系统中无线网络的配置</h3>
+<ol>
+<li>
+在livecd启动之后，小黑的网卡已经安装好驱动了；剩下的就是配置工具了。
+
+<li>
+这边的网络是wpa加密方式的无线路由，所以使用的是wpa_supplicant这个工具。
+
+<ul>
+<li>
+编辑 <em>/etc/conf.d/net</em> 文件,系统级别的网络配置
+
+<ul>
+<li>
+<code>modules=("wpa_supplicant")</code>
+
+<li>
+<code>wpa_supplicant_wlan0="-Dwext"</code>
+
+<li>
+<code>config_wlan0=("dhcp")</code>
+
+</ul>
+<li>
+编辑 /etc/wpa_supplicant/wpa_supplicant.conf 文件，这个文件可能起初没有，相当于新建一个。
+
+<ul>
+<li>
+<code>ctrl_interface=/var/run/wpa_supplicant</code>
+
+<li>
+<code>ctrl_interface_group=0</code>
+
+<li>
+<code>ap_scan=1</code>
+
+<li>
+<code>network={</code>
+
+<li>
+<code>		ssid="ustc"</code>
+
+<li>
+<code>		psk="password"</code>
+
+<li>
+<code>		priority=5</code>
+
+<li>
+<code>}</code>
+
+</ul>
+</ul>
+<li>
+<code>ln -s /etc/init.d/net.lo /etc/init.d/net.wlan0</code>
+
+<li>
+<code>/etc/init.d/net.wlan0 start</code>
+
+<li>
+到这里，在livecd下的无线配置就好了。可以ping下百度试试。
+
+</ol>
+
+<h3 id="toc_1.3.2">为硬盘系统配置无线网络</h3>
+<p>
+这里介绍安装硬盘系统时候的配置，如果已经装好了系统，但因为硬件问题没办法联上网络，那么，可以使用livecd来重新编译下内核，过程没有特别的变化。
+</p>
+<ol>
+<li>
+最小光盘+stage3的流程安装，到了配置内核这一步，请按照上文的第三篇文章配置内核。
+
+<ul>
+<li>
+这里说明下，我的内核版本是2.6.36-r8，这个内核的配置选项和上面的第三篇文章其实已经不一样的，但相似的还是可以找到的，其中当时就没有5100的选择，5000的也没有，但是有4965的选项，而在2.6.30的内核中是直接有5000的；后来发现4965后面的选项可能包含了更高版本的，比如5100，最后安装好，只是可能，但我现在可以使用无线网络。
+
+<li>
+还有就是文章中提到的，要使用编译成模块<code>M</code>代替编译进内核<code>*</code>，这很重要！切记！
+
+<li>
+配置完成，编译，复制覆盖掉 <em>/boot</em> 里的之前的内核。
+
+</ul>
+<li>
+<code>emerge -av net-wireless/iwl5000-ucode</code>，这里可以先<code>emerge --search iwl5000</code>一下。
+
+<li>
+完成上面一步后，再将上一小结中对 /etc/conf.d/net 和 /etc/wpa_supplicant/wpa_supplicant.conf 的修改再做一遍。
+
+<li>
+<code>ln -s /etc/init.d/net.lo /etc/init.d/net.wlan0</code>
+
+<li>
+<code>rc-update add net.wlan0 default</code>
+
+<li>
+完成了，继续安装的其他步骤，最后reboot，PC会自动联接上网络。
+
+</ol>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="gentoo配置intel5100无线网卡";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="gentoo配置intel5100无线网卡";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

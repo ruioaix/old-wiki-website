@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>在RHEL6配置LAMP_fordevelopment</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">RHEL6配置LAMP（用于本机开发）</h1>
+
+<h2 id="toc_1.1">apache和php</h2>
+<p>
+apache可以在rpmfusion中找到，所以可以直接yum之。
+</p>
+<ul>
+<li>
+<code>yum install httpd php php-common</code>
+
+<li>
+<code>yum install php-pecl-apc php-cli php-pear php-pdo php-mysql php-pgsql php-pecl-mongo php-sqlite php-pecl-memcache php-pecl-memcached php-gd php-mcrypt php-xml</code>
+
+<li>
+<strong>php-mbstring</strong> 在EPEL和rpmfusion中都找不到，所以可以使用remi。当然也可以从rpmsearch这种地方找单独的rpm包，然后安装之。（如果这个php-mbstring没有安装的话，也不会有什么，但phpmyadmin会出现提示，总要装上的）
+
+<li>
+<code>/etc/init.d/httpd start</code> apache开始
+
+<li>
+<code>chkconfig --levels 235 httpd on</code> 设置开机启动
+
+<li>
+默认的html文件夹，在<code>/var/www/html/</code>，在这个文件夹中建立 <strong>test.php</strong> 测试下。
+<pre>
+    &lt;?php
+        phpinfo();
+    ?&gt;
+</pre>
+
+</ul>
+
+<h2 id="toc_1.2">mysql</h2>
+<p>
+同上面类似
+</p>
+<ul>
+<li>
+<code>yum install mysql mysql-server</code> 安装MySQL server，以及用于连接server的mysql client软件。
+
+<li>
+<code>/etc/init.d/mysqld start</code>
+
+<li>
+<code>chkconfig --levels 235 mysqld on</code>
+
+<li>
+这里安装完mysql后，最好，立刻执行下面的脚本，可以认为是必执行的。
+
+<li>
+<code>/usr/bin/mysql_secure_installation</code> 这个脚本一步一步的说明很详细，照着来就好。
+<pre>
+    NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MySQL
+          SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+           
+            
+    In order to log into MySQL to secure it, we\'ll need the current
+    password for the root user.  If you\'ve just installed MySQL, and
+    you haven\'t set the root password yet, the password will be blank,
+    so you should just press enter here
+   
+    Enter current password for root (enter for none): 
+    OK, successfully used password, moving on...
+     
+    Setting the root password ensures that nobody can log into the MySQL
+    root user without the proper authorisation.
+      
+    Set root password? [Y/n] Y
+    New password: 
+    Re-enter new password: 
+    Password updated successfully
+    Reloading privilege tables..
+    ... Success!
+    
+    XXXX,....,XXXX
+</pre>
+
+</ul>
+
+<h2 id="toc_1.3">apache userdir</h2>
+<ul>
+<li>
+<code>su -</code>
+
+<li>
+<code>vim /etc/httpd/conf/httpd.conf</code>
+<pre>
+    360 &lt;IfModule mod_userdir.c&gt;
+    361     #
+    362     # UserDir is disabled by default since it can confirm the presence
+    363     # of a username on the system (depending on home directory
+    364     # permissions).
+    365     #
+    366     #UserDir disabled
+    367 
+    368     #
+    369     # To enable requests to /~user/ to serve the user's public_html
+    370     # directory, remove the "UserDir disabled" line above, and uncomment
+    371     # the following line instead:
+    372     # 
+    373     UserDir webDevelopDir
+    374 
+    375 &lt;/IfModule&gt;
+    ......
+    393 &lt;Directory /home/*/webDevelopDir&gt;
+    394     AllowOverride All
+    395     Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+    396     Allow from all
+    397     Order allow,deny
+    398 &lt;/Directory&gt;
+</pre>
+
+<li>
+<code>chmod 711 /home/xxx</code>
+
+<li>
+<strong>CTRL+D</strong>
+
+<li>
+<code>cd</code>
+
+<li>
+<code>mkdir webDevelopDir</code>
+
+<li>
+<code>chmod 755 webDevelopDir</code>
+
+<li>
+SElinux需要设置下，userdir才会起作用。我自己一般都是disabled。
+
+<ul>
+<li>
+<code>echo 0 &gt;/selinux/enforce</code> 临时关闭
+
+<li>
+<code>vim /etc/selinux/config</code> 永久关闭
+
+</ul>
+<li>
+到这里设置好了，<code>/etc/init.d/httpd restart</code>下，在 <strong>webDevelopDir</strong> 中建立一个html或者php文件，使用<a href="http://localhost/~xxx/yyy.html">http://localhost/~xxx/yyy.html</a> 访问下看看。
+
+</ul>
+
+<h2 id="toc_1.4">phpmyadmin</h2>
+<ul>
+<li>
+去官网下载最新的包：<a href="http://www.phpmyadmin.net/home_page/downloads.php">http://www.phpmyadmin.net/home_page/downloads.php</a> 。
+
+<li>
+解压，放在userdir可以，放在<code>/var/www/html/</code>也可以。
+
+<li>
+重要的只有一点，就是：<code>cp config.sample.inc.php config.inc.php</code>。并修改其中的<code>$cfg['blowfish_secret'] = 'nihaoaworld'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */</code>。否则，cookies不可用，即使相隔时间很短，访问phpmyadmin都会要求你输入用户名密码。
+
+</ul>
+
+<h2 id="toc_1.5">Other Tips</h2>
+<ul>
+<li>
+<a href="../Drupal7/Clean_urls_with_Apache_userdir.html">../Drupal7/Clean_urls_with_Apache_userdir</a>
+
+<li>
+对于在重启apache时候出现的<code>httpd: apr_sockaddr_info_get() failed for RHEL6.T430</code>，解决方法是在<code>/etc/hosts</code>中的127.0.0.1后面填上<code>RHEL6.T430</code>。
+
+<li>
+对于在重启apache时候出现的<code>httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName</code>，解决的方法是在httpd.conf中确保<code>ServerName localhost:80</code>的存在。
+
+</ul>
+
+<h1 id="toc_2">OVER</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="在RHEL6配置LAMP_fordevelopment";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="在RHEL6配置LAMP_fordevelopment";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

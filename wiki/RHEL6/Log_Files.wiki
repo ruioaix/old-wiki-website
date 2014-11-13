@@ -1,0 +1,6 @@
+= Log Files =
+log files中包含了kernel，services，applications的信息。
+
+*rsyslogd* daemon控制一些log file。这些log file都在`/etc/rsyslog.conf`中有记录。
+
+rsyslogd是syslogd的加强型，兼容syslogd。

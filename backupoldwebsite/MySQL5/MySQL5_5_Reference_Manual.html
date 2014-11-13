@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>MySQL5_5_Reference_Manual</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">MySQl 5.5 Reference Manual</h1>
+<p>
+用于MySQL5.5到MySQL5.5.30之间的版本，我当前使用的是5.5.28，从remi中获得。
+<a href="http://dev.mysql.com/doc/refman/5.5/en/index.html">http://dev.mysql.com/doc/refman/5.5/en/index.html</a> 
+</p>
+
+<h2 id="toc_1.1">Tutorial</h2>
+<ul>
+<li>
+linux中在终端使用的mysql命令，是一个客户端程序，可以使用这个程序同MySQL servr进行交互。
+
+<li>
+mysql命令可以交互着来，也可以使用batch mode（读取已经放入命令的文件，顺序执行）。
+
+<li>
+也就是说，安装LAMP组合的时候，M其实包含两部分：mysql命令和MySQL server。
+
+<li>
+使用mysql命令来交互MySQL server的时候，通常第一件事是建立连接：
+
+<ul>
+<li>
+<code>mysql -h host -u username -p</code>
+
+<li>
+然后输入用户密码，本机登录的话，<code>-h host</code>可以省略。
+
+</ul>
+<li>
+mysql命令做的事情就是将命令发给MySQL server，后者执行并反馈结果，mysql再显示结果。
+
+<li>
+mysql命令显示结果的方式是表格，并会给出有多少行结果，执行所耗费的时间（这是粗略的时间）。
+
+<li>
+mysql中数据库和表的名字都是大小写敏感的。
+
+<li>
+<code>create database test_database_name;</code>
+
+<li>
+<code>use test_database_name</code> 这个命令不需要分号结尾
+
+<li>
+在连接MySQL server之后，每次都需要选择自己所要操作的数据库，但是也可以在连接的时候设置。
+
+<ul>
+<li>
+<code>mysql -h host -u user -p test_database_name</code> ，就是在其他所有命令选项之后，加入自己要选择的database即可。
+
+<li>
+上面的<code>-p</code>之后如果直接输入密码，那么p和密码之间不要有空格。
+
+</ul>
+<li>
+使用<code>select database();</code>查看当前选择的数据库。
+
+<ul>
+<li>
+<code>create table test_table_name(name varchar(20), other1 varchar(20), other2 varchar(20), sex char(1), birth date, death date);</code>
+
+<li>
+<code>describe test_table_name;</code> 给出详细的表内容。
+
+<li>
+<code>load data local infile '/root/pet001' into table pet;</code>
+
+<li>
+<code>insert into pet values('puffball','dianna','hamster','f','1999-02-20',null);</code>
+
+</ul>
+<li>
+<code>select</code>命令用来查看table中的内容。
+<pre>
+    select what_to_select
+    from which_table
+    where conditions_to_satisfy;
+</pre>
+
+<ul>
+<li>
+<code>select * from pet;</code> 查看pet table中的所有内容。
+
+<li>
+<code>delete from pet;</code> 删除pet table中的所有。
+
+<li>
+<code>update pet set birth='1999-03-24' where name='bowser';</code>
+
+<li>
+<code>select * from pet where name='whitler';</code> 输出一行，string的比较通常是大小写不敏感的。
+
+<li>
+<code>select * from pet where species='dog' and sex='f';</code>
+
+<li>
+<code>select * from pet where species='dog' or sex='f';</code>
+
+<li>
+<code>select name,birth from pet;</code>
+
+<li>
+<code>select distinct owner from pet;</code> 多个条目中都有一个owner的时候，可以让这个owner只出现一次。
+
+<li>
+<code>select name,species,birth from pet where species='dog' or species='cat';</code> 结合行和列的选择。
+
+<li>
+<code>select name,birth from pet order by birth;</code>
+
+<li>
+<code>select name,birth from pet order by birth desc;</code>
+
+<li>
+<code>select name,species,birth from pet order by species,birth desc;</code> 先按照种类排序，然后在一种种类内部按照生日降序显示。
+
+<li>
+<code>select name,birth,curdate(),(year(curdate())-year(birth))-(right(curdate(),5)&lt;right(birth,5)) as age from pet order by age;</code>
+
+<li>
+<code>select name,birth,month(birth) from pet where month(birth)=5;</code>
+
+<li>
+<strong>null</strong> 表示 一个不知道的值。不能被直接用于比较。可以用的 <strong>is not null</strong> 。这种方式不错。
+
+<li>
+0不是null，使用<code>select 0 is null;</code>会出现0，也就是说0不是null。
+
+<li>
+sql的模式匹配和linux终端的表示方法很像，<code>_</code>表示一个未知字母，<code>%</code>表示任意未知字母的组合。在where中用 <strong>like</strong> 和 <strong>not like</strong> 来比较。
+
+<li>
+匹配的方式还有一种 <strong>regexp</strong> 。
+
+<li>
+<code>select count(*) from pet;</code> 计算总共有几只宠物。
+
+<li>
+<code>select owner,count(*) from pet group by owner</code>
+
+<li>
+<code>select species,count(*) from pet group by species</code>
+
+<li>
+<code>select species,sex,count(*) from pet group by species,sex;</code>
+
+<li>
+<code>mysql -h host -u user -p &lt; batch-file</code>
+
+</ul>
+<li>
+Examples of Common Queries
+
+<ul>
+<li>
+<code>select max(article) as article from shop;</code>
+
+<li>
+<code>select article,dealer,price from shop where price=(select max(price) from shop);</code>
+
+</ul>
+</ul>
+
+<h2 id="toc_1.2">MySQL Server Administration</h2>
+<ul>
+<li>
+<a href="The_MySQL_Server.html">The_MySQL_Server</a>
+
+<li>
+<a href="MySQL_Server_Logs.html">MySQL_Server_Logs</a>
+
+</ul>
+
+<h2 id="toc_1.3">MySQL Programs</h2>
+<p>
+介绍MySQL command-line programs。
+</p>
+<ul>
+<li>
+<a href="Overview_of_MySQL_Programs.html">Overview_of_MySQL_Programs</a>
+
+<li>
+<a href="Using_MySQL_Programs.html">Using_MySQL_Programs</a>
+
+<li>
+<a href="MySQL_Server_and_Server_Startup_Programs.html">MySQL_Server_and_Server_Startup_Programs</a>
+
+</ul>
+
+<h2 id="toc_1.4">Security in MySQL</h2>
+<ul>
+<li>
+<a href="General_Security_Issues.html">General_Security_Issues</a>
+
+<li>
+<a href="Postinstallation_Setup_and_Testing.html">Postinstallation_Setup_and_Testing</a>
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="MySQL5_5_Reference_Manual";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="MySQL5_5_Reference_Manual";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

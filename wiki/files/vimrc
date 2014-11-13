@@ -1,0 +1,72 @@
+set nocompatible "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限
+set nu "显示行号
+
+filetype plugin on
+
+syntax on
+
+set tabstop=4 "设置tab键等同的空格长度，这里只是等同，并没有用2个空格来代替tab。
+set shiftwidth=4 "设置程序中自动缩进所使用的空白长度，这里和上面的相同（都是2），那么自动缩进就表示2个空格的长度。
+"set expandtab "设置tab由空格代替。tab是8个空格长度，那么当键入tab时就是8个空格，这里是2个空格。
+
+"autocmd FileType c set shiftwidth=4 | set tabstop=4 | set expandtab "这里针对php类型的文件使用4个空格的格式。
+autocmd FileType php set shiftwidth=2 | set tabstop=2 | set expandtab "这里针对php类型的文件使用4个空格的格式。
+
+set smartindent "设置缩进，是cindent/smartindent/autoindent中的一种，可以识别{}。
+
+set incsearch "设置随打随搜的特性，而不是输入完毕回车之后才搜索。
+"set ignorecase "设置搜索时大小写不敏感。
+"set ignorecase smartcase
+""设置搜索时小写搜索关键字则大小写不敏感，但如果关键字中有一个大写，那么就大小写敏感。
+
+set laststatus=2 "最下方的两行状态
+set statusline=%4*%<\%m%<[%f\%r%h%w]\ [%{&ff},%{&fileencoding},%Y]%=\[Position=%l,%v,%p%%]
+
+if has("autocmd") "设置vim再次打开一个文件时，光标处于上次编辑的位置。
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+au BufRead,BufNewFile *.test  set filetype=php "将test作为php文件类型
+au BufRead,BufNewFile *.install set filetype=php "将install作为php文件类型
+au BufRead,BufNewFile *.module set filetype=php "将install作为php文件类型
+
+nmap <F2> :nohlsearch<CR>
+
+"vimwiki's config part.
+let g:vimwiki_global_ext=0 "don't make temporary wiki in that dir.
+let g:vimwiki_ext2syntax = {}
+"let g:vimwiki_html_header_numbering=2
+"let g:vimwiki_html_header_numbering_sym='.'
+let g:vimwiki_user_htmls='404.html, InstallingGeant4.html'
+let g:vimwiki_list=[{   'path': '~/Wiki/wikiofRRRUI/',
+                       \'path_html': '~/webDevelopDir/wikiofRRRUI_html/',
+                       \'auto_export': 1,
+                       \'template_path': '~/Wiki/wikiofRRRUI/files/',
+                       \'template_default': 'default',
+                       \'template_ext': '.html',
+                       \'css_name': 'css/style.css',
+                       \'nested_syntaxes': {'c': 'c'} },
+                       \{'path' : '~/temp/WikiSources'}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"the next line should be the last line of this script.
+"don't write anything below the next line.
+autocmd! bufwritepost .vimrc source ~/.vimrc "设置每次修改了vimrc之后都重新运行一次

@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>笔记（五）</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">笔记（五）——表达式</h1>
+<ul>
+<li>
+cpp提供了丰富的操作符，并定义了操作数为内置类型时，这写操作符的意义。
+
+<li>
+cpp还支持操作符重载，允许程序员自定义用于类类型时操作符的含义。
+
+<li>
+标准库正是使用这种功能用于库类型的操作符。
+
+<li>
+下面的每种操作符将从以下几个方面来安排：
+
+<ul>
+<li>
+操作符的可用类型。
+
+<li>
+操作符的优先级。
+
+<li>
+操作符的结合性。
+
+<li>
+特殊案例。
+
+</ul>
+<li>
+如果有怀疑就使用圆括号。在同一个表达式中或者语句中不要改变一个值同时又使用这个值，这会导致歧义，完全有其他更好的方法避免这种不确定。
+
+<li>
+结合性和求解次序是不同的，求解的次序是没有规定的。像这样<code>a++&amp;&amp;a</code>,<code>a[i++]&amp;&amp;a[i]</code>都是不会的，应该说是可能不对的。
+
+</ul>
+
+<h2 id="toc_1.1">算术操作符</h2>
+<ul>
+<li>
+可用于任意算术类型，或者可以转换为算术类型的数据类型。
+
+<li>
+算术操作符的优先级：正负，乘除求余，加减。
+
+<li>
+算术操作符的结合性：左结合，当操作符优先级相同时，从左向右。
+
+<li>
+<code>%</code>，<code>/</code>，当左右为一正一负时，结果取决于机器。
+
+</ul>
+
+<h2 id="toc_1.2">关系操作符和逻辑操作符</h2>
+<ul>
+<li>
+关系和逻辑操作符使用算术或指针类型的操作数，并返回bool类型的值。
+
+<li>
+优先级：逻辑非，大小不大于不小于，等不等，与，或。
+
+<li>
+一般，关系操作符（大小）不串接，虽然是左结合性，但是前两者比较的结果不是0就是1。
+
+<li>
+bool字面值是true和false，相等操作符用于这两个时，不如直接省略。if（xx=true）不如写成if（xx）。
+
+</ul>
+
+<h2 id="toc_1.3">位操作符</h2>
+<ul>
+<li>
+使用整型的操作数。
+
+<li>
+对于位操作数，由于系统不能确保如何处理其操作数的符号位，所以强烈建议使用unsigned整型操作数。
+
+<li>
+处理signed有很大的不确定性。
+
+<li>
+优先级：位求反，左右移，位与，位异或，位或。
+
+<li>
+bitset类类型比位操作符方便很多。
+
+<li>
+左右移被输入输出标准库重载了，左结合性。其比算术操作符优先级低，但比关系操作符，复制操作符，条件操作符高。
+
+</ul>
+
+<h2 id="toc_1.4">赋值操作符</h2>
+<ul>
+<li>
+赋值操作符是右结合性。
+
+<li>
+多个赋值操作中，各对象必须具有相同的数据类型，或者具有可转换为同一类型的数据类型。
+
+<li>
+存在一下的复合赋值操作符
+
+<ul>
+<li>
++= -= *= /= %=
+
+<li>
+&lt;&lt;= &gt;&gt;= &amp;= ^= |=
+
+</ul>
+</ul>
+
+<h2 id="toc_1.5">自增自减操作符</h2>
+<ul>
+<li>
+只有在必要时才使用后置操作符。
+
+<li>
+*p++就是 *(p++)。
+
+</ul>
+
+<h2 id="toc_1.6">箭头操作符</h2>
+<ul>
+<li>
+点操作符优先级高于解操作符。
+
+<li>
+(*p).foo和p-&gt;foo是一个意思。点操作符是对类的对象。箭头操作符则是对类对象的指针。
+
+</ul>
+
+<h2 id="toc_1.7">条件操作符</h2>
+<ul>
+<li>
+就是<code>cond?a:b;</code>。
+
+</ul>
+
+<h2 id="toc_1.8">sizeof操作符</h2>
+<ul>
+<li>
+返回一个对象或类型名的长度，返回值的类型为size_t。
+
+<li>
+sizeof *p；是p指向的对象的类型的长度。
+
+</ul>
+
+<h2 id="toc_1.9">new和delete表达式</h2>
+<ul>
+<li>
+cpp使用直接初始化语法法则初始化动态创建的对象。
+
+<li>
+对于提供了默认构造函数的类类型，没有必要对其对象进行值初始化，值初始化就是说加个（）。
+
+<li>
+但对于内置类型或没有定义默认构造函数的类型，则有明显差距。
+
+<li>
+如果new表达式无法获取需要的内存空间，系统将抛出名为bad_alloc的异常。（内存耗尽的时候）。
+
+<li>
+cpp没有明确定义如何释放指向不是用new分配的内存地址的指针。
+
+</ul>
+
+<h2 id="toc_1.10">类型转换</h2>
+<ul>
+<li>
+强烈建议程序员避免使用强制类型转换。
+
+<li>
+类型转换分两种，显式和隐式。
+
+<li>
+隐式类型转换的发生时刻：
+
+<ul>
+<li>
+在混合类型的表达式中，其操作数转换为相同的类型。
+
+<li>
+用作条件的表达式被转换为bool型。
+
+<li>
+同一表达式初始化某个变量或将一个表达式赋值给某个变量，则该表达式被转换为该变量的类型。
+
+<li>
+函数调用中也可能发生隐式类型转换。
+
+</ul>
+</ul>
+	
+<h3 id="toc_1.10.1">算术转换</h3>
+<ul>
+<li>
+显然是隐式的一种。
+
+<li>
+总结来说：两个不同类型的算术类型，在运算时，以不损失精度为原则，转换为两者中大的那个类型，或者，转换为比两者都高一级的类型。
+
+</ul>
+
+<h3 id="toc_1.10.2">显式转换</h3>
+<ul>
+<li>
+也称为强制类型转换。
+
+<li>
+cast-name有：
+
+<ul>
+<li>
+static_cast  隐式转换的任何类型转换都可以由这个显式完成，同时这个还用来找回void*类型的指针。
+
+<li>
+dynamic_cast
+
+<li>
+const_cast
+
+<li>
+reinterpret_cast
+
+</ul>
+<li>
+旧式强制转换只有在c或标准cpp之前在使用。
+
+</ul>
+
+
+
+<h2 id="toc_1.11">心得</h2>
+<ul>
+<li>
+<a href="表达式，操作符.html">表达式，操作符</a>
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="笔记（五）";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="笔记（五）";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Managing_Projects_with_GNU_Make</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Managing Projects with GNU Make, 3.Xth Edition</h1>
+<p>
+target紧靠行首。command使用hard tab开头，hard tab不可以使用space替代。
+</p>
+
+<p>
+使用vim编写Makefile的时候，会发现即使在~/.vimrc中使用了expandtab，在键入tab的时候，tab的确还是tab，而不是几个space。这是因为Vim识别出了Makefile，所以启动了“makefile mode”。
+</p>
+
+<p>
+A rule consists of three parts: target, prerequisites, command.
+</p>
+
+<p>
+The default goal is always the first target listed in the makefile.
+</p>
+
+<p>
+<code>default: all</code>中的<code>default</code>和<code>all</code>都只是习惯而已。
+</p>
+
+<p>
+make的过程就是target-prerequisites-target-prerequisites这样的递归循环。
+</p>
+
+<p>
+<code>make xxx</code>的时候，如果xxx没有prerequisites，那么只有在xxx不存在的情况下，xxx下面的command才会执行。xxx有prerequisites的话，自然是按照target-prerequisites-target-prerequisites的递归来判断。
+</p>
+
+<p>
+Building and processing this dependency graph to update the requested target is what make is all about.
+</p>
+
+<p>
+rule分几种：explicit rules，patterns rules，implicit rules。
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Managing_Projects_with_GNU_Make";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Managing_Projects_with_GNU_Make";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>安装RHEL_6-3</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">安装RHEL6.3</h1>
+
+<ul>
+<li>
+下载对应的RHEL光盘镜像
+
+<li>
+在网上还是很容易找到RHEL发布的原版镜像的，我一般是直接搜索 <strong>rhel-server-6.3-x86_64.iso</strong> ，这是64位机器的server版本。对应的 <strong>rhel-client-6.0-i386.iso</strong> 就是6.0的32位机器的桌面版。
+
+<li>
+只要可以找到下载地址，在国内就可以使用QQ旋风的离线下载功能，极度霸气。
+
+<li>
+验证光盘正确性的话，可以google <code>rhel-server-6.3-x86_64 md5</code> ，这样就可以知道是否原版无损。
+
+<li>
+刻盘（光盘或者u盘），我都是使用ultraISO。
+
+</ul>
+    
+<h2 id="toc_1.1">光盘安装RHEL6.3</h2>
+<ul>
+<li>
+刻盘之后直接linux都大差不差的安装过程。
+
+<li>
+我会在安装的时候选择desktop的配置安装，并且安装的时候就定制软件，包括 <strong>chinese support</strong> (我使用英文系统，但汉语的支持是必须的）， <strong>development tools</strong> （这样就不需要我去安装g++，gdb等必须的工具了）。
+
+</ul>
+
+<h2 id="toc_1.2">U盘安装RHEL6.3</h2>
+<ul>
+<li>
+这个有点麻烦，因为如果直接将 <strong>rhel-server-6.3-x86_64.iso</strong> 写入到u盘里面，安装过程会卡在分区之后的那一步上。 报错是找不到image，也就是光盘镜像吧。
+
+<li>
+我的解决办法是下载了 <strong>rhel-client-6.0-i386-boot.iso</strong> ，这个很小，几百兆，就是用来引导的，将这个iso刻录到u盘中，然后将 <strong>rhel-server-6.3-x86_64.iso</strong> 复制到u盘中。
+
+<ul>
+<li>
+如果你的u盘体积够大（有8G），那么你可以先使用ultraISO将 <strong>rhel-server-6.3-x86_64.iso</strong> 写入u盘，然后再将之拷贝入u盘根目录。效果和上面是一样的。 
+
+</ul>
+<li>
+然后安装，系统开机会停留在<code>boot:</code>这里，输入<code>linux</code>，回车就可以了。
+
+<li>
+之后的过程与光盘类似。
+
+<li>
+其中有一点，u盘一般是 <strong>/dev/sdb</strong> ，或者 <strong>/dev/sdb4</strong> 。
+
+</ul>
+
+<h1 id="toc_2">OVER</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="安装RHEL_6-3";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="安装RHEL_6-3";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

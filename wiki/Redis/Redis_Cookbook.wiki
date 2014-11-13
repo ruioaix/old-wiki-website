@@ -1,0 +1,20 @@
+= Redis Cookbook =
+
+== An Introduction to Redis ==
+
+key的选择，要考虑可读性，太大不好，太小也不好。
+
+redis中的典型value限制是512MB。
+
+strings：redis中最简单的data type。
+
+lists: 链表？
+
+hashes
+
+sets：集合？
+
+sorted sets
+
+== Clients ==
+

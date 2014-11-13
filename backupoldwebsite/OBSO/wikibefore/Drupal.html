@@ -1,0 +1,401 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Drupal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Drupal 内容管理系统</h1>
+
+<ul>
+<li>
+<a href="Patterns modules.html">Patterns modules</a>
+
+</ul>
+
+<h2 id="toc_1.1">Modules study</h2>
+<ul>
+<li>
+<a href="testing modules.html">testing modules</a>
+
+</ul>
+
+<h2 id="toc_1.2">enable testing module need curl</h2>
+<ul>
+<li>
+<code>sudo apt-get install php5-curl</code>
+
+<li>
+<code>sudo service apache2 restart</code>
+
+</ul>
+
+<h2 id="toc_1.3">Clean URLs for Ubuntu 10.04</h2>
+<ul>
+<li>
+<code>sudo a2enmod rewrite</code> or <code>ln -s /etc/apache2/mod-available/rewrite.mod /etc/apache2/mod-enable/rewrite.mod</code>
+
+<li>
+<code>sudo vim /etc/apache2/sites-enabled/000-default</code>
+
+<ul>
+<li>
+change line 7 and line 11:<code>AllowOverride None</code> to <code>AllowOverride All</code>.
+
+<li>
+<code>:wq</code>
+
+</ul>
+<li>
+<code>sudo /etc/init.d/apache2 restart</code>
+
+<li>
+<code>vim ~/public_html/drupal79/.htaccess</code>
+
+<ul>
+<li>
+change <code>RewriteBase /</code> to <code>RewriteBase /~youruseridr/drupal79</code>
+
+<li>
+<code>:wq</code>
+
+</ul>
+<li>
+Ok.
+
+</ul>
+
+<h2 id="toc_1.4">drupal 代码标准</h2>
+<ul>
+<li>
+缩进使用2个空格，不用tab。
+
+<li>
+每行的结尾不要留有空格。
+
+<li>
+文件的结尾要是一个空行，<code>/n</code>。
+
+<li>
+操作符前后各留一个空格。
+
+<li>
+see:<a href="http://drupal.org/coding-standards">http://drupal.org/coding-standards</a>
+
+</ul>
+
+<h2 id="toc_1.5">Doxygen 和 drupal中文档注释惯例</h2>
+<ul>
+<li>
+Doxygen是文档生成器，这里的文档是指各种代码的说明文档；或者说，Doxygen是一个编写软件参考文档的工具。
+
+<ul>
+<li>
+文档是直接写在代码里面的，也就是注释之类的。
+
+</ul>
+<li>
+<strong>这里主要介绍再drupal代码中文档编写的惯例，或者说drupal代码中注释编写的惯例。</strong>
+
+<li>
+drupal中有两种注释： <strong>in-line</strong> 和 <strong>headers</strong> 。
+
+<li>
+在drupal中函数/类等上面的注释，就是用来构建文档的。构建的工具就是Doxygen。
+
+<li>
+in-line 就是在函数中的注释，这类注释是被鼓励的。
+
+<ul>
+<li>
+如果只是对一句的注释，就在语句的上面加上<code>//</code>来注释。
+
+<li>
+如果是一个list中的每一行都要注释，那么将注释防盗list上面，按照list的格式加以注释。
+
+<li>
+<code>/* */</code>在函数中是不鼓励的，<code>#</code>都是不鼓励的。
+
+<li>
+为了注释一段代码，如一个file，一个函数，一个类，一个成员函数等，语法是：
+<pre>
+/**
+ * 注释
+ * /
+</pre>
+
+<li>
+drupal的风格是尽量少的使用doxygen命令，从而保证源代码的易读。
+
+</ul>
+<li>
+Documenting files
+
+<ul>
+<li>
+每个file应该再开头加上一段注释， 如下：
+<pre>
+/**
+ * @file
+ * summary xxxxxxxxxx 
+ *
+ * details xxxxxxx
+ * /
+</pre>
+
+<li>
+中间的空行是必须的。
+
+</ul>
+<li>
+Documenting functions and methods
+
+<ul>
+<li>
+同上的注释符号
+
+<li>
+第一行：简短的描述下函数干吗的
+
+<li>
+第二行：空格
+
+<li>
+第三行：详细描述
+
+</ul>
+<li>
+Documenting hook definitions
+
+<li>
+Documenting hook implementations
+
+<li>
+too much rules,look this:<a href="http://drupal.org/node/1354">http://drupal.org/node/1354</a>
+
+</ul>
+
+<h2 id="toc_1.6">patterns</h2>
+<ul>
+<li>
+这是一个正在开发的模块。
+
+<li>
+pattern 是一个文件，包含info节和action节，这个action名字可以任意定义。在action中有3个小节，分别是modify,delete,create。
+
+<ul>
+<li>
+还可以有两个可选的节，是modules和include。
+
+<li>
+modules是在执行pattern的时候需要使能的pattern。
+
+<li>
+include则包含其他的pattern。
+
+</ul>
+<li>
+patterns 工作的时候，分析pattern文件，然后构建一个form，并自动的验证和提交。
+
+<ul>
+<li>
+这一过程有两种方式：batch，php；前者是后台运行，后者利于调试。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.7">在自己的module实现patterns</h2>
+<ul>
+<li>
+至少在module中添加6个hook。这6个hook将顺序的被patterns模块调用。
+
+<ul>
+<li>
+<code>hook_patterns()</code>，声明，模块是可以支持pattern配置的，并指出那个tags和那个forms是支持的。
+
+<li>
+<code>hook_patterns_prepare(\(action,\)tag,&amp;$data)</code>，检查输入，添加缺省值，并且，它提出是那个错误引起执行过程的终止。这个应该就是构建form的函数。应该是比较大的一个函数。
+
+<li>
+<code>hook_patterns_callbacks(\(action,\)tag,&amp;$data)</code>，返回一组将被顺序执行的form，这些form的id都放在一个数组中。如果数组中有一个value不在hook_patterns()的声明中，那么这个value将作为一般的callback函数处理，这种情况下，下面的3个函数不会再执行，而pattern的返回值由这个callback函数提供。
+
+<li>
+<code>hook_patterns_build(\(action,\)form_id,&amp;\(data,&amp;\)action_state)</code>，取得action的formdata，可以是一个form values，也可以是form state对象。
+
+<li>
+<code>hook_patterns_params(\(action,\)form_id,&amp;$action_state)</code>，返回额外的参数，form也许需要。
+
+<li>
+<code>hook_patterns_cleanup(\(action,\)tag,&amp;$data)</code>，在action的操作完成后，提供一些额外的操作。
+
+</ul>
+</ul>
+
+<h3 id="toc_1.7.1">other</h3>
+<ul>
+<li>
+<code>\(action</code>是create，modify，delete中的一个，<code>\)tag</code>是特殊执行的命令。
+
+<li>
+<code>hook_patterns()</code>是单独调用的，其他的hook则是顺序调用来执行一个action。
+
+<li>
+如果prepare和validate不报错，那么prepare返回一些formid，然后，build和params执行，提交form（调用drupal form submit函数），然后cleanup。
+
+<li>
+<code>hook_patterns()</code>返回值是一个action的数组，<code>$actions</code>。
+
+</ul>
+<li>
+到底什么用？
+
+<ul>
+<li>
+在自己的module里面加入这几个hook。
+
+<li>
+那pattern是做什么的，放在哪？
+
+<li>
+patterns是做什么的。
+
+</ul>
+
+<h2 id="toc_1.8">hook_menu</h2>
+<ul>
+<li>
+这个函数不简单，其决定了URL请求如何被处理。
+
+<li>
+其返回一个数组，key是path，value是path的各种属性。
+
+</ul>
+
+
+
+<h2 id="toc_1.9">在ubuntu上本地安装drupal</h2>
+<h3 id="toc_1.9.1">安装LAMP</h3>
+<ol>
+<li>
+在新立得--编辑--使用任务分组标记软件包--LAMP--安装过程中需要设置mysql的密码--12345
+
+<li>
+测试 <a href="http://localhost">http://localhost</a> 看看是否ok。
+
+</ol>
+
+<h3 id="toc_1.9.2">安装phpmyadmin</h3>
+<ol>
+<li>
+在<a href="http://phpmyadmin.net">http://phpmyadmin.net</a> 上下载最新的all language的包
+
+<li>
+解压到 <em>/var/www/</em> 下，重命名--phpMyAdmin
+
+<li>
+<code>cp /var/www/phpMyAdmin/config.example.inc.php /var/www/phpMyAdmin/config.inc.php</code>
+
+<li>
+测试<a href="http://localhost/phpMyAdmin/。">http://localhost/phpMyAdmin/。</a>
+
+<li>
+发现无法加载mcrypt扩展，<code>sudo apt-get install libmcrypt4 php5-mcrypt</code>,<code>sudo service apache2 restart</code>。
+
+<li>
+发现配置文件需要一个短语密码，编辑 <em>config.inc.php</em> 中的 blowfish_secret，在其后方加入任意密码--abcde。
+
+<li>
+使用root和安装LAMP时候设置的密码12345,加入phpmyadmin。
+
+<li>
+添加一个数据库，字符集--utf-generic-ci，名字随意--drupal1。
+
+</ol>
+
+<h3 id="toc_1.9.3">安装drupal</h3>
+<ol>
+<li>
+在<a href="http://drupal.net上下载drupal的包，解压到">http://drupal.net上下载drupal的包，解压到</a> <em>/var/www</em> 中。
+
+<li>
+重命名一下--drupal。
+
+<li>
+使用浏览器加入<a href="http://localhost/drupal，其会自动检测，一步一步安装。">http://localhost/drupal，其会自动检测，一步一步安装。</a>
+
+<li>
+在第三步，需要三个问题。
+
+<ul>
+<li>
+gd扩展，使用<code>sudo apt-get install php5-gd</code>,<code>sudo service apache2 restart</code>。
+
+<li>
+sites文件系统，<code>sudo chmod a+w -R sites</code>，即可。
+
+<li>
+配置文件，<code>cp sites/default/default.setting.php sites/default/setting.php</code>，<code>sudo chmod a+w sites/default/setting.php</code>,即可。
+
+</ul>
+<li>
+在第四步，drupal1，root，12345。
+
+<li>
+最后，网站名字--drupal1,网站邮箱--local@drupal1.com，帐号ray。
+
+<li>
+over
+
+</ol>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Drupal";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Drupal";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

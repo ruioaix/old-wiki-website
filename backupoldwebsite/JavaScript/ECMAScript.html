@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>ECMAScript</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">ECMAScript</h1>
+
+<h2 id="toc_1.1">ECMAScript 基础</h2>
+<ul>
+<li>
+变量，函数名，运算符以及其他一切东西都是区分大小写的。
+
+<li>
+变量是弱类型的
+
+<li>
+每行结尾的分号可有可无，但是推荐总是使用分号。
+
+<li>
+注释与C语言相同，<code>//</code>和<code>/*   */</code>。
+
+<li>
+大括号表示代码块。
+
+</ul>
+
+<p>
+变量的类型真的很弱。
+</p>
+<ul>
+<li>
+除了字母和下划线，美元符号也可以是变量名的一员。
+
+<li>
+ECMAScript的解释程序遇到未声明的标志符时，用该变量名创建一个全局变量，并将其初始化为指定的值。
+
+<li>
+在ECMAScript中，变量可以存在两种类型的值，即原始值和引用值。
+
+<ul>
+<li>
+原始值，就是正常的值。
+
+<li>
+引用值，就是指针。
+
+</ul>
+<li>
+ECMAScript有5种原始类型：undefined，null，boolean，number，string。
+
+<ul>
+<li>
+ECMAScript提供了typeof运算符来判断一个值是否在某种类型的范围内。可以用这种运算符判断一个值是否表示一种原始类型；如果它是原始类型，还可以判断它表示哪种原始类型。
+
+<li>
+undefined类型只有一个值，就是undefined。当声明的变量未初始化时，该变量的默认值是undefined。
+
+<li>
+当函数无明确返回值时，返回的也是值“undefined”。
+
+<li>
+null类型也只有一个值，就是null。如果函数返回的是对象，那么找不到该对象时，返回的通常是null。
+
+<li>
+boolean类型有两个值，true和false。
+
+<li>
+string类型的值，使用双引号和单引号没有区别。
+
+</ul>
+</ul>
+<p>
+ECMAScript的boolen值，数字和字符串的原始值的有趣之处在于它们是伪对象，这意味着它们实际上具有属性和方法。
+</p>
+<ul>
+<li>
+ECMAScript定义所有对象都有toString()方法。
+
+</ul>
+<p>
+引用类型通常叫做类（class），也就是说遇到引用值，所处理的就是对象。
+</p>
+<ul>
+<li>
+ECMAScript预定义了大量的引用类型。
+
+<ul>
+<li>
+object对象
+
+<li>
+boolean对象
+
+<li>
+number对象
+
+<li>
+string对象
+
+<li>
+instanceof运算符用来识别引用类型。（因为typeof只能告诉你是object）
+
+</ul>
+</ul>
+
+<h2 id="toc_1.2">ECMAScript 一元运算符</h2>
+<ul>
+<li>
+delete
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="ECMAScript";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="ECMAScript";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

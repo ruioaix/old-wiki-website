@@ -1,0 +1,75 @@
+= 系统数据文件和信息 =
+== 口令文件 ==
+`#include <pwd.h>`
+`struct passwd *getpwuid(uid_t uid);`
+`struct passwd *getpwnam(const char *name);`
+- `ls -l`命令会告诉你文件的拥有者，这个信息就是ls中的getpwuid通过i节点中的用户ID来获取的。
+- 登录的时候输入用户名，然后getpwnam就根据用户名获得口令信息。
+
+`struct passwd *getpwent(void);`
+`void setpwent(void);`
+`void endpwent(void);`
+- 这三个函数总是联合起来使用的。
+- 第一个负责打开文件并获取一个记录项，再次调用，获取下一个记录项。
+- 第二个是让所有打开的文件都定位到文件开始的地方。
+- 第三个是负责关闭第一个打开的文件。
+
+== 阴影口令 ==
+加密口令是经单向加密算法处理过的用户口令副本。
+
+`#include <shadow.h>`
+`struct spwd *getspname(const char *name);`
+`struct spwd *getspent(void);`
+`void setspent(void);`
+`void endspent(void);`
+
+== 其他数据文件 ==
+至此，讨论了两个系统数据文件：/etc/passwd,/etc/shadow.
+
+还有很多其他的系统数据文件：/etc/protocols，/etc/services，/etc/networks。
+
+一般情况下，对于每个数据文件至少有三个函数：
+# get函数，读下一个记录，如果需要，还可打开该文件。
+# set函数，打开相应数据文件（如果还没有打开），然后反绕该文件，就是将文件定位在开始处。
+# end函数，关闭相应文件。
+# 如果数据文件支持某种形式的关键字搜索，则会提供搜索具有指定关键字记录的例程，比如getpwname。
+
+== 登录账户记录 ==
+`who`读取/var/run/utmp文件。
+
+`last`读取/var/log/wtmp文件。
+
+== 系统标识 ==
+`#include <sys/utsname.h>`
+`int uname(struct utsname *name);`
+
+`#include <unistd.h>`
+`int gethostname(char *name, int namelen);`
+
+== 时间和日期例程 ==
+由UNIX内核提供的基本时间服务是计算自国际标准时间公元1970年1月1日00:00:00以来经过的秒数。
+
+这种秒数是以数据类型time_t表示的。
+
+time函数可以返回当前的时间和日期。
+- `#include <time.h>`
+- `time_t time(time_t *calptr);`
+
+gettimeofday提供了更高的分辨率（最高为微妙级）
+- `#include <sys/time.h>`
+- `int gettimeofday(struct timeval *restrict tp, void *restrict tzp);`
+
+`struct tm *gmtime(const time_t *calptr);`
+- 将日历时间（秒数）转换成国际标准时间的年月日时分秒周日。
+`struct tm *localtime(const time_t *calptr);`
+- 将日历时间转换成本地时间。
+`time_t mktime(struct tm *tmptr);`
+- 将本地时间转换成秒数。
+`char *asctime(const struct tm *tmptr);`
+- 将tm结构转化为字符串。
+`char *ctime(const time_t *calptr);`
+- 将秒数转化为字符串。
+
+`size_t strftime(char *restrict buf, size_t maxsize, const char *restrict format, const struct tm *restrict tmptr);`
+
+=OVER=

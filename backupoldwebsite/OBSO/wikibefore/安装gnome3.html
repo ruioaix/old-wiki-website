@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>安装gnome3</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">安装gnome3</h1>
+<h2 id="toc_1.1">添加gnome overlay</h2>
+<ul>
+<li>
+<code>emerge -av layman</code>
+
+<li>
+<code>echo "source /var/lib/layman/make.conf" &gt;&gt; /etc/make.conf</code>
+
+<li>
+<code>layman -L</code>
+
+<li>
+<code>layman -a gnome</code>
+
+<li>
+<code>mkdir /etc/portage</code>
+
+<li>
+<code>mkdir /etc/portage/package.keywords /etc/portage/package.unmask /etc/protage/profile</code>
+
+<li>
+<code>ln -s /var/lib/layman/gnome/status/portage-configs/package.keywords.gnome3 /etc/portage/package.keywords/</code>
+
+<li>
+<code>ln -s /var/lib/layman/gnome/status/portage-configs/package.unmask.gnome3 /etc/portage/package.unmask/</code>
+
+<li>
+<code>cat /var/lib/layman/gnome/status/portage-configs/use.mask.gnome3 &gt;&gt; /etc/portage/profile/use.mask</code>
+
+<li>
+<code>emerge -avuND world</code>
+
+</ul>
+
+<h2 id="toc_1.2">安装xorg</h2>
+<ul>
+<li>
+修改 <em>/etc/make.conf</em> ，添加下面两句：
+
+<ul>
+<li>
+<code>INPUT_DEVICES="evdev synaptics"</code>
+
+<li>
+<code>VIDEO_CARDS="radeon"</code>
+
+</ul>
+<li>
+<code>echo "x11-base/xorg-server udev" &gt;&gt; /etc/portage/package.use</code>
+
+<li>
+<code>emerge -av xorg-server</code>
+
+<li>
+<code>emerge -av xterm</code>
+
+<li>
+<code>startx</code>  <sup><small>成功</small></sup>
+
+</ul>
+
+<h2 id="toc_1.3">安装gnome3</h2>
+<ul>
+<li>
+<code>emerge -av gnome</code>
+
+<li>
+根据反馈结果：
+
+<ul>
+<li>
+不断修改  <em>/etc/portage/package.use</em> 。
+
+<li>
+如果出现slot冲突，在 <em>/etc/portage/</em> 中进行修改，然后<code>emerge -avuND world</code>。
+
+</ul>
+<li>
+<code>emerge -av gnome</code> 出现如下错误：
+
+<ul>
+<li>
+sys-fs/lvm2 报错，向 <em>/etc/portage/package.use</em> 添加<code>sys-fs/lvm2 -static</code>。
+
+<li>
+media-libs/gst-plugins-good-0.10.23 报错，这是因为23版本对gtk+3来说已经不适合了，所以，向 <em>/etc/portage/package.accept-keywords</em> 文件中添加<code>media-libs/gst-plugins-good ~x86</code>，这样会使用28版本代替23版本。
+
+<li>
+gnome-extra/zenity-3.0.0 报错，安装libnotify，<code>emerge -av libnotify</code>。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.4">启动gnome3</h2>
+<ul>
+<li>
+<code>/etc/init.d/dbus start</code>
+
+<li>
+<code>rc-update add dbus default</code>
+
+<li>
+<code>echo "exec gnome-session" &gt; ~/.xinitrc</code>
+
+<li>
+<code>sed -i '1i\export XDG_MENU_PREFIX=gnome-' ~/.xinitrc</code>
+
+<li>
+<code>startx</code>
+
+</ul>
+
+
+<h2 id="toc_1.5">思考</h2>
+<ul>
+<li>
+我将gnome overlay加入了，然后，我将其中间的对单一portage的配置文件放入到了系统中，那么对系统造成的影响有：
+
+<ul>
+<li>
+使用update的时候，会对现在有的软件进行一定的修改，如果当下有软件在单一portage文件中，那么必然需要升级，对于系统本来没有的软件，效果会反映在emerge -s上面。
+
+<li>
+如果我没有立刻update，那么我现在安装的新的软件，会有一定的影响，比如依赖有新的版本，所以，先update。
+
+</ul>
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="安装gnome3";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="安装gnome3";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

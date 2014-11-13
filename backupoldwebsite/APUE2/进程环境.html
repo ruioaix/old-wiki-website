@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>进程环境</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">进程环境</h1>
+
+<p>
+8种方式使进程终止，其中5种为正常终止：
+</p>
+<ol>
+<li>
+从main返回
+
+<li>
+调用exit
+
+<li>
+调用_exit或_Exit
+
+<li>
+最后一个线程从其启动例程返回
+
+<li>
+最后一个线程调用pthread_exit
+
+<li>
+调用abort
+
+<li>
+接到一个信号并终止
+
+<li>
+最后一个线程对取消请求做出响应
+
+</ol>
+
+<p>
+main函数是c程序的主函数，main返回，c程序就结束了。但对内核来说，不是这样的，在main还是之前，内核做了一些事情，在main返回之后，内核也做了一些事情。而在main返回之后，内核就立即调用exit函数，这种立即调用可以看作是<code>exit(main(argc,argv));</code>，所以，在main中<code>return 0;</code>和直接调用exit(0)没有区别。
+</p>
+
+<p>
+按照ISO C的规定，一个进程可以登记多达32个函数，这些函数将由exit自动调用。
+</p>
+<ul>
+<li>
+这写登记的函数称为终止处理函数。
+
+<li>
+<code>int atexit(void (*func)(void));</code>
+
+<li>
+exit会自动调用这些函数。
+
+</ul>
+
+<p>
+根据ISO C和POSIX.1，exit首先调用各终止处理程序，然后按需多次调用fclose，关闭所有打开流。
+</p>
+
+<p>
+内核首先启动一个c启动例程，然后c启动例程调用main函数，main完成后，如果没有exit，那么就返回到c启动例程，c启动例程就exit，然后exit就调用终止处理程序，以及关闭标准I/O流等。在任何时候调用_exit和_Exit都会导致直接返回内核。
+</p>
+
+<p>
+内核使程序执行的唯一方法是调用一个exec函数。
+</p>
+
+<p>
+进程资源终止的唯一方法是显式或隐式（通过exit）的调用_exit和_Exit。
+</p>
+
+<p>
+ISO C和POSIX.1都要求argv[argc]是一个空指针。
+</p>
+
+<p>
+通常使用getenv和putenv函数来访问特定的环境变量，而不是用environ变量。但是，如果要查看整个环境，则必须使用environ指针。
+</p>
+
+<p>
+ISO C说明了三个用于存储空间动态分配的函数。
+</p>
+<ol>
+<li>
+malloc——分配指定字节数的存储区，此存储区中的初始值不确定。
+
+<li>
+calloc——为指定数量且指定长度的对象分配存储空间。该空间中的每一位都初始化为0
+
+<li>
+realloc——更改以前分配区的长度。新增区域内的初始值不确定。
+
+<li>
+<code>#include &lt;stdlib.h&gt;</code>
+
+<li>
+<code>void *malloc(size_t size);</code>
+
+<li>
+<code>void *calloc(size_t nobj, size_t size);</code>
+
+<li>
+<code>void *realloc(void *ptr, size_t newsize);</code>
+
+<li>
+<code>void *free(void *ptr);</code>
+
+<li>
+三个分配函数所返回的指针一定是适当对齐的。
+
+</ol>
+
+<p>
+因为realloc可能移动存储区，所以，不应该有任何指针指向将要realloc的存储区。
+</p>
+
+<p>
+上面的函数通常都使用sbrk系统调用实现。
+</p>
+
+<p>
+内核并不care环境变量，环境变量仅仅是用于应用程序的。ISO C没有定义任何的环境变量。
+</p>
+
+<p>
+非局部goto——setjmp和longjmp函数
+</p>
+<ul>
+<li>
+<code>#include &lt;betjm.h&gt;</code>
+
+<li>
+<code>int setjmp(jmp_buf env);</code>
+
+<li>
+<code>void longjmp(jmp_buf env, int val);</code>
+
+</ul>
+
+<p>
+使用getrlimit和setrlimit函数来查询和更改进行的资源限制。
+</p>
+<ul>
+<li>
+<code>#include &lt;sys/resource.h&gt;</code>
+
+<li>
+<code>int getrlimit(int resource, struct rlimit *rlptr);</code>
+
+<li>
+<code>int setrlimit(int resource, const struct rlimit *rlptr);</code>
+
+</ul>
+
+<h1 id="toc_2">OVER</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="进程环境";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="进程环境";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

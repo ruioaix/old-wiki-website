@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chapter 7. Process Environment</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link type="image/x-icon" rel="shortcut icon" href="../cssjs/css/favicon.ico"/>
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/css/custom.css" rel="stylesheet">
+	<script type="text/javascript" src="../cssjs/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../cssjs/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../cssjs/js/custom.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+
+</head>
+
+<body>
+	<div class="row-fluid">
+		<div id="left-side"  class="span4"> <div class="row-fluid">
+			<div class="navbar navbar-fixed-top visible-desktop">
+				<div class="navbar-inner">
+					<a class="brand" href="#"></a> 
+					<ul class="nav">
+						<li class="active"><a href="../index.html">home</a></li>
+					</ul>
+				</div>
+			</div><!--navbar --!>
+
+			<div id="myCarousel" class="carousel slide span12 img-polaroid  hidden-phone">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+					<li data-target="#myCarousel" data-slide-to="6"></li>
+					<li data-target="#myCarousel" data-slide-to="7"></li>
+					<li data-target="#myCarousel" data-slide-to="8"></li>
+					<li data-target="#myCarousel" data-slide-to="9"></li>
+					<li data-target="#myCarousel" data-slide-to="10"></li>
+					<li data-target="#myCarousel" data-slide-to="11"></li>
+					<li data-target="#myCarousel" data-slide-to="12"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item">		 <img src="../file/LRphoto/fribourg001.jpg"></div> 
+					<div class="item">       <img src="../file/LRphoto/fribourg002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg003.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg004.jpg"></div>
+					<div class="active item"><img src="../file/LRphoto/fribourg005.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/hangzhou001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/kunming001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/shanghai001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/someplace001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zhoushan001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zurich001.jpg"></div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+
+			<div class="span12" id="profile"><div class="row-fluid">
+				<div class="span4 offset1">
+					<a href="http://github.com/xrfind"><img src="http://s.gravatar.com/avatar/c273e7c0a671536c4d122bc39d67c3d2?s=512" id="avatar" class="img-polaroid"></a>
+				</div>
+				<div class="span6 offset1 hidden-phone">
+					<strong><i class="icon-user"></i> xrfind</strong><br />
+					<span><i class="icon-home"></i><a href="http://wiki.rrrui.com"> wiki.rrrui.com</a></span><br />
+					<span><i class="icon-envelope"></i> xrfind@gmail.com</span><br />
+					<span><i class="icon-heart"></i><abbr title="c, c++, Linux"> System Engineer</abbr></span><br />
+					<span><i class="icon-tasks"></i><abbr title="php, html/css/javascript, LAMP, Redis"> Web Developer</abbr></span><br />
+					<span><i class="icon-road"></i> Complex Network</span>
+				</div>
+			</div></div>
+
+			<div class="span12 hidden-phone" id="disqus">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				var disqus_title="Chapter 7. Process Environment";
+				var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+				var disqus_identifier="Chapter 7. Process Environment";
+
+				(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+
+
+
+		</div></div><!-- left-side --!>
+
+		<div id="right-side" class="span8" >
+			<div id="content">
+			<h1>Chapter 7. Process Environment</h1>
+
+<p>12 sections.</p>
+
+<h2>Section 7.1. Introduction</h2>
+
+<p>process之前的准备工作。</p>
+
+<h2>Section 7.2. main Function</h2>
+
+<p>从这节知道的就是C program是被kernel使用exec函数来执行的，所有的C program都是如此。</p>
+
+<h2>Section 7.3. Process Termination</h2>
+
+<p>这节讲的是process的终止。所有的程序大概都是有main函数的吧，不，所有的需要编译成为可执行格式文件的程序大概都是有main函数的吧，也不一定吗？准确
+的讲应该是入口函数，不同的编译环境下有不同的入口函数，在UNIX的环境下，程序的入口函数就是main函数。所以，这里讲的是AP in the UNIX
+Environment.</p>
+
+<p>入口函数是main，出口就很多了，3个exit，3种last thread，1个return main，1个abort，1个signal。</p>
+
+<p>不可以做太多假设，我可以做的是断言：在UNIX下所有的可执行文件都有main这个入口和9个出口。</p>
+
+<p>UNIX下程序执行的顺序是这样的：</p>
+
+<ol>
+<li>kernel会通过exec来call一个二进制可执行格式文件。 </li>
+<li>exec会找到这个文件的入口，也就是main。 </li>
+<li>main以及main中调用的所有的函数，以及调用函数再调用的所有函数中，任意一个函数调用<code>_exit();</code>或<code>_Exit();</code>的时候，程序从这两个出口出来了，直接返回到kernel。 </li>
+<li>在不存在<code>_exit();</code>和<code>_Exit();</code>的条件下，如果任意一个函数调用<code>exit();</code>，那么，程序从这个出口出去，到达一个临时区域，在这个区域中，会调用一些注册函数，最后清理下所有的I/O stream，然后从这个区域返回到kernel。 </li>
+<li>如果也不存在<code>exit();</code>，那么就是<code>return</code>了，这个出口是回到上一级函数的出口，上一级再上一级。直到main，然后再<code>return</code>，就到了kernel调用exec产生的那个区域，在这个区域会自动的调用<code>exit</code>，执行一些注册函数，清理下，回到kernel。 </li>
+</ol>
+
+<p>上面是正常的4个出口，另外的3个last thread，属于main return一样的处理；还有2个，abort和signal，再看。</p>
+
+<ul>
+<li><code>#include &lt;stdlib.h&gt;</code></li>
+<li><code>void exit(int status);</code></li>
+<li><code>void _Exit(int status);</code></li>
+<li>这是ISO C定义的，难怪exit会处理I/O stream，stream也是ISO C定义的吗。 </li>
+</ul>
+
+<p>总结下，UNIX下，process的开始总是exec导致的，process回归kernel总是<em>exit或</em>Exit导致的。无例外。（exit在做完所有事情
+的时候，也会调用上面的两个。）</p>
+
+<h2>Section 7.4. Command-Line Arguments</h2>
+
+<p>无啥</p>
+
+<h2>Section 7.5. Environment List</h2>
+
+<ul>
+<li><code>extern char **environ;</code></li>
+</ul>
+
+<p>这个使用的话是：<code>for(i=0; environ[i] != NULL; i++){}</code>。</p>
+
+<p>不过类似于/etc/passwd等system data file，对于这个全局变量，UNIX也有相应的函数可以获取并设置。</p>
+
+<h2>Section 7.6. Memory Layout of a C Program</h2>
+
+<p>这一节的内容很好，首先分清楚：C program在执行时内存中的布局和C program保存在硬盘上时硬盘文件的布局。</p>
+
+<p>这里讲的是前者：5个部分。</p>
+
+<ul>
+<li>text segment，Initialized data segment，Uninitialized data segment，stack和heap。 </li>
+<li>stack和heap分别从上下向中间增加，前者是函数调用和动态变量，后者是动态分配的内存空间。 </li>
+<li>两个data segment都是指全局变量，一个初始化了，一个没有初始化。 </li>
+<li>text segment是程序执行代码。 </li>
+</ul>
+
+<p>这里是C program内存中的布局，很易理解，也不需死记。 至于C program文件本身的布局，看吧。</p>
+
+<h2>Section 7.7. Shared Libraries</h2>
+
+<p>这一节只是说明了shared libraries是啥。</p>
+
+<h2>Section 7.8. Memory Allocation</h2>
+
+<p>三个函数，<code>malloc</code>, <code>calloc</code>, <code>realloc</code>。不初始化，初始化为0，不初始化。</p>
+
+<p>有句话让我在意：这3个函数通常是使用<code>sbrk</code>来实现的。这个函数会扩展process的heap。</p>
+
+<ul>
+<li>我好像对这3个函数有了错误的认识。 </li>
+<li>sbrk是通过增加data segment来的，heap不是一个使用的空间，而是一个可以被使用的空间，增加了data segment，也就是减小了heap。 </li>
+<li>3个函数增加的空间从heap获取而来，但现在隶属于data segment，空间的地址会被返回给程序。程序不关心归属，而只关心地址。 </li>
+<li>free了之前的空间，但data segment不会因此减小，这free的空间还在data segment里面，虽然没有被使用，但是记录在册。这就是说的malloc pool。 </li>
+<li>不，以上理解还是有疑问的，但也可以这样理解，另外还有一种理解。 </li>
+</ul>
+
+<p>第二种理解：</p>
+
+<ul>
+<li>heap就是指从data segment开始的，向上延伸的空间。暂且认为heap存在上地址和下地址，下地址就是data segment的顶端，上地址就是heap的另一端的地址。 </li>
+<li>程序刚开始的时候，heap是0，也就是无空间。上地址和下地址相等。 </li>
+<li>在使用这3个函数的时候，就开始扩展heap了，或者说这个时候heap就是从data segment开始到分配的空间的地址这段空间。下地址不变，上地址增加了。 </li>
+<li>free的时候，heap并不随之减小，上地址保持不变，多余出来的可用空间，就称为malloc pool。 </li>
+</ul>
+
+<p>第二种理解更为合适一些，我之所以有第一种理解是因为linux sbrk的说明说其被用于增长data segment的空间。但这两种理解其实是一样的，本质上。</p>
+
+<p><code>alloca</code>直接从stack里面获取空间。自成一系，但不理解stack frame的意思，但也不影响，再说。</p>
+
+<h2>Section 7.9. Environment Variables</h2>
+
+<p>ISO C没有定义任何的环境变量。</p>
+
+<p>使用<code>putenv</code>的时候，其参数不可以是存储在stack中的。可以理解。</p>
+
+<ul>
+<li>如果调用是putenv的不是main，那么，当这个函数返回的时候，stack中存储的内容就不再可用，main中如果使用这个环境变量，那么会导致操作非法地址。 </li>
+<li>但如果调用putenv的是main，那么，貌似就没有问题啊。是不是？ </li>
+</ul>
+
+<p>原本的environment list通常存储在stack之上。</p>
+
+<p>当进行修改的时候，如果修改导致原本的stack之上的空间不足，那么通常会在heap中取出空间进行存储。</p>
+
+<p>environment
+list是一个数组，所以需要存储空间，数组元素指向的可以stack之上空间，可以是heap中的空间，但不可以是stack中的空间。这么理解应该没问题。</p>
+
+<h2>Section 7.10. setjmp and longjmp Functions</h2>
+
+<p>对这两个函数还不熟：</p>
+
+<ul>
+<li><code>#include &lt;setjmp.h&gt;</code></li>
+<li><code>int setjmp(jmp_buf env);</code></li>
+<li><code>void longjmp(jmp_buf env, int val);</code></li>
+</ul>
+
+<p>他们的工作模式还是很奇怪的，但就是这么工作的。</p>
+
+<p>这里面有一个问题，就是setjmp之前，定义了一些变量，在setjmp之后longjmp之前变化了，那么longjmp跳回到setjmp的时候，这些变量的值
+是为何？</p>
+
+<ul>
+<li>变量有：automatic，register，volatile，global，static。 </li>
+<li>如果不加任何优化的编译，那么这些变量保持变化之后的值。 </li>
+<li>如果加了优化，那么automatic，register保持定义时候的值，其他三个保持变化之后的值。 </li>
+<li>这里注意，在setjmp之前定义的变量，在其之后的变量自然没有了。 </li>
+<li>没有优化的时候，这些变量都在内存中，longjmp跳回去，并不影响这些内存中的变量，因为这些变量都在setjmp之前定义。 </li>
+<li>优化了之后，automatic和register变量被放入了寄存器之中，longjmp跳回去的时候，寄存器被覆盖了，所以。 </li>
+</ul>
+
+<p>这里也认识了一些其他的知识，比如各种变量，被优化编译时，register和automatic会被放到寄存器中；volatile就是不要被优化，ok。</p>
+
+<p>加一条： <strong>never be referenced after the function that declared it returns</strong>
+这是对automatic variable来的。</p>
+
+<h2>Section 7.11. getrlimit and setrlimit Functions</h2>
+
+<p>这里说的是processd的resource
+limit，什么是resource，就是这个process最多可以使用的cpu时间，最大可以使用memory等等。感觉貌似在linux上很多resource
+limit都是无限制的。这也是可以理解的。</p>
+
+<ul>
+<li><code>#include &lt;sys/resource.h&gt;</code></li>
+<li><code>int getrlimit(int resource, struct rlimit *rlptr);</code></li>
+<li><code>int setrlimit(int resource, const struct rlimit *rlptr);</code></li>
+</ul>
+
+<p>hard limit和soft limit也好理解。规则也好理解。</p>
+
+<p>所有这些limit都是定义的常量，在上面的头文件中吧。</p>
+
+<p>这一节其实真的可以玩一下的。</p>
+
+<h2>Section 7.12. Summary</h2>
+
+<p><strong>OVER</strong></p>
+			</div><!-- content --!>
+		</div><!-- right-side span8 --!>
+	</div> <!--row-fluid --!>
+</body>
+</html>

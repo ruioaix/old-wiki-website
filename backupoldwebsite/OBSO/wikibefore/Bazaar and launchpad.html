@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Bazaar and launchpad</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Bazaar</h1>
+<ul>
+<li>
+类似于git，也是用于团队合作的，跟踪每一个修改，你的或者他人的，使用快照（类似于git）的方案，其可以很容易的合并多人之间的工作。
+
+<li>
+版本控制工具：文件控制，中央型工具，分布式工具。分布式是最先进的，比如git；而bzr可以中央也可以分布。
+
+</ul>
+
+<h2 id="toc_1.1">bazaar中四个重要的概念</h2>
+
+<h3 id="toc_1.1.1">revision--版本/快照</h3>
+<ul>
+<li>
+revision包含有版本控制相关的文件目录（包括内容和格式），除此之外还包含有以下四个特性：
+
+<ul>
+<li>
+提交人
+
+<li>
+提交时间
+
+<li>
+提交的名称
+
+<li>
+父revision
+
+</ul>
+</ul>
+
+<ul>
+<li>
+revision是不变的，唯一的，由一个唯一的revision-id标示。
+
+<li>
+<strong>可以认为revision是bazaar的基础单元。</strong>
+
+<li>
+相对于revision-id，revision number是在一个branch中，用来标示revision的，比如9，10，这种标示的方式，相对于revision-id更适合人的理解。
+
+</ul>
+
+<h3 id="toc_1.1.2">working tree--当前版本控制的目录</h3>
+<ul>
+<li>
+一个working tree对应于一个branch。
+
+<li>
+比如说：使用<code>commit</code>时，就会根据working tree中的所有文件目录等内容建立一个新的revision。
+
+</ul>
+
+<h3 id="toc_1.1.3">branch--有序的一列revision</h3>
+<ul>
+<li>
+最新的revision叫作tip。
+
+<li>
+branch 可以多个，多个合并起来形成一幅关于revision的graph，graph中的revision是非循环的，而且都被标记了父级和子级，也就称为直接非循环图形，简称DAG。
+
+<ul>
+<li>
+DAG中的发展主线称为<code>mainline</code>，<code>trunk</code>，<code>left hand side（LHS）</code>。
+
+<li>
+如果一个branch有其他的发展线路，那么这些线路开始于某一点，并且最终截止于某一点。
+
+</ul>
+</ul>
+
+<h3 id="toc_1.1.4">repository--仓库</h3>
+<ul>
+<li>
+就是仓库，revision的仓库，简单的情况是一个branch对应一个repository，但也有多个branch对应一个repository的情况。
+
+</ul>
+
+
+<h2 id="toc_1.2">Bazaar的使用</h2>
+<ul>
+<li>
+安装bazaar。（略去）
+
+<li>
+告诉bazaar提交更改的人是谁：<code>bzr whoami "xxx &lt;xxx@xxx.xxx&gt;"</code>，可以不加xxx，那么就是显示之前的值。
+
+<li>
+除了上面一条，其他的bazaar配置，可以暂时不管。
+
+</ul>
+
+<h3 id="toc_1.2.1">本地使用bazaar</h3>
+<ul>
+<li>
+首先是一个目录，可是空的，也可以不是，这个不重要。
+
+<li>
+进入该目录。
+
+<li>
+<code>bzr init</code>，在目录中创建一个branch，并在该目录中加入一个隐藏目录 <em>.bzr</em> 。
+
+<li>
+这时候，bzr只是准备好，但是还需要你告诉它，要追踪哪些文件。
+
+<li>
+<code>bzr add</code>，不加参数，标示追踪所有文件。
+
+<li>
+<code>bzr commit -m "init message"</code>，将追踪的所有文件建立一个snapshot，也就是一个version，这个version上有一个message，就是”init message“。
+
+<li>
+当你修改了文件的时候，可以使用<code>bzr status</code>和<code>bzr diff</code>看看修改了什么。
+
+<li>
+然后，如果就可以commit了。
+
+<li>
+<code>bzr log</code>，可以看到vervison的历史。
+
+</ul>
+
+<h3 id="toc_1.2.2">配合lanuchpad</h3>
+<ul>
+<li>
+从lanuchpad上获取代码的方法：<code>bzr branch lp:xxxx</code>，这里面的<code>lp</code>就是lanuchpad的缩写。这样就比较好理解了。
+
+<li>
+也可以使用<code>bzr branch lp:xxx yourdir</code>，我觉得其实没有啥区别。
+
+<li>
+当lanuchpad上的代码更新了的时候，使用<code>bzr merge</code>就可以将修改down下来，但并没有形成version。
+
+<li>
+可以看下down下来的代码的更改：<code>bzr diff</code>。
+
+<li>
+没问题，就可以<code>bzr commit -m ”xxx“</code>。
+
+</ul>
+
+
+<h2 id="toc_1.3">bazaar使用思考</h2>
+<p>
+使用bazaar的方式有很多，单人，双人，多人集中，多人分布，等等。
+</p>
+
+<p>
+可以这么认为，单人是所有其他类的基础，双人也可以是其他类的基础。
+</p>
+
+<h3 id="toc_1.3.1">单人solo</h3>
+<p>
+单人的时候，不需要仓库的，只需要init下，做第一次的add和commit；然后在每次的修改后，再使用add和commit，这样就不断的有revision，也就形成了自己的branch。
+</p>
+
+<p>
+commit也可以不配合add使用，单独对于某一个文件或者目录，这样也是一个revision。
+</p>
+
+<p>
+bzr init 在你当前目录建立一个.bzr的文件夹，只在当前目录，子目录里面没有。
+</p>
+
+<p>
+bzr add 在当前目录寻找所有的目录和文件和链接，然后将他们注册在案。
+</p>
+
+<p>
+bzr commit 做一个snapshot记录信息，同时需要一个评论message，使用一次这个命令，就将产生一个新的revision，别且提交给branch（其实，产生来revision，branch就自己变更了）。
+</p>
+
+<p>
+bzr init-repo dirname 建立一个仓库，而仓库看来都是shared，可以分享的。
+</p>
+
+<p>
+bzr status和bzr diff，前者比较粗，后者比较细。
+</p>
+
+<h3 id="toc_1.3.2">两人合作</h3>
+<p>
+bzr branch URL 这个就是从一个URL将那里的branch搞过来，放在本地作为branch。这个命令看起来不需要先建立一个目录，然后在目录中init，直接使用目录就可以了。
+</p>
+
+<p>
+有了branch以后，就可以在本地的branch上做修改，commit的也是本地的branch，最终，本地的branch和远端的那个branch需要合并，使用的就是merge这个命令。
+</p>
+
+<p>
+bzr merge URL 没有URL的时候，就直接将远端的branch中的修改更新到本地的branch中。在这条命令执行之后，需要commit一下。
+</p>
+
+<h3 id="toc_1.3.3">多人集中</h3>
+<p>
+有两种方式来产生一个主要的branch。
+</p>
+
+<h4 id="toc_1.3.3.1">先做一个本地branch，然后push成为中心branch</h4>
+<p>
+建立一个仓库 ：bzr init-repo project
+</p>
+
+<p>
+在仓库中init一个： bzr init project/trunk
+</p>
+
+<p>
+将真实的内容，cp到truck中。
+</p>
+
+<p>
+add下，commit下，然后，bzr push 成为一个主要branch。
+</p>
+
+<h4 id="toc_1.3.3.2">做一个空的中心branch，然后commit内容进去</h4>
+<p>
+建立一个仓库 ：bzr init-repo project
+</p>
+
+<p>
+...... <strong>其实我不懂这么产生一个主要的branch</strong> 
+</p>
+
+<h4 id="toc_1.3.3.3">思考</h4>
+<p>
+有了一个中心的branch之后，本地要一个branch，可以使用bzr branch和bzr checkout，branch就是如同上面的两人合作一样，merge下；checkout则是产生一个绑定到中心branch的branch，当commit的时候，修改除了提交到本地branch，也会提交到中心branch；如果是branch下来的，那么使用bzr bind可以绑定成为checkout。
+</p>
+
+<p>
+checkout就是绑定到working tree的branch，这也就是你工作的branch。
+</p>
+
+<p>
+bzr update 保持checkout处于最新的状态。
+</p>
+
+<p>
+在使用checkout的时候，commit提交的本地和中心branch，commit --local则只提交到本地branch。
+</p>
+
+
+
+<h3 id="toc_1.3.4">多人分布</h3>
+<p>
+每个人都有一个mirror branch，这个保持固定，并不是用来工作的branch。
+</p>
+
+<p>
+建立一个mirror branch的方法很简单，init-repo 和 bzr branch/checkout
+</p>
+
+<p>
+而实际工作的branch称为task branch，建立一个task branch的方法也很简单：
+</p>
+
+<p>
+bzr branch mirror fix；mirror是mirror branch，fix是task branch。
+</p>
+
+<p>
+使用pull 保持mirror branch最新。
+</p>
+
+<p>
+将新的mirror更新到task  cd fix，merge，commit
+</p>
+
+<p>
+将task的更新放入mirror
+</p>
+<ul>
+<li>
+如果mirror是checkout，那么cd trunk，update，merge，commit
+
+<li>
+如果mirror是branch，那么cd trunk， pull，merge，commit，push
+
+</ul>
+
+
+
+
+<h3 id="toc_1.3.5">思考</h3>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Bazaar and launchpad";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Bazaar and launchpad";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

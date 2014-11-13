@@ -1,0 +1,46 @@
+= Specifying Program Options =
+设置MySQL programs的选项有以下几种方法：
+    - 命令行中添加选项，这是一次性的。
+    - 在options file中设置选项，这是程序每次运行都会读取的选项。
+    - 在环境变量中设置选项，也是程序每次运行都会读取，就这种目的来说options file可能更适合一些；环境变量中设置还有其他的作用。
+`mysql -h example.com -h localhost`，这里mysql将连接localhost上的server，前者被覆盖了。
+环境变量的优先级最低，命令行的优先级最高，options file位于中间。
+
+== Using Options on the Command Line ==
+在command line里面使用的options遵循以下原则：
+- options位于command之后。
+- options有一个或者两个dash。
+- options是大小写敏感的。
+- 有些options后面接的有参数。
+- 对于使用两个dash的options，也就是使用的是全名，那么后面的参数跟着 *=* ；如果是一个dash的options，那么，options和参数之间可以有空格也可以没有，但有一个option例外，就是`-p`，这个option后面如果接参数，必须无空格的接。
+- options后面的数字参数，可以使用 *k* ， *m* ， *g* ，来表示1024，1024*1024，1024*1024*1024。
+- options的参数如果有空格，那么使用双引号扩起来。
+
+== Using Option Files==
+在linux中，MySQL programs按顺序读取下面的options file。
+| File Name           | Purpose                                                     |
+| /etc/my.cnf         | Global options                                              |
+| /etc/mysql/my.cnf   | Global options                                              |
+| *SYSCONFIR*/my.cnf  | Global options                                              |
+| $MYSQL_HOME/my.cnf  | Server-specific options                                     |
+| defaults-extra-file | the file specified with *--defaults-extra-file=path*,if any |
+| ~/.my.cnf           | User-specific options                                       |
+- *SYSCONFDIR* 一般指 */etc* 。
+- *$MYSQL_HOME* 环境变量。
+
+options file的写法。
+- 一行一个option
+- 没有dash了
+- *#* ， *；* 用于注释。
+- *[group]* ，options file中的options都是按照节来分得。
+- *option_name=value* 写法就是这样。
+- 如果一个option group的名字是一个program的名字，那么这个group中的options都是用于这个program的。
+- *[client]* 是给所有的client program的。所以，对应的，不要把不是所有的client program都认得的option放入这个group里面。
+
+== Command-line Options that Affect Option-File Handling ==
+有一些options，是会影响options file的读取的，所以，他们必须在command line中设置，而不是在options file中。
+
+== Option Defaults, Options Expecting Values, and the = Sign ==
+-  `mysql --host=tonfisk --user=jon`
+-  `mysql --host tonfisk --user jon`
+-  上面都是对的。

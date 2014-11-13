@@ -1,0 +1,60 @@
+%toc
+%title Directories in .vim
+if you type `:set runtimepath?` in vim, you will find *.vim* dirctories in the output.
+{{{
+runtimepath=~/.vim,~/.vim/bundle/php,~/.vim/bundle/vimwiki,/usr/share/vim/vimfiles,/usr/share/vim/vim74,/usr/share/vim/vimfiles/after,~/.vim/after
+}}}
+
+*runtimepath* is a series of folders, in which vim will search the following directories:
+- plugin
+- ftplugin
+- colors
+- autoload
+- doc
+- syntax
+- indent
+
+these folders will be described here.
+
+= plugin directory =
+When vim starts, it will load every files with _.vim_ extension in *plugin* directory. (of course, vim can be set to not load these files in *plugin* directory, actually there are a lot of ways which can achieve this target. But basically, I don't think anybody and any Linux distributions will do this.)
+
+On my Fedora, the vim gives me the following *.vim* files in _/usr/share/vim/vim74/plugin/_ dir by default.
+- getscriptPlugin.vim
+- gzip.vim
+- matchparen.vim
+- netrwPlugin.vim
+- rrhelper.vim
+- spellfile.vim
+- tarPlugin.vim
+- tohtml.vim
+- vimballPlugin.vim
+- zipPlugin.vim
+
+I don't have to figure every script above out. If they are the default options in fedroa, I can expect they are also supplied by many other Linux distributions by default.
+----
+Most likely, what the *.vim* files in *plugin* dir contains is rules, which means a certain thing will happen if a condition is meet. In other worlds, a rule means a _if A do B_.
+
+These *.vim* files add a lot of rules to help vim more intelligent.
+
+Yes, vim's smart is because of the rules, because of _if A do B_.
+
+For example, when we open a *main.c* with vim, a condition is meet. the meet condition is that the file we open is `c` type file. 
+
+Then, Vim do a lot of things for us, e.g. highlight the syntax, very smart autoindent when you type code.
+----
+All rules in *.vim* files in *plugin* dir are global. In other words, the most common.
+
+= autoload directory =
+This dir is a lib. 
+
+A rule is a _if A do B_. _B_ can be a very simple operation or a very complex operation. if latter, the operation can be writed into a function and stored in *autoload* dir. Therefore, a rule will be just one line.
+
+And the *autoload* directory supply a great mechanism which make vim starts much faster. Not work faster, just start faster, I think.
+
+The mechanism is that vim doesn't need to load everything into memory when it starts.
+
+If a condition is meet, vim will search _B_ in *autoload* dir. So maybe the *autoload* dir make vim work slower, but we can not feel that.
+
+If without *autoload* and you have a lot of *.vim* files, the feeling of the delay when vim starts will be obvious.
+

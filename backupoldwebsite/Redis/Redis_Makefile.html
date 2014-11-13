@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Redis_Makefile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Redis(2.6.10)'s Makefile</h1>
+
+<h2 id="toc_1.1">make学习</h2>
+<ul>
+<li>
+<a href="http://www.gnu.org/software/make/manual/make.html">http://www.gnu.org/software/make/manual/make.html</a>
+
+<li>
+<a href="make_3_3之前.html">make_3_3之前</a>
+
+<li>
+make_3_3到 
+
+</ul>
+
+<p>
+<code>include foo *.mk $(bar)</code>是可以的，make处理include的方法是暂停当前，执行include里面的makefile之后，返回当前。还是头文件的意思。
+</p>
+
+<p>
+<code>-include filenames</code>，找不到filename也没事。<code>sinclude filenames</code>一个意思。
+</p>
+
+
+
+<h2 id="toc_1.2">主目录的Makefile</h2>
+<pre>
+default: all
+.DEFAULT:
+    cd src &amp;&amp; $(MAKE) $@
+install:
+    cd src &amp;&amp; $(MAKE) $@
+.PHONY: install
+</pre>
+<ul>
+<li>
+当我<code>make</code>的时候，默认第一个target，相当于<code>make default</code>，也就相当于<code>make all</code>。
+
+<li>
+没有target叫<code>all</code>，所以<code>make all</code>就会执行 <strong>.DEFAULT</strong> 下面的recipe。也就是<code>cd src &amp;&amp; make all</code>。
+
+<li>
+当我<code>make xxx</code>的时候，如果<code>xxx</code>也会执行，相当于<code>cd src &amp;&amp; make xxx</code>。
+
+<li>
+当我<code>make install</code>的时候，<code>install</code>这个target有recipe，也就是<code>cd src &amp;&amp; make install</code>。
+
+<li>
+所以，有意义的是这几个命令，这几个命令包含了所有的情况：
+
+<ul>
+<li>
+<code>cd src &amp;&amp; make xxx</code>
+
+<li>
+<code>cd src &amp;&amp; make all</code>
+
+<li>
+<code>cd src &amp;&amp; make install</code>
+
+</ul>
+</ul>
+<p>
+进入src。
+</p>
+
+<h2 id="toc_1.3">src目录下的Makefile</h2>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Redis_Makefile";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Redis_Makefile";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

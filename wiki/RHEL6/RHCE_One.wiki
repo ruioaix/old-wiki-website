@@ -1,0 +1,269 @@
+= RHCE Part One =
+Red Hat Certified Engineer.
+
+== unit 1 Overview ==
+- UNIX商标在AT&T手中，其他人开发的符合UNIX规范的非常类似与UNIX系统的系统不可以使用UNIX的名字，所以只能另取它名，比如Solaris。
+- UNIX的特色
+    - everything is a file
+    - 配置文件都存储在文本文件中
+    - 小而专一的程序
+    - 大功能通过小程序组合实现
+- Free Software Foundation（FSF）
+    - GNU计划的主要赞助单位
+- GPL，GNU通用公共授权
+    - 任何软体挂上了GPL之后，就变成了open source software。
+- _linux其实也可以看作是Solaris同等级的一种吧，暂时放置。_
+
+== unit 2 Running Commands and Getting Help==
+- shell命令的语法： *command [options] [arguments]* 。
+    - 单词类型的option，则在option之前加上 *--* 。
+    - 字母类型的option，则在option之前加上 *-* 。
+    - 字母类型的可以结合在一起，如`-a -b -c`可以写为`-abc`。
+- *whatis* 用来查看command的简短说明。
+- *--help* 用来查看command的摘要，大多数命令都支持这个选项，但也不是所有的。
+- *man* 用来查看command的手册，man page就称为linux manual。用法 *man [<chapter>] <command>* 。
+    - chapter有8个。
+- *info* 类似于man page，但更详细。
+- */usr/share/doc* 中有非常完整的说明文件。
+- redhat官方的说明文档有搜索功能，也可以使用。
+
+== unit 3 Browsing the Filesystem==
+目录及操作
+- linux目录名称都是大小写区分的。
+    - `cd -`是回到上一个目录。
+    - `cp`可以通过选项`-p`来保持时间戳。
+    - `cat -A`会输出换行字元。
+    - `file` 可以查看文件类型。
+
+== unit 4 The bash Shell==
+bash shell相关
+- *[^a-z]* 除了a-z之间字母的其他任意一个字母。
+ 
+- `history`可以产看历史命令。
+- `^xxx^yyy`可以将上一个命令中的xxx修改为yyy。
+- `cd ~username`可以进入user的主目录。
+- `touch a{a,b}`可以建立aa和ab两个档案。
+- `touch {a,b}{a,b}`可以建立aa，ab，ba，bb四个文件。
+- `touch {a,b}y{a,b}`可以建立aya，ayb，bya，byb四个文件。
+- `echo`后面的单词如果加上倒引号，echo就认为其是变量。
+- `echo hostname:$(hostname)`的结果同上。
+- shell中使用双引号，则双引号中的几个字符会经过处理
+    - `$`
+    - `\`
+    - 倒引号
+    - `!`
+    - 使用双引号的效果和不使用任何引号的效果是相同的。
+- shell中使用单引号，则单引号内部的任何字符都不会被处理，都将直接输出。
+- 在shell中输入Crtl-R，就进入了寻找命令的提示下。
+- 在shell中输入Alt+`.`，会将上一个命令的最后一个参数放出来。
+
+== unit 5 Standard I/O and Pipes==
+- `ls -l /dev/std*`可以看到3个标准输入输出。
+- 在缺省设置下，标准输出和标准错误都会输出在屏幕上。
+- `>`导出资料，并覆盖。
+- `>>`导出资料，但不覆盖，而是添加。
+- `<`导入。
+- `1>`标准输出导入到文件。
+- `2>`标准错误导入到文件。
+- 直接使用`>`的时候，和`1>`是一样的。
+- 使用`> 2>&1`或者`1> 2>$1`将标准输出和标准错误都输入到文件。
+- `cut -f4 -d: -c4-8 filename`
+- `sort [options] file`
+- `|`可以将某个指令的输出变成另一个指令的输入。
+- `xargs`可以将pipe导入的文本作为后续指令的参数使用。
+- `cat file.txt|xargs rm -f`
+- `tee`可以将标准输出记录，同时标准输出并不受到影响。
+
+== unit 6 Users, Groups, and Permissions ==
+- users和groups用于控制linux文件的存取权限。
+- 每个file都有owner，owner必定是一个user，user必定有一个group。
+- 每个process也有一个owner，就是是user和group。该process所能存取的resources也有限制。
+- user
+    - 每一个都有一个唯一的user id。
+    - 记录在 */etc/passwd* 和 */etc/shadow* 。
+- group
+    - 每一个都有一个唯一的group id。
+    - 记录在 */etc/group* 和 */etc/gshadow* 。
+    - 每个user都会有一个自己唯一的group；也可以有其他的group。
+- root user
+    - 拥有所有的权限。
+- 每个file和directory都有权限设定。
+    - 权限permission用于限制三种类型： owner，owener的group的其他user，others
+    - permission自身分为三种：read，write，execute。
+    - r：读取档案，和，使用ls列出dir内容的权限。
+    - w：写档案，和，从一个dir中创建和删除档案的权限。
+    - x：执行档案，和，使用cd进入dir，并使用ll等权限。
+- `ls -l dir`看的是dir内部的内容。
+- `ls -ld dir`看的是dir本身。
+
+== Unit 7 vi Editor Basics and Printing ==
+- `w`到下一个word的第一个字母。
+- `b`到上一个word的第一个字母。
+- `(`到上一个句子。
+- `)`到下一个句子。
+- `{`到上一个段落。
+- `}`到下一个段落。
+- `dtc`就是从光标当前位置删除到字母c。
+
+== Unit 8 The Linux Filesystem In-Depth ==
+- 硬盘会分成分区，partitions。
+- partition需要格式化，从而拥有一个filesystem。格式化就是给予一个partition一个filesysytem的过程。
+- 只有具有filesystem的partition才能存储文件。
+- linux的filesystem有很多种，ext4，ext2等。
+- 当一个partition被格式化为ext4时，就会在partition上建立一个inode table。
+- inode table，既然是table，所以，必然的有条目，每个条目都具有相同的结构，条目的索引就是inode number。条目的其他部分包括一个文件的各种属性。
+    - time stamp：access time，modify time， change time。
+        - access time：最后一次存取这个档案的时间。
+        - modify time：最后一次编辑这个档案的时间。
+        - change time：该条目任何一个部分有变化的时间。
+    - pointer指向了实际的文档的存储位置（那几个block）。
+    - dir和file对于inode table来说是没有区别的。
+- 当`cp`发生时，会找到一个空的inode number，放入到inode table；建立一个dir entry，得到新的file name，放入到这个inode number的条目中，然后复制。
+- 一个inode number是否可以使用，是在于这个条目的link count是否为0。
+- symbolic（or soft）links
+    - symbolic link的内容就是一个名称，一个filename。
+    - `ln -s filename linkname`
+- hard links
+    - 不同的filename对应到同一个inode number。
+    - `ln filename [linkname]`
+    - 不可以跨partition。
+    - 这个会改变inode number对应条目的link count。
+    - 没办法建立dir的hard link。
+- 7种档案形态
+    - regular file，directroy，symbolic link，block special file，character special file， named pipe， socket。
+- df
+    - 显示每个partition的使用情况。
+    - `df -h`使用比较容易阅读的方式来显示。
+    - `df -h anyonefile`
+- du
+    - 显示每一个目录里面使用了多少空间。
+    - 显示目录中子目录使用的多少空间。
+    - `du -s dirname`显示指定目录占用的空间。
+    - `du -sh dirname`使用比较容易阅读的方式显示目录占用的空间。
+- removable media，非root用户可能只能mount一些特定的media，通常mountpoint在/media中。
+- `eject`用于unmount。
+- `tar`是打包档案的，不是压缩档案的。
+    - `tar cvf archive_name files...`
+    - `c` create a new archive。
+    - `v` 显示打包详细信息。
+    - `f` archive_name is name of new file.
+    - 不需要dash。
+    - `tar tf archive_name`显示包里有那些内容。
+    - `tar xvf archive_name`解包。
+- 压缩档案
+    - gzip，gunzip；`gzip -v termcap`，`gunzip termcap.gz`。    
+    - bzip2，bunzip2
+- 打包档案的时候，一般同时就压缩档案。
+    - tar后面接`z`，就使用gzip方式压缩档案。
+    - tar后面接`j`，就是bzip2方式压缩档案。
+
+== Unit 9 Configuring the bash Shell ==
+- 三种设定bash shell的方式。
+    - local variable
+    - aliase 和 function
+    - `set`命令
+- variable存储在内存中
+    - local，
+    - environment，
+    - 两种variable。
+- `set`查看所有的variable。
+- `env`只查看系统的environment variable。
+- 常见的Local variables
+    - HISTFILESIZE 指定history一共记录几条command记录。
+    - COLUMNS 终端的宽度。
+    - LINES 终端的高度。
+- ps1 local variable
+    - 提示字元前面的提示。
+- 常见的environment variables
+    - HOME
+    - LANG
+    - PWD
+- `which ls`
+- Shell Startup Scripts
+    - 在script里面建立local variable，或者运行set command
+    - 在script里面建立environment variable
+    - 使用aliase
+    - 运行programs
+- Login Shells
+    - 使用登录所启用的shell
+    - nonlogin shell和login shell执行不同的startup script。
+    - login shells会先执行 */etc/profile* ，这个script会执行 */etc/profile.d/xx.sh* 。
+        - 然后执行 *~/.bash_profile* ，这个script会执行 *~/.bashrc* ，这个script会执行 */ect/bashrc* 。
+    - nonlogin shell会执行 *~/.bashrc* ,*/etc/bashrc* ， */etc/profile.d* 。
+- /etc/profile
+    - login shell第一个执行的startup script。
+    - 其中，定义了PATH，USER，LOGNAME，MAIL，HOSTNAME，HISTSIZE，and INPUTRC。
+- /etc/profile.d
+    - 一些应用程序需要的startup scripts。
+    - 这里面的script主要是建立变数，以及一些初始化程序。
+- ~/.bash_profile and ~/.bashrc
+    - user自身的设定。
+- ~/.bash_logout
+    - 登出的时候会执行。
+    - 比如，备份，删除临时文件，或显示登出日期时间等。
+
+== Unit 10 Advanced Topics in Users,Groups and Permissions ==
+- system user and group.
+    - 1-499的uid和gid是给系统user和group使用的。
+- `su - username`
+    - 这里的dash是指：将为user启动一个login shell，也就是上面的login shell启动的过程。
+    - 所以，environment variable，local variable都会更改位user的。
+- `whoami`，`groups`，`id`。
+- `users`，`who`，`w`。
+- `last`
+- default Permissions
+    - default permissions for file is 666
+    - default permissions for dir is 777
+    - 使用umask来遮掉一些权限。
+    - 非root的users，umask是002。
+    - root，umask是022。
+    - `umask`
+- special permissions
+    - 又叫做第四个权限。
+    - suid，sgid，sticky。
+    - rwsrwsrwt。rwSrwsrwt。
+    - 小写的s或t，表示本来有x。
+    - 大写的S或T，表示本来没有x。
+    - `chmod u+s filename`
+    - `chmod g+s filename`
+    - `chmod o+t filename`
+    - `chmod 2755 filename` rwxr-sr-x
+    - `chmod 7755 filename` rwsr-sr-t
+    - 执行档案可以带有suid和sgid。
+        - 带有suid的命令，当执行时，是按照命令所有者来执行，而不是当前命令执行者的user。也就是说任意人都可以执行suid的命令。
+        - 带有sgid，是按照owner所在组的身份来执行。
+    - 目录可以带有stick和sgid。
+        - 如果一个dir带有stick，那么这个dir里面的档案只有档案的owner和root可以删除。
+        - 如果一个dir带有sgid，只有dir的group里的user才能在dir里建立档案。
+
+== Unit 11 Advanced Uses of the vi Editors ==
+- 银幕上的位置：`H`，`M`，`L`； `z+enter`将当前行设置为屏幕第一行。`z+-`将当前行设置为屏幕最后一行。
+- `!!ls -l`
+- `:%s/this/that/g`
+- `:r file1`将file1放入当前位置
+- `:1,20w file2`将当前文档的1到20行写入file2
+- `:1,$w file3`将当前文档的所有内容写入file3
+- `:1,20w >> file4`
+- `:set`
+- `:set all`
+
+== Unit 12 Introduction to String Processing ==
+- `head -n 15 file1`
+- `head -12 file1`
+- `tail -5 file1`
+- `tail -f file1`
+- `wc -l file1`line计数
+- `wc -w file1`word计数
+- `wc -c file1`character计数
+- `sort file2 | uniq`将file2排序，然后相邻的相同的行就只剩一行。
+- `uniq -c file2`计算重复行。
+- `paste file1 file2 file3>file123`这是列和合并。
+- `cat file1 file2 file3>file123`这是行合并。
+- `tar 'A-Z' 'a-z'<.bash_profile`大写字母变成小写字母。
+- `cat -A file4|tr '$' '\r'>file4.txt` unix转变为dos格式。
+- `diff ABC abc`
+- `sdiff ABC abc`
+- `aspell check file2`检测档案字拼写。
+- `expand file1`将file1中的tab变为空格。
+- `fmt -u -w50 file1`规范文档。
+- `pr -5 /usr/share/dict/words | more`

@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Git</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Git</h1>
+
+<h2 id="toc_1.1">github</h2>
+<ul>
+<li>
+<a href="Git and github.html">Git and github</a>
+
+</ul>
+
+<h2 id="toc_1.2">我的一些git脚本</h2>
+<ul>
+<li>
+<a href="files/git/vwikifirst.myscript][pull source from github.html">files/git/vwikifirst.myscript][pull source from github</a>
+
+<li>
+<a href="files/git/vwikilast.myscript][push source to github.html">files/git/vwikilast.myscript][push source to github</a>
+
+</ul>
+
+<h2 id="toc_1.3">Git 基本原理</h2>
+<ul>
+<li>
+从一般的高度来说，git是<code>commit</code>的集合，<code>commit</code>的序列构成了分支。
+
+<li>
+分支可以有很多，分支可以使用不同的名字来标记，缺省的一个是<code>master</code>。
+
+<li>
+git的仓库可以认为是分支的集合。仓库包括远程仓库和本地仓库。
+
+<li>
+从本质上讲，远程仓库和本地仓库不存在重要性上的差异。
+
+</ul>
+
+<h3 id="toc_1.3.1">Git在本机上的设置</h3>
+<ul>
+<li>
+安装Git
+
+<li>
+安装git之后的配置。
+
+<ul>
+<li>
+使用的是<code>git config --global user.name "xxx"</code>命令，这个命令中<code>--global</code>是指针对当前用户的设置，<code>--system</code>这个是针对系统的设置，还有针对特定仓库的；这里的本质不同其实是将同样的命令写入到不同的配置文件中。
+
+<li>
+使用<code>git config --list</code>可以看出当前的设置情况。
+
+<li>
+这里的配置，主要设置的是user.name和user.email两个，其他的保持默认即可。
+
+</ul>
+<li>
+设置第一个需要使用git来跟踪的项目。
+
+<ul>
+<li>
+首先你得有个项目，这个项目可以是0,也可以是已经做好了一部分，放在了某个目录下。对git来说，这两种其实没有区别。
+
+<li>
+项目是0,那可以马上开始，首先建立一个目录。
+
+<li>
+到这里，可以看到，不论项目开始与否，我们都有了一个目录。
+
+<li>
+现在cd到这个目录中，使用<code>git init</code>命令。
+
+<li>
+到这一步，这个目录已经被git初始化了。
+
+<li>
+使用<code>git stauts</code>，可以看看当前目录的状态，注意这个命令是要在你项目的目录中运行。
+
+<li>
+当前的状态（对已经建立了部分的目录来说）是：有很多的文件没有被track，也就是<code>untrack</code>的状态。
+
+<li>
+对空目录来说，没有文件。所以，状态的显示也是没有file
+
+<li>
+当如果你在空目录中建立了一个文件，那么，状态显示就是：一个文件处于<code>untrack</code>的状态。
+
+<li>
+这里要说下git中的几种文件状态。
+
+<ul>
+<li>
+首先是<code>untrack</code>，也就是这个文件没有被git追踪。
+
+<li>
+<code>unmodified</code>，代表这个文件被track了，而且从上次被track之后，就没有修改过。
+
+<li>
+<code>modified</code>，对应上面的就知道了，是修改过的，但git不知道修改的是什么。
+
+<li>
+<code>staged</code>，代表这个文件已经是被track了，而且，从上次被track以来，修改过，而且，这种修改的内容已经被git知晓了。
+
+<li>
+<code>staged</code>的文件，如果commit了，那么就变成了<code>unmodified</code>了。
+
+<li>
+对一个文件来说，首先看它是否被track了，没有，那么就一个状态untrack。
+
+<li>
+如果track了，那么就可以是上面的其他三种情况，三者之间的关系如下：
+
+<ul>
+<li>
+<code>unmodified</code>和<code>modified</code>，这个简单，暂且这样理解，只能从前者到后者，到后者的方法就一种，改动文件就可以了。
+
+<li>
+<code>modified</code>和<code>staged</code>，这个也简单，暂且这样理解，只能从前者到后者，到后者的方法就一种，<code>git add</code>就可以了。
+
+<li>
+<code>staged</code>和<code>unmodified</code>，这个也简单，暂且这样理解，只能从前者到后者，到后者的方法就一种，<code>git commit</code>就可以了。
+
+</ul>
+<li>
+而<code>track</code>和<code>untrack</code>，前到后，使用的是<code>git rm</code>，后到前使用的是<code>git add</code>。
+
+</ul>
+<li>
+现在，在<code>git init</code>之后，目录中文件处于的状态就是<code>untrack</code>。
+
+<li>
+这个时候，使用<code>git add .</code>，就会将所有的文件处于<code>track</code>状态，并且是<code>staged</code>的状态，本身，<code>git add</code>就有两层功用。
+
+<li>
+也可以看到，目前的本地的仓库，使用的就是<code>master</code>分支。
+
+<li>
+使用<code>git commit -m ”init“</code>，就可以将这些处于<code>staged</code>状态的文件设置为<code>unmodified</code>。
+
+<li>
+现在可以使用<code>git status</code>，就可以看到在分支<code>master</code>上，处于<code>nothing to commit</code>的状态。
+
+<li>
+到这里，本地的git跟踪的项目，就OK了。
+
+</ul>
+</ul>
+
+<h3 id="toc_1.3.2">将本地仓库推送到github上</h3>
+<ul>
+<li>
+首先当然是本机与github的通信。
+
+<li>
+在github上注册，建立一个账户。
+
+<li>
+然后，点击首页的四幅小图就可以链接到4个帮助的页面，其中有ssh的设置。这里其实总结来讲，就是本机的一个账户，使用ssh工具生成ssh的密钥，然后将公共密钥放入github的账户里，这样以后，此用户使用ssh通道就可以链接到github该账户，对账户的仓库进行一些列的处理。
+
+<li>
+这一步不详细叙述了。
+
+<li>
+现在已经处理好了ssh通道的问题。
+
+<li>
+现在本地已经有一个建立好的仓库。
+
+<li>
+现在在github，也就是远程端建立一个仓库。
+
+<li>
+到本地仓库的目录中，使用命令<code>git remote add origin git@github.com:xxx/xxx.git</code>，这样就建立了一个远程的仓库，仓库的名字是origin。
+
+<li>
+然后，使用<code>git push origin master</code>，意思上将当前的master分支推送到origin这个远程仓库中。
+
+</ul>
+
+<h3 id="toc_1.3.3">从远程仓库clone到本地</h3>
+<ul>
+<li>
+通过上一步，在远程仓库上已经有了一个master分支。
+
+<li>
+使用<code>git clone git@github.com:xxx/xxx.git xxxdir</code>就可以将远程仓库上的master分支，克隆到本地。
+
+<li>
+并且，上面的命令，还产生了几个额外的作用，产生了一个缺省的origin，用来表示git@github.com:xxx/xxx.git，有一个origin/master分支，这是和远程对应的，有一个本地的master分支，这个分支就用于跟踪远程的master分支。
+
+<li>
+<code>git fetch xxx</code>这个命令只是从远程获取本地仓库没有的数据，并不会将其同本地仓库合并。
+
+<li>
+<code>git pull xxx</code>这个命令就是从远程获取，且立即合并。
+
+<li>
+将自己的本地的仓库推送的远程，使用的就是<code>git push origin master</code>命令，这个上面已经讲过了，就是将本地的master分支推送到origin这个远程仓库上和origin/master进行合并。
+
+</ul>
+
+<h2 id="toc_1.4">Git 分支的概念</h2>
+<ul>
+<li>
+首先，git的元数据是commit，每个commit包含了一个tree和提交commit的人的信息，commit的时间等等；tree包含了对每个修改的文件的修改方式，使用的是blob格式。
+
+<li>
+每次commit就产生了一个commit，一系列的commit，就产生了一系列的commit，这就是分支。
+
+<li>
+主干分支，通常标志为<code>master</code>
+
+<li>
+<code>master</code>通常指向最新的commit，但也不一定。
+
+<li>
+<code>git branch xxx</code>就产生了一个分支，这个分支就指向当前<code>master</code>所在的位置。
+
+<li>
+使用上面的命令只会产生一个xxx分支，但你工作的还是<code>master</code>的分支，想要切换的xxx分支去工作，就需要使用<code>git checkout xxx</code>这个命令。
+
+<li>
+<code>git checkout -b xxx</code>相当于上面两个命令的集合。
+
+<li>
+有了一个新的分支，并且有过commit的发展，那么，想要将这个分支加入到<code>master</code>分支所需要的操作是：<code>git checkout master</code>和<code>git merge xxx</code>，就将xxx分支融合进入了<code>master</code>分支。
+
+<li>
+一个分支被merge之后，就没有上面作用了，就可以删除掉了<code>git branch -d xxx</code>。
+
+<li>
+如果<code>merge</code>发生了冲突，就不会提交，使用<code>git status</code>命令就可以看到，冲突的内容，标记为<code>unmerged</code>，然后在标记其后的文件中，手动的修改，而且文件中是有标记的。
+
+<li>
+解决之后，文件会处于<code>modified</code>状态，<code>git add</code>，<code>git commit</code>，就可以了。
+
+</ul>
+
+<h3 id="toc_1.4.1">git 远程分支</h3>
+<ul>
+<li>
+远程分支，是对远程仓库的一种索引，其是在本地的，但是如前所诉，其是一种索引，是不可在本地改变的，其改变只会发生在git使用网络功能的时候。
+
+<li>
+可以将其看作书签，标示着：上次连接远程仓库时上面各分支的位置，（如果远程仓库上只有master，那么就是master分支的位置）
+
+<li>
+我们使用<code>（远程仓库名）/（分支名）</code>来标示远程分支，如<code>origin/master</code>。
+
+<li>
+跟踪分支是从远程分支检出的本地分支，在跟踪分支里使用<code>git pull</code>，就会获取远程索引，然后合并到本地分支。使用<code>git push</code>git会自动分辨那个向那个服务器，那个分支推送数据。
+
+<li>
+<code>git clone</code>就会自动的使用<code>master</code>来跟踪<code>origin/master</code>。
+
+<li>
+over
+
+</ul>
+
+<h2 id="toc_1.5">以前的git学习</h2>
+<ul>
+<li>
+<a href="use github for my personal website.html">use github for my personal website</a>
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Git";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Git";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

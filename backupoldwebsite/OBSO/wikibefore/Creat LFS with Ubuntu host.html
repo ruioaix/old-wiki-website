@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Creat LFS with Ubuntu host</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Creating LFS with Ubuntu host</h1>
+
+<h2 id="toc_1.1">Partition and File System</h2>
+<ul>
+<li>
+我在安装ubuntu10.04的时候只分了三个分区，一个根分区，给了40G，一个/home分区，给了100G，这两个是主分区，然后我很傻的分了一个扩展分区2G，然后建了一个逻辑分区2G作为swap分区，这就是问题了，我当时应该将剩余空间都给扩展分区。
+
+<li>
+所以，我必须将扩展分区重做，下面是过程：
+
+<ul>
+<li>
+fdisk是工具。
+
+<li>
+<code>d</code>掉扩展分区。
+
+<li>
+<code>n</code>了一个新的扩展分区，包含所有剩余空间。
+
+<li>
+<code>n</code>了sda5，10G，用来作/root
+
+<li>
+<code>n</code>和<code>t</code>了sda6，新的swap，2G
+
+<li>
+<code>n</code>了sda7，sda8，sda9，sda10，分别是100M，5G，10G，20G，分别给boot，home，opt，usr/src。
+
+<li>
+<code>w</code>。
+
+</ul>
+<li>
+ubuntu显示在下次启动的时候使用新的分区表。
+
+<li>
+注释掉<code>/etc/fstab</code>的swap语句，不然sda5重启无法使用。
+
+<li>
+<code>reboot</code>
+
+<li>
+<code>mkfs.ext3 sda5/7/8/9/10</code>
+
+<li>
+<code>mkswap sda6</code>
+
+<li>
+<code>blkid /dev/sda6</code>，得到新的swap的UUID，然后修改掉<code>/etc/fstab</code>中的UUID。
+
+<li>
+<code>reboot</code>
+
+<li>
+<code>cat /proc/swaps</code>
+
+<li>
+<strong>注：有些发行版会重新定义自己的文件系统生成工具，这里的mkfs.ext3验证过，没有改动。</strong>
+
+<li>
+挂载文件系统到当前host
+
+<ul>
+<li>
+<code>mkdir -pv /mnt/lfs</code> -p是没有mnt的时候建立mnt的意思，-v是输出信息。
+
+<li>
+<code>mount -v -t ext3 /dev/sda5 /mnt/lfs</code> 挂载，-v是输出信息，后面是固定的挂载格式。
+
+<li>
+同理，挂载其他几个。
+
+<li>
+<code>mount</code> 观察是否挂载成功。
+
+</ul>
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Creat LFS with Ubuntu host";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Creat LFS with Ubuntu host";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

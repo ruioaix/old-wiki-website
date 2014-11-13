@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>C标准中很有用的几个术语</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">C标准中几个很有用的术语</h1>
+
+<h2 id="toc_1.1">不可移植的</h2>
+<ul>
+<li>
+不同的编译器，就会有不同的定义，C并没有规定其具体定义如何，但C规定任何C编译器都必须指定其意义，并文档说明。
+
+<li>
+例如：当整形右移位时，要不要扩展符号位。
+
+</ul>
+
+<h2 id="toc_1.2">未确定的</h2>
+<ul>
+<li>
+C标准没有任何规定，也不要求编译器去做规定。“在某些正确情况下的做法，标准并未明确规定应该怎么做”
+
+<li>
+例如：参数求值的顺序。（不管顺序如何，只要求值中不相互引用或影响，那么总是正确的）
+
+</ul>
+
+<h2 id="toc_1.3">未定义的</h2>
+<ul>
+<li>
+C标准没有任何规定，也不要求编译器去做规定。“在某些不正确的情况下的做法，标准并未明确规定应该怎么做”
+
+<li>
+例如：当一个有符号整数溢出时该采取什么行动。（错误的情况）
+
+<li>
+例如：试图使用空指针的内容。
+
+<li>
+其包括两部分：
+
+<ul>
+<li>
+不符合约束条件的————编译器报错。
+
+<li>
+非定义中除去上面一条的————编译器可以不告诉你。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.4">约束条件</h2>
+<ul>
+<li>
+C标准中明确规定必须遵守的限制和要求，任何不符合约束条件的行为都是上面说的“未定义的“。
+
+<li>
+例如：%操作符的操作数为非整形时。
+
+</ul>
+
+<h2 id="toc_1.5">可移植的</h2>
+<ul>
+<li>
+遵循下面三条的，就称为可移植的。
+
+<ul>
+<li>
+不使用“不可移植的“
+
+<li>
+不使用“未定义的“和“未确定的“
+
+<li>
+只使用已确定的特性。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.6">遵循标准的</h2>
+<ul>
+<li>
+在“可移植的“中去掉第一个限制“不使用不可移植的“这条，也就是说，可以使用一些依赖于编译器的特性。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="C标准中很有用的几个术语";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="C标准中很有用的几个术语";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

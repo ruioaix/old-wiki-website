@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>php5_variables</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Variables</h1>
+<p>
+变量是用 <strong>$</strong> 加上变量名来表示的。变量名大小写敏感。
+</p>
+<ul>
+<li>
+<code>$this</code>是不能赋值的特殊变量。
+
+</ul>
+<p>
+变量也支持引用和赋值，与c蛮像。
+</p>
+
+<p>
+不赋值的话，各类型有default value。
+</p>
+<ul>
+<li>
+boolean：false
+
+<li>
+integer&amp;floats：0
+
+<li>
+strings：empty string
+
+<li>
+aray：empty array
+
+</ul>
+
+<p>
+php提供了大量的预定义变量。
+</p>
+<h2 id="toc_1.1">Variable scope 变量作用域</h2>
+<ul>
+<li>
+与c有点不同，在函数里面，如果想使用全局变量，必须使用 <strong>global</strong> 。
+
+<li>
+global关键字和<code>$GLOBALS['a']</code>是相同的。
+
+<li>
+<code>$GLOBALS</code>是superglobal。
+
+<li>
+大部分的predefined variable并不是superglobal。
+
+<li>
+在函数外使用global关键字是错误。
+
+<li>
+static和c很像。
+
+</ul>
+
+<h2 id="toc_1.2">Variable variables</h2>
+
+<h2 id="toc_1.3">Variable From External Sources</h2>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="php5_variables";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="php5_variables";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

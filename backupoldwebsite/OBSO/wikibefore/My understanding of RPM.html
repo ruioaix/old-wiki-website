@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>My understanding of RPM</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">RPM</h1>
+<h2 id="toc_1.1">what are packages</h2>
+<ul>
+<li>
+linux中的程序，需要
+
+<ul>
+<li>
+程序本身，程序本身的配置文件。
+
+<li>
+程序本身调用的其他程序，以及其他程序的配置文件。
+
+<li>
+程序本身调用的其他程序调用的其他程序，以及......
+
+</ul>
+<li>
+在需要使用一个软件的时候，你要完成上面的过程，一种是自己手动去做，一种是计算机自己完成；手动是可行的，但也许会设计几千，甚至几万个文件，最好的当然是计算机去完成。
+
+<li>
+计算机完成的方案就是通过PM。PACKAGE MANAGER。
+
+<li>
+什么是包？
+
+<ul>
+<li>
+把相关的东西放在一起。
+
+<li>
+在使用前需要打开。
+
+<li>
+包上有标志，指出包里是啥。
+
+</ul>
+<li>
+对RPM来说，包是package，.rpm文件，或者就叫RPM。
+
+<li>
+每个RPM里面可能还有几千个文件。但现在的redhat下，还是有几万个RPM包，这些包并不是那么独立的，相互之间还是会有关联。
+
+<li>
+处理这些关联是RPM的一个作用，但显然，RPM可以做更多的事情。
+
+</ul>
+
+<h2 id="toc_1.2">RPM</h2>
+<ul>
+<li>
+RPM不是第一个PM。
+
+<li>
+在其之前，还有PM，PMS，RPP。
+
+<li>
+在上面三者的基础上，第一代RPM出现了，是使用perl语言写的。
+
+<li>
+第二代RPM很快出现，是用C语言写的。
+
+<li>
+每个RPM包本身有标签，包里面的文件的信息也被包含在RPM中，包括md5。
+
+</ul>
+
+<h2 id="toc_1.3">RPM 和 redhat</h2>
+<ul>
+<li>
+RPM是redhat发展迅速的重要原因。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="My understanding of RPM";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="My understanding of RPM";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

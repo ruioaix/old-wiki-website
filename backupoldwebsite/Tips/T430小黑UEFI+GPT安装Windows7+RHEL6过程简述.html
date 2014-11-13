@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>T430小黑UEFI+GPT安装Windows7+RHEL6过程简述</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">T430小黑UEFI+GPT安装Windows7+RHEL6过程简述</h1>
+<p>
+凭记忆去描述。
+</p>
+
+<h2 id="toc_1.1">BIOS设置</h2>
+<p>
+首先在BIOS中设置UEFI only，CSM开启。我一直没有使用独显，在BIOS中设置只使用核芯显卡且独显不可被OS探测。
+</p>
+
+<p>
+需要注意的一个事情是LENOVO UEFI BIOS在1.16和2.50版本的时候RHEL6.3是可以正常使用的，前些日子从1.16升级BIOS到2.20，结果RHEL6.3出现了屏幕右移、颜色错误的情况，从2.20升级到2.50之后，这一bug被修复。问题应该是BIOS中的代码影响了RHEL6的显卡驱动。
+</p>
+
+<h2 id="toc_1.2">Windows 7安装</h2>
+<p>
+先安装Windows7，直接download的msdn的cn_windows_7_ultimate_with_sp1_x64_dvd_u_677408.iso，然后使用ultroISO将镜像写入到U盘，结果不能正常启动安装。
+</p>
+
+<p>
+对这个镜像进行修改，在efi目录中添加了 <strong>boot\BOOTX64.efi</strong> 。也就是说现在，efi目录下，有两个目录了，一个是microsoft，一个是boot。至于这个BOOTX64.efi文件，是从 <strong>source\install.wim</strong> 文件中提取的，提取路径是 <strong>Windows\Boot\EFI\bootmgfw.efi</strong> 文件要重命名为 <strong>BOOTX64.efi</strong> 。
+</p>
+
+<p>
+修改镜像之后，刻录到U盘，U盘引导启动，然后进入windows安装程序，在分区的时候，使用 <strong>shift+F10</strong> 打开命令行，键入 <strong>diskpart.exe</strong> 回车，打开diskpart工具。
+</p>
+
+<p>
+使用该工具将硬盘转化为GPT硬盘，这里要注意，如果硬盘上还有分区，那么 <strong>convert GPT</strong> 就会失败，所以，需要先用diskpart将所有分区都删除掉。然后再 <strong>convert GPT</strong> 。
+</p>
+
+<p>
+转化为GPT硬盘之后，还是使用diskpart来创建分区，这里有个好处，之后会讲。
+</p>
+
+<p>
+先创建ESP分区，也就是 <strong>EFI system partition</strong> 分区。这是每个GPT硬盘上都必须有的一个分区，我给了500M，这个分区不仅仅是用来放置windows的EFI application（一般是efi后缀的文件，用于引导对应OS启动），之后还会放置所有其他OS的EFI application。我大概会用到三到四个系统，所以分了500M，应该足够了。
+</p>
+
+<p>
+ESP分区创建后，再创建一个MSR分区，这个不是mbr，这是windows的保留分区，我分200M给它。
+</p>
+
+<p>
+上述两个分区是windows在UEFI+GPT系统上必须提前分配好的分区，之后就可以建立用来安装windows系统的分区，也就是C盘。我给了70G。
+</p>
+
+<p>
+整个使用diskpart的过程是：
+</p>
+<ul>
+<li>
+<code>list disk</code> <sup><small>查看有哪些硬盘</small></sup>
+
+<li>
+<code>select disk 0</code> <sup><small>选择主硬盘</small></sup>
+
+<li>
+<code>list partition</code> <sup><small>查看有那些分区</small></sup>
+
+<li>
+<code>select partition n</code> <sup><small>选择分区</small></sup>
+
+<li>
+<code>delete partition</code> <sup><small>删除分区，只有删除所有分区，才可以convert gpt</small></sup>
+
+<li>
+<code>convert GPT</code> <sup><small>硬盘转换为GPT格式的</small></sup>
+
+<li>
+<code>create partition esp size=500</code> <sup><small>建立esp，size默认是M</small></sup>
+
+<li>
+<code>create partition msr size=200</code>
+
+<li>
+<code>create partition primary size=71000</code>
+
+</ul>
+
+<p>
+diskpart的使用说明：<a href="http://support.microsoft.com/kb/300415/zh-cn">http://support.microsoft.com/kb/300415/zh-cn</a>
+</p>
+
+<p>
+上面的使用diskpart来分区的方式相比较于之间使用图形界面来分区要复杂的多，但有一个好处。当你使用windows安装程序的图形界面来建立分区的时候，你只能建立数据分区，也就是C盘，D盘这种分区，ESP和MSR分区的建立都是windows安装程序自动建立的，导致的一个结果就是ESP只有一两百兆，这个大小对windows来说足够了，但对于多系统的用户就不适合了。
+</p>
+
+<p>
+之后windows的安装过程就傻瓜式的，一步到底。
+</p>
+
+<h2 id="toc_1.3">RHEL6.3 安装</h2>
+<p>
+安装好windows之后，需要安装RHEL6。
+</p>
+
+<p>
+RHEL6的光盘使用的是 <strong>rhel-server-6.3-x86_64.iso</strong> ，这个iso直接支持U盘UEFI安装。但你需要一个大U盘。先使用ultraISO刻录iso到U盘，然后，将iso文件直接copy到U盘根目录，这需要大概8G的空间。
+</p>
+
+<p>
+U盘引导启动，next，next……到了选择image的那一步，先选 <strong>hard disk</strong> ，再选 <strong>/dev/sdb4</strong> （这是U盘），然后next就到了图形化的安装界面，然后常规的next，next，到了分区这一步，需要注意，首先要选择已经存在的，在安装windows时候建立的ESP分区，在其上挂载 <strong>/boot/efi</strong> ，然后再建立<code>/boot</code>,<code>/</code>等分区，之后一路到底。
+</p>
+
+<p>
+这里还要注意的事情是，如果你为 <strong>/boot/efi</strong> 建立了一个新的分区，RHEL6还是可以启动的，只不过这个分区是一个奇怪的ESP，LENOVO UEFI BIOS可以识别RHEL6的存在，但 <strong>/boot/efi</strong> 的GUID类型并不是ESP。应该说是不符合规范的吧。
+</p>
+
+<p>
+两者安装好了之后，在UEFI BIOS的boot manager里面就可以看见windows boot manager和Redhat Enterprise linux两个选项了，由于现在电脑上只有一个windows，所以，选择windows boot manager会直接开启windows7，否则会出现windows的选择界面。而Redhat Enterprise linux会打开Grub 0.99，RHEL修改之后的grub，这里面有两个选项，一个是RHEL，一个是other，但这个other是没办法启动的。
+</p>
+
+<p>
+两个系统的切换。在T430上，如果想切换两个系统，就需要按F12打开boot manager选择，这是很麻烦的，所以，我默认是启动Redhat Enterprise linux，然后修改 <strong>/boot/efi/EFI/redhat/grub.conf</strong> ，最后三行修改为：
+</p>
+<ul>
+<li>
+<code>title Windows 7 sp1 (x86_64)</code>
+
+<li>
+<code>		rootnoverify (hd0,0)</code> <sup><small>这是ESP，我的磁盘的第一个分区就是ESP，所以是0.0</small></sup> 
+
+<li>
+<code>		chainloader /EFI/Microsoft/Boot/bootmgfw.efi</code>
+
+</ul>
+
+<p>
+如果想在linux下进行硬盘操作，可以使用gdisk，还是蛮好用的。
+</p>
+
+<h1 id="toc_2">over</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="T430小黑UEFI+GPT安装Windows7+RHEL6过程简述";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="T430小黑UEFI+GPT安装Windows7+RHEL6过程简述";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

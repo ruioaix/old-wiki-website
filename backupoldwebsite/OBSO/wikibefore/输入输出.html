@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>输入输出</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">cpp的输入/输出</h1>
+<ul>
+<li>
+cpp没有直接定义进行输入或输出的任何语句，这种功能是由标准库提供的。
+
+<li>
+通常，一般的cpp程序使用的是iostream库，该库基础是<code>istream</code>和<code>ostream</code>这两个类。
+
+<li>
+<strong>标准库（这里应该指的就是iostream库）</strong> 定义了4个IO对象：<code>cin</code>是<code>istream</code>的对象，<code>cout，cerr，clog</code>是<code>ostream</code>的对象。
+
+<li>
+一般情况下，系统将这些对象与执行程序的窗口联系起来，比如一般的shell窗口。
+
+</ul>
+
+<h2 id="toc_1.1">cin</h2>
+<ul>
+<li>
+<code>cin&gt;&gt;x&gt;&gt;y</code>，这里是输入两个值到变量x，y中，x，y的输入方式，是“任意空格，任意tab，任意回车+一个有效值+任意空格，任意tab，任意回车+一个有效值+任意空格，任意tab，一个回车”。
+
+</ul>
+
+<h2 id="toc_1.2">endl</h2>
+<ul>
+<li>
+endl是一个特殊值，称为操纵符，将它写入输出流的时候，具有输出换行效果，并刷新与设备相关联的缓冲区，通过刷新缓冲区，用户可立即看到写入到流中的输出。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="输入输出";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="输入输出";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

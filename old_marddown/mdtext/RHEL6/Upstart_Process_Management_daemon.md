@@ -1,0 +1,114 @@
+# Upstart process management daemon
+
+linux内核启动的第一个process就是init。
+
+init负责启动所有其他的process。
+
+所有init管理的process都称为job，并且在/etc/init目录中定义。
+
+现在RHEL6中的init和RHEL5以及之前的init是完全不同的。两种架构。这里说的都是RHEL6的upstart init。
+
+## Init in Fedora and RHEL
+
+  * SysVinit 
+    * Fedora < 9 
+    * RHEL < 6 
+  * upstart 
+    * Fedora 9-14 
+    * RHEL 6 
+  * systemd 
+    * Fedora 15(Rawhide) 
+
+## upstart startup
+
+  * startup event 
+    * /etc/init/rcS.conf 
+      * /etc/rc.d/rc.sysinit 
+      * exec telinit $runlevel 
+  * runlevel event 
+    * /etc/init/rc.conf -> /etc/rc.d/rc $runlevel 
+
+## Event
+
+  * init是基于event的。 
+  * 也就是说，发生在系统中的改变会直接的导致job的启动和停止。 
+    * job的启动和停止本身就是一种发生在系统中的改变，也就是event的一种。 
+    * 了解更多的event，可以查看 **initctl** 。 
+    * 主要的event是 **startup** ，在init读取自己的配置文件之后就会导致该event的产生。 
+    * 其他有用的event有： **starting** ， **started** ， **stopping** ， **stopped** 。 
+  * init不再自己去追踪runlevel，而是有相应的工具去做，而且有一个 **runlevel** event。可以查看。 
+  * init应该具有pid=1，如果不是，那么可以查看 **telinit** 。 
+
+## /etc/init/
+
+  * 在机器启动时，init会读取它的配置文件，就在 **/etc/init** 目录中 。可以查看 **inotify** 。 
+  * 在该目录下的文件，要么以 **.conf** 结尾，要么以 **.override** 结尾。 
+  * conf文件是主要的配置文件，override则具有更高的优先级，也就是像它的名字一样覆盖conf文件的对应配置。override不是必须的。 
+  * 每个/etc/init/中的配置文件都定义了一个single service（lng-running process or daemon）或者task（short-lived process）， 
+  * job是/etc/init目录下配置文件的运行实例。 
+  * /etc/init目录下的配置文件的名字就是去后缀，比如/etc/init/rc-sysinit.conf名字就是rc-sysyinit；/etc/init/net/apache.conf名字是net/apache。 
+  * system adminstrator可以使用start和stop来启动和停止job，但使用init可以自动的进行管理。 
+  * init自动管理是通过指定哪些event会引起job开始，哪些event会导致job停止。 
+  * 最开始的时候，init会发出 **startup** event。 
+    * 这会启动执行兼容system v的job，并发出 **runlevel** event。 
+      * 随着之后的job启动和停止，init会发出 **starting** ， **started** ， **stopping** 和 **stopped** event。 
+  * `start on EVENT`
+  * `stop on EVENT`
+  * `exec COMMAND [ARG]`和`script ... end script`是main process。在一个job中，这两个只能存在一个。 
+  * 以下四个是辅助process。 
+    * `pre-start exec|script ...` 在job starting event完成之后，在main process开始之前，执行。 
+    * `pre-stop exec|script...` job遭遇到了会导致stop的event，然后在main process被kill和stopping event发出之前，执行。 
+    * `post-stop exec|script...` 在main process已经挂了之后，再job stopped event发出之前，执行。 
+    * `post-start exec|script...` 在main process已经产生，但是started event还没有发出去的时候，执行。 
+  * 这里四个辅助的process 
+    * 两个start，两个stop。 
+    * 一个start在main process开始之前，一个start在main process开始之后。 
+    * 一个stop在main process停止之前，一个stop在main process停止之后。 
+    * 一个start在starting之后，一个start在started之前。 
+    * 一个stop在stopping之前，一个stop在stopped之前。 
+    * 一个job先要starting，然后就是started，然后stopping，然后stopped。 
+    * starting的时候，main process还没开始，这之间有一个空位，就是pre-start。字面可以这么解释：main process开始之前。 
+    * main process产生之后，started之前，这之间有一个空位，就是post-start。 
+    * main process结束之前，stopping之前，但已经有event导致马上就要发生stop了，这个时候，是pre-stop，在stop开始之前。 
+    * main process结束了，stopped之前，有一个空位，就是post-stop。字面就是main process结束之后。 
+
+## Ubuntu Startup Process
+
+  * 开机之后到initramfs搞完之前，不管。 
+  * initramfs启动/sbin/init，其pid=1。 
+  * upstart（就是上面的/sbin/init）完成自己本身的初始化。 
+  * upstart发出一个event **startup** 。 
+  * 在/etc/init中有一些conf文件里面有 `start on startup`这样的语句。/sbin/init就会启动这些job。 
+    * 这些job会做mount各分区等等的行为。 
+  * 这些被启动的job又会发出额外的event。比如virtual-filesystems event。 
+    * virtual-filesystems event：启动udev job。 
+      * udev job又发出event使得upstart-udev-brideg job启动。 
+        * …… 
+  * 当上面这些job完成之后，最后会发出filesystem event。 
+  * rc-sysinit job因此被启动。 
+  * rc-sysinit job调用telinit命令，并将runlevel作为参数发给它。 
+  * telinit命令发出runlevel event。 
+  * runlevel event又会导致其他的job启动，包含/etc/init/rc.conf，这个文件就是启动SystemV init system。 
+
+## RHEL6 upstart init启动流程分析
+
+  * 先在/etc/init中搜寻包含startup event的conf。 
+    * rcS.conf 
+    * readahead-collector.conf 
+    * readahead.conf 
+    * readahead-disable-services.conf 
+  * rcS.conf 
+    * main process是 `exec /etc/rc.d/rc.sysinit` 。这个和system v init script的时候是一样的。 
+    * pre-start是看情况是否启动rcS-emergency。 
+    * 然后发出runlevel event。 
+  * runlevel event导致的最重要的job就是rc.conf。在这个里面执行了`/etc/rc.d/rc $RUNLEVEL`。对应system v init。 
+  * 然后当rc 5 stopped的时候，prefdm.conf执行。就是启动x11，桌面环境。 
+  * 其实吧，启动过程不一样，但做的事情是一样的。 
+
+# OVER
+
+事实上，也许在RHEL7中upstart又会被systemd替代。
+
+还有一点要分清楚，job的控制和daemon的控制是两回事。job控制的是启动的流程。启动之后的system v init
+script还和以前的控制方法一样，比如chkconfig和/etc/init.d/xxx start等。
+

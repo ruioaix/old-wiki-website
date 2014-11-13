@@ -1,0 +1,663 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>安装gentoo系统--改</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Gentoo系统安装--改</h1>
+<h2 id="toc_1.1">安装的十步</h2>
+<ol>
+<li>
+准备好一个系统环境，这个系统环境是用来安装Gentoo的，可以是最小光盘系统，可以是ubuntu，不知道可不可以是win7或者xp。这里使用最小光盘系统。
+
+<li>
+在上一步准备好的系统环境中，确保网络畅通，portage和stage3都是从网上下载的，也可以使用U盘在其他电脑上下好copy过来，但更新portage和emerge一些软件的时候不用网络是很痛苦的。
+
+<li>
+将硬盘初始化，也就是对硬盘进行分区，格式化，挂载到光盘系统，用来作为gentoo安装的地方。
+
+<li>
+将硬盘环境准备好，也就是将stage3和portage放入硬盘，作为一个初始的系统环境，并且切换到这一环境中。
+
+<li>
+安装linux内核，这个时候已经在硬盘系统中了，内核源代码包也被下载到硬盘的指定地方。
+
+<li>
+编译内核源代码，产生一个内核文件。
+
+<li>
+自己写gentoo系统的大部分的配置文件。
+
+<li>
+安装必要的系统工具。
+
+<li>
+安装引导程序，可以是grub，也可以是lilo，这里使用的是grub。
+
+<li>
+重启系统，进入硬盘系统。
+
+</ol>
+
+<h2 id="toc_1.2">第一步--准备一个系统环境</h2>
+<ul>
+<li>
+使用最小光盘系统，一般是 <em>install-x86-minimal-&lt;release&gt;.iso</em> 这个名字，它在开机的时候，会自动检测机器的硬件，然后加载合适的驱动，有gentoo developers维护，同时它还包含有很多的软件，比如网络配置的软件 <em>wireless-tools</em> ，硬盘处理的软件 <em>fdisk</em> 这些。所以使用这个光盘系统的时候，其实还是蛮舒服的。
+
+<li>
+stage3是一个tarball，就是一个包，包含了最小的gentoo系统环境，在其基础上，可以继续进行gentoo的安装；还有stage1和stage2,但是现在官方已经不支持这两者了，所以还是使用stage3比较好。
+
+<li>
+最小光盘系统我直接使用dvd-iso的方式刻录到dvd盘上了，以为手头上没有cd盘，不过实践证明没有区别。
+
+<li>
+启动光盘--默认gentoo--默认keymap
+
+<li>
+进入到了光盘系统中的root环境，第一步完成。
+
+</ul>
+
+<h2 id="toc_1.3">第二步--将光盘连上网络</h2>
+<h3 id="toc_1.3.1">连上使用wpa方式加密的无线网络</h3>
+<p>
+我的环境是无线网络，而且无线网络的加密模式是wpa，所以设置如下；除此之外，还有wep加密模式的无线网络，这个使用wireless-tools这个工具，iwconfig什么的；有线使用net-setup之类的。
+</p>
+
+<p>
+最小光盘系统里已经安装了wpa_supplicant这个软件，这里可以直接使用，但在硬盘系统里在reboot之前一定要记得安装wpa_supplicant，否则就上不去网了。
+</p>
+<ol>
+<li>
+<code>ln -s /etc/init.d/net.lo /etc/init.d/net.wlan0</code>     
+
+<li>
+<code>nano -w /etc/conf.d/net</code>
+
+<ul>
+<li>
+<code>modules=("wpa_supplicant")</code>
+
+<li>
+<code>wpa_supplicant_wlan0="-Dwext"</code>
+
+<li>
+<code>config_wlan0=("dhcp")</code>
+
+</ul>
+<li>
+<code>nano -w /etc/wpa_supplicant/wpa_supplicant.conf</code>
+
+<ul>
+<li>
+<code>ctrl_interface=/var/run/wpa_supplicant</code>
+
+<li>
+<code>ctrl_interface_group=0</code>
+
+<li>
+<code>ap_scan=1</code>
+
+<li>
+<code>network={</code>
+
+<li>
+<code>	ssid="ustc"</code>
+
+<li>
+<code>	psk="password"</code>
+
+<li>
+<code>	priority=5</code>
+
+<li>
+<code>}</code>
+
+</ul>
+<li>
+<code>/etc/init.d/net.wlan0 start</code>
+
+</ol>
+
+<h2 id="toc_1.4">第三步--硬盘硬件处理</h2>
+<ul>
+<li>
+SCSI和SATA驱动器（估计就是使用SCSI和SATA接口的设备，当然包括硬盘）使用<code>/dev/sd*</code>来标示，在linux内核中的libata framework将IDE驱动器也标示为<code>/dev/sd*</code>，在老的device framework中则使用<code>/dev/hd*</code>来标示。
+
+<li>
+SCSI和SATA有最多15个分区的限制。
+
+<li>
+分区如下分配：
+
+<ul>
+<li>
+sda3 主 100M /boot
+
+<li>
+sda4 扩展 allfree
+
+<ul>
+<li>
+sda5 3G  swap
+
+<li>
+sda6 10G /
+
+<li>
+sda7 30G /home
+
+<li>
+sda8 10G /usr
+
+<li>
+sda9 10G /var
+
+</ul>
+</ul>
+<li>
+除了swap之外的所有分区都使用ext4格式:<code>mkfs.ext4 /dev/sda[36789]</code>。
+
+<li>
+挂载
+
+<ul>
+<li>
+<code>mount /dev/sda6 /mnt/gentoo</code>
+
+<li>
+<code>cd /mnt/gentoo</code>
+
+<li>
+<code>mkdir boot home usr var</code>
+
+<li>
+<code>mount /dev/sda3 boot</code>
+
+<li>
+<code>mount /dev/sda7 home</code>
+
+<li>
+<code>mount /dev/sda8 usr</code>
+
+<li>
+<code>mount /dev/sda9 var</code>
+
+</ul>
+</ul>
+
+<h2 id="toc_1.5">第四步--硬盘软件环境处理</h2>
+<ul>
+<li>
+<code>date</code> <sup><small>确定时间是否正确</small></sup>
+
+<li>
+<code>cd /mnt/gentoo</code>
+
+<li>
+<code>links http://mirrors.163.com/gentoo/</code>
+
+<li>
+<code>tar xvjpf stage3*.tar.gz</code>
+
+<li>
+<code>cd usr</code>
+
+<li>
+<code>links http://mirrors.163.com/gentoo/</code>
+
+<li>
+<code>tar xvjf portage*.tar.gz</code>
+
+<li>
+对 <em>/mnt/gentoo/etc/make.conf</em> 进行配置
+
+<ul>
+<li>
+<code>CFLAGS="-02 -march=core2 -pipe"</code>
+
+<li>
+<code>CXXFLAGS="${CFLAGS}"</code>
+
+<li>
+<code>CHOST="i686-pc-linux-gnu"</code>
+
+<li>
+<code>MAKEOPTS="-j3"</code>
+
+<li>
+<code>USE="-qt4 -kde gtk gnome</code>
+
+<li>
+<code>SYNC="rsync://mirrors.ustc.edu.cn/gentoo-portage/"</code>
+
+<li>
+<code>GENTOO_MIRRORS="http://mirrors.ustc.edu.cn/gentoo/"</code>
+
+</ul>
+<li>
+<code>cp -L /etc/resolv.conf /mnt/gentoo/etc</code>
+
+<li>
+<code>mount -t proc none /mnt/gentoo/proc</code>
+
+<li>
+<code>mount --rbind /dev /mnt/gentoo/dev</code>
+
+<li>
+<code>chroot /mnt/gentoo /bin/bash</code>
+
+<li>
+<code>env-update</code>
+
+<li>
+<code>source /etc/profile</code>
+
+</ul>
+
+<h2 id="toc_1.6">第五步--安装linux内核源代码</h2>
+<ul>
+<li>
+更新portage tree：<code>emerge --sync</code>
+
+<li>
+设置语系：
+
+<ul>
+<li>
+<code>nano -w /etc/locale.gen</code>
+
+<ul>
+<li>
+<code>en_US ISO-8859-1</code>
+
+<li>
+<code>en_US.UTF-8 UTF-8</code>
+
+<li>
+<code>zh_CN GB18030</code>
+
+<li>
+<code>zh_CN.GBK GBK</code>
+
+<li>
+<code>zh_CN.GB2312 GB2312</code>
+
+<li>
+<code>zh_CN.UTF-8 UTF-8</code>
+
+</ul>
+<li>
+<code>locale-gen</code>
+
+</ul>
+<li>
+时区：<code>cp /usr/share/zoneinfo/GMT /etc/localtime</code>
+
+<li>
+安装一些必要的软件
+
+<ul>
+<li>
+<code>emerge -av radeon-ucode</code>
+
+<li>
+<code>emerge -av wpa_supplicant</code>
+
+<li>
+<code>emerge -av vim</code>
+
+<li>
+<code>emerge -av dhcpcd</code>
+
+<li>
+<code>emerge -av iwl5000-ucode</code>
+
+</ul>
+</ul>
+
+<h2 id="toc_1.7">第六步--配置和编译linux内核</h2>
+<ul>
+<li>
+获取内核源代码：<code>emerge gentoo-sources</code>
+
+<li>
+<code>ls -l /usr/src/</code>可以看到当前的内核版本。
+
+<li>
+<code>cd /usr/src/linux</code>
+
+<li>
+<code>make menuconfig</code>
+
+<ul>
+<li>
+CPU
+
+<ul>
+<li>
+在 <em>processor type and features</em> 中进行如下设置
+
+<ul>
+<li>
+<em>processor family(core 2/newer xeon)</em>
+
+<li>
+去掉 <em>generic x86 support</em>
+
+<li>
+<em>maximum number of cpus</em> 设置为2
+
+<li>
+去掉 <em>smt scheduler support</em> 
+
+</ul>
+</ul>
+<li>
+file systems
+
+<ul>
+<li>
+在 <em>file systems</em> 中进行如下设置
+
+<ul>
+<li>
+去掉ext3支持
+
+<li>
+加入ext4支持
+
+</ul>
+</ul>
+<li>
+wireless
+
+<ul>
+<li>
+在 <em>networking support</em> 中进行如下设置
+
+<ul>
+<li>
+在 <em>wireless</em> 中进行如下设置
+
+<ul>
+<li>
+保持默认：generic ieee 802.11和cfg80211 wireless api 
+
+</ul>
+</ul>
+<li>
+在 <em>cryptographic api</em> 中进行如下设置
+
+<ul>
+<li>
+加入sha224和sha384，
+
+<li>
+加入pcbc
+
+<li>
+加入michael mic
+
+</ul>
+<li>
+在 <em>device drivers</em> 中进行如下设置
+
+<ul>
+<li>
+在 <em>network device support</em> 中进行如下设置
+
+<ul>
+<li>
+在 <em>wireless lan</em> 中进行如下设置
+
+<ul>
+<li>
+将 <em>intel wireless wifi</em> 设置为模块
+
+<ul>
+<li>
+将 <em>intel wireless wifi next gen agn</em> 设置为模块
+
+<li>
+加入 <em>intel wireless-n/advanced-n/ultimate-n/ wifi link</em> 
+
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li>
+ati 3400
+
+<ul>
+<li>
+在 <em>device drivers</em> 中进行如下设置
+
+<ul>
+<li>
+在 <em>graphics support</em> 进行如下设置
+
+<ul>
+<li>
+在 <em>direct rendering manager</em> 中设置如下：
+
+<ul>
+<li>
+加入ati tadeon及其enable modesetting
+
+</ul>
+</ul>
+<li>
+在 <em>generic driver options</em> 中进行如下设置
+
+<ul>
+<li>
+设置 <em>external firmware blobs</em> 为(radeon/R600_rlc.bin radeon/R700_rlc.bin)
+
+<li>
+设置 <em>(/lib/firmware/)firmware blobs root directory</em>
+
+</ul>
+</ul>
+</ul>
+<li>
+保持配置为 <em>.config</em> 
+
+<li>
+exit
+
+</ul>
+<li>
+<code>make &amp;&amp; make modules_install</code>
+
+<li>
+<code>cp arch/i386/boot/bzimage /boot/kernel-2.6.37-gentoo-r4</code>
+
+<li>
+<code>find /lib/modules/&lt;kernel version&gt;/ -type f -iname '*.o' -or -iname '*.ko' &gt;&gt; /ete/moudles.autoload.d/kernel-2.6</code>
+
+<li>
+编辑上面的kernel-2.6,只留下模块名字，去路径，去后缀。
+
+</ul>
+
+<h2 id="toc_1.8">第七步--配置系统</h2>
+<ul>
+<li>
+<em>/etc/fstab</em>
+
+<ul>
+<li>
+<code>/dev/sda3	/boot		ext4		defaults,noatime		1	2</code>
+
+<li>
+<code>/dev/sda6	/			ext4		noatime					0	1</code>
+
+<li>
+<code>/dev/sda7	/home		ext4		noatime					0	1</code>
+
+<li>
+<code>/dev/sda8	/usr		ext4		noatime					0	1</code>
+
+<li>
+<code>/dev/sda9	/var		ext4		noatime					0	1</code>
+
+<li>
+<code>/dev/sda5	none		swap		sw						0	0</code>
+
+<li>
+<code>/dev/cdrom	/mnt/cdrom	auto		noauto,user				0	0</code>
+
+</ul>
+<li>
+<em>/etc/conf.d/hostname</em> 改成 <strong>Gentoo</strong> 了。
+
+<li>
+<em>/etc/conf.d/net</em> 无线网络，同第二步。
+
+<li>
+<em>/etc/wpa-supplicant/wpa-supplicant.conf</em>  无线网络，同第二步。
+
+<li>
+<code>ln -s /etc/init.d/net.lo /etc/init.d/net.wlan0</code>
+
+<li>
+<code>rc-update add net.wlan0 default</code>
+
+<li>
+<code>rm /etc/init.d/eth0</code>   <sup><small>需要的时候链接一下即可</small></sup>
+
+<li>
+<code>passwd</code>
+
+<li>
+<em>/etc/conf.d/clock</em> 改成 <strong>local</strong> 了。
+
+</ul>
+
+<h2 id="toc_1.9">第八步--安装必要的系统软件</h2>
+<ul>
+<li>
+<code>emerge -av syslog-ng</code>
+
+<li>
+<code>rc-update add syslog-ng default</code>
+
+<li>
+<code>emerge -av vixie-cron</code>
+
+<li>
+<code>rc-update add vixie-cron default</code>
+
+<li>
+<code>emerge mlocate</code>
+
+</ul>
+
+<h2 id="toc_1.10">第九步--安装引导程序</h2>
+<ul>
+<li>
+<code>emerge -av grub</code>
+
+<li>
+<code>nano -w /boot/grub/grub.conf</code>
+
+<ul>
+<li>
+<code>default 0</code>
+
+<li>
+<code>timeout 30</code>
+
+<li>
+<code>title Gentoo Linux 2.6.37-r4</code>
+
+<li>
+<code>root (hd0,2)</code>   <sup><small>这里是/boot目录所在的地方</small></sup>
+
+<li>
+<code>kernel /boot/kernel-2.6.37-gentoo-r4 root=/dev/sda6</code>  <sup><small>这里注意root是/目录在的地方</small></sup>
+
+</ul>
+<li>
+<code>grep -v rootfs /proc/mounts&gt;/etc/mtab</code>
+
+<li>
+<code>grub-install --no-floppy /dev/sda3</code> <sup><small>这里是/boot目录</small></sup>
+
+<li>
+<code>exit</code>
+
+<li>
+<code>umount /mnt/gentoo/home /mnt/gentoo/usr /mnt/gentoo/var /mnt/gentoo/boot /mnt/gentoo/dev /mnt/gentoo/proc /mnt/gentoo</code>  <sup><small>有时候会出现无法umount dev，就直接reboot了，也没出什么问题</small></sup>
+
+<li>
+<code>reboot</code>
+
+</ul>
+
+<h2 id="toc_1.11">第十步--完成安装</h2>
+<ul>
+<li>
+建立新用户，如果需要的话。
+
+<li>
+rm stage3和portage两个包。
+
+</ul>
+
+<h2 id="toc_1.12">OVER</h2>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="安装gentoo系统--改";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="安装gentoo系统--改";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

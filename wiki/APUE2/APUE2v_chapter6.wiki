@@ -1,0 +1,83 @@
+= Chapter 6. System Data Files and Information =
+11 sections.
+
+== Section 6.1. Introduction ==
+本来linux是有很多系统配置文件的，这ok，所有这些配置文件一般都是ASCII的文本文件，这ok，小系统文本文件的读取也ok，如果是大系统，文本文件太多，太大的时候，可能就不行了。
+
+这章就介绍这个问题的解决方案，是吧。
+
+== Section 6.2. Password File ==
+这节的两个函数还是很有用的。
+- `#include <pwd.h>`
+- `struct passwd *getpwuid(uid_t uid);`
+- `struct passwd *getpwnam(const char *name);`
+- `struct passwd *getpwent(void);`
+- `void setpwent(void);`
+- `void endpwent(void);`
+这个password涉及到的是linux的/etc/passwd文件，可以在我们的程序中直接对这个文件进行open read，也可以使用上面的函数。显然上面的函数要容易使用很多。
+
+== Section 6.3. Shadow Passwords ==
+- `#include <shadow.h>`
+- `struct spwd *getspnam(const char *name);`
+- `struct spwd *getspent(void);`
+- `void setspent(void);`
+- `void endspent(void);`
+linux有/etc/shadow文件，freebsd和mac os x现在都没有吗？
+
+这些系统调用都是可以发生错误的，内核的权限控制应该是一项导致发生错误的原因吧。
+
+== Section 6.4. Group File ==
+group还有密码域，平时完全没有用到。
+
+- `#include <grp.h>`
+- `struct group *getgrgid(gid_t gid);`
+- `struct group *getgrnam(const char *name);`
+- `struct group *getgrent(void);`
+- `void setgrent(void);`
+- `void endgrent(void);`
+这些函数都一个模子刻出来的。
+
+== Section 6.5. Supplementary Group IDS ==
+对于supplementary group id，有些不理解。
+- 使用`getgroups`函数获得的是所有的supplementary group id吗？
+- 用户得到的是部分supplementary group id，还是全部的sgi？
+- linux里面没有对应的文件？
+在网上查到的资料显示，spi也是放置在/etc/group中。理解的还是没错的，那么每个用户都应该具有可以一样，可以不一样的一套spi，那么，我就不理解这一节中的函数的意思了。
+
+- `#include <unistd.h>`
+- `int getgroups(int gidsetsize, gid_t grouplist[]);`
+这个函数得到的是这个进程的effiective uid的spi吗？
+
+通过在本机上面测试，的确，这个函数获取的是登录用户，同时也是effective uid，的/etc/group里面的内容。
+
+- `#include <unistd.h>`
+- `int initgroups(const char *username, gid_t basegid);`
+这个函数是初始化，用`setgroups`来初始化spi，这个初始化的过程的作用应该就是放置到内核中吧，先读取/etc/group，然后根据读取的内容，来初始化。
+
+这样理解，应该没有错。
+
+== Section 6.6. Implementation Differences ==
+恩
+
+== Section 6.7. Other Data Files ==
+这一节很重要，其总结了一个观点，即存在于unix的系统数据文件，总是有那么几个函数来进行文件的读取设置搜索操作，方便，安逸。
+
+== Section 6.8. Login Accounting ==
+事实上，现在的我虽然对于linux本身的操作设置有一定的了解，同时，对于UNIX系统接口有一定的了解，但是前者依靠后者实现的过程我就不了解了，我现在知道的仅仅是linux的命令包含的内容远远多余命令对应的接口，命令是使用接口的结果编译的二进制文件，其中除了接口还有更多的逻辑用于形成linux一整套管理命令，各种逻辑，各种权限的处理，这目前在我看来是个庞杂的过程。但是，必定存在这一种原则，会知道这种原则的。
+
+这节讲述的是两个文件，和对应的操作这两个文件的命令。
+- /var/run/utmp, /var/log/wtmp
+- who, last
+
+== Section 6.9. System Identification ==
+这节也没啥，讲了uname函数和uname命令。
+
+== Section 6.10. Time and Date Routines ==
+- `#include <time.h>`
+- `time_t time(time_t *calptr);`
+这个函数是基本的，其他的time函数都操作于其上。最上层函数操作的最终结果就是string。中间有个struct tm的结构。就在这三者之间换来换去。
+
+这一章和linux本身的时钟显示还是很有关系的。主要在于TZ这个环境变量。
+
+== Section 6.11. Summary ==
+*OVER*  

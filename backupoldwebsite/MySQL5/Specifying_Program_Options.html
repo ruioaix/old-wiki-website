@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Specifying_Program_Options</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Specifying Program Options</h1>
+<p>
+设置MySQL programs的选项有以下几种方法：
+</p>
+<ul>
+<li>
+命令行中添加选项，这是一次性的。
+
+<li>
+在options file中设置选项，这是程序每次运行都会读取的选项。
+
+<li>
+在环境变量中设置选项，也是程序每次运行都会读取，就这种目的来说options file可能更适合一些；环境变量中设置还有其他的作用。
+
+</ul>
+<p>
+<code>mysql -h example.com -h localhost</code>，这里mysql将连接localhost上的server，前者被覆盖了。
+环境变量的优先级最低，命令行的优先级最高，options file位于中间。
+</p>
+
+<h2 id="toc_1.1">Using Options on the Command Line</h2>
+<p>
+在command line里面使用的options遵循以下原则：
+</p>
+<ul>
+<li>
+options位于command之后。
+
+<li>
+options有一个或者两个dash。
+
+<li>
+options是大小写敏感的。
+
+<li>
+有些options后面接的有参数。
+
+<li>
+对于使用两个dash的options，也就是使用的是全名，那么后面的参数跟着 <strong>=</strong> ；如果是一个dash的options，那么，options和参数之间可以有空格也可以没有，但有一个option例外，就是<code>-p</code>，这个option后面如果接参数，必须无空格的接。
+
+<li>
+options后面的数字参数，可以使用 <strong>k</strong> ， <strong>m</strong> ， <strong>g</strong> ，来表示1024，1024*1024，1024*1024*1024。
+
+<li>
+options的参数如果有空格，那么使用双引号扩起来。
+
+</ul>
+
+<h2 id="toc_1.2">Using Option Files</h2>
+<p>
+在linux中，MySQL programs按顺序读取下面的options file。
+</p>
+<ul>
+<li>
+<strong>SYSCONFDIR</strong> 一般指 <strong>/etc</strong> 。
+<table>
+<tr>
+<td>
+File Name
+</td>
+<td>
+Purpose
+</td>
+</tr>
+<tr>
+<td>
+/etc/my.cnf
+</td>
+<td>
+Global options
+</td>
+</tr>
+<tr>
+<td>
+/etc/mysql/my.cnf
+</td>
+<td>
+Global options
+</td>
+</tr>
+<tr>
+<td>
+<strong>SYSCONFIR</strong>/my.cnf
+</td>
+<td>
+Global options
+</td>
+</tr>
+<tr>
+<td>
+$MYSQL_HOME/my.cnf
+</td>
+<td>
+Server-specific options
+</td>
+</tr>
+<tr>
+<td>
+defaults-extra-file
+</td>
+<td>
+the file specified with <strong>--defaults-extra-file=path</strong>,if any
+</td>
+</tr>
+<tr>
+<td>
+~/.my.cnf
+</td>
+<td>
+User-specific options
+</td>
+</tr>
+</table>
+
+<li>
+<strong>$MYSQL_HOME</strong> 环境变量。
+
+</ul>
+
+<p>
+options file的写法。
+</p>
+<ul>
+<li>
+一行一个option
+
+<li>
+没有dash了
+
+<li>
+<strong>#</strong> ， <strong>；</strong> 用于注释。
+
+<li>
+<strong>[group]</strong> ，options file中的options都是按照节来分得。
+
+<li>
+<strong>option_name=value</strong> 写法就是这样。
+
+<li>
+如果一个option group的名字是一个program的名字，那么这个group中的options都是用于这个program的。
+
+<li>
+<strong>[client]</strong> 是给所有的client program的。所以，对应的，不要把不是所有的client program都认得的option放入这个group里面。
+
+</ul>
+
+<h2 id="toc_1.3">Command-line Options that Affect Option-File Handling</h2>
+<p>
+有一些options，是会影响options file的读取的，所以，他们必须在command line中设置，而不是在options file中。
+</p>
+
+<h2 id="toc_1.4">Option Defaults, Options Expecting Values, and the = Sign</h2>
+<ul>
+<li>
+ <code>mysql --host=tonfisk --user=jon</code>
+
+<li>
+ <code>mysql --host tonfisk --user jon</code>
+
+<li>
+ 上面都是对的。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Specifying_Program_Options";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Specifying_Program_Options";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

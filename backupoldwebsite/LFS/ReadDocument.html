@@ -1,0 +1,619 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>ReadDocument</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Read Document</h1>
+
+<p>
+32位的linux发行版可以安装在64位intel cpu上，也可以作为一个host system。
+</p>
+
+<p>
+从LFS直接建立的64位系统是一个纯64位系统，纯，表示其只支持64位可执行文件。
+</p>
+
+<p>
+建立一个multi-lib系统，需要编译很多应用两次，一次为32位，一次为64位。
+</p>
+
+<p>
+很多包不支持纯64位系统，因为，这些包里可能嵌入了特殊的32位依赖。
+</p>
+
+<p>
+也许，第一次实验性质的，我该先选择安装一个32位的系统。
+</p>
+
+<h2 id="toc_1.1">一陀要使用的包</h2>
+<ol>
+<li>
+Autoconf
+
+<ul>
+<li>
+这个包里的程序是用来产生shell script的，这些产生的shell script会自动根据开发者的模板来配置source code。
+
+</ul>
+<li>
+Automake
+
+<ul>
+<li>
+这个包里的程序是用来根据一个模板来产生make file的。
+
+</ul>
+<li>
+Bash
+
+<ul>
+<li>
+这个包提供了一个bourne shell给系统；LSB要求有一个shell接口。
+
+</ul>
+<li>
+Binutils
+
+<ul>
+<li>
+这个包包括了一个连接器linker，一个汇编器assembler以及其他一些用来处理object file的工具。对象文件，其实就是具有特殊格式的二进制文件。大部分LFS包的编译都需要这个工具。
+
+</ul>
+<li>
+Bison
+
+<ul>
+<li>
+不清楚这个是什么意思，yacc是什么？
+
+</ul>
+<li>
+Bzip2
+
+<ul>
+<li>
+这个包用来解压和压缩文件。
+
+</ul>
+<li>
+Check
+
+<ul>
+<li>
+作用不清楚
+
+</ul>
+<li>
+Coreutils
+
+<ul>
+<li>
+这个包提供了很多查看操作文件和目录的必须程序；大多数包的安装过程都需要这个包。
+
+</ul>
+<li>
+DejaGNU
+
+<ul>
+<li>
+这个包提供了一种检查测试其他程序的框架，貌似是安装时候的临时工具。
+
+</ul>
+<li>
+Diffutils
+
+<ul>
+<li>
+这个包提供了用来显示文件之间的不同或者目录之间的不同的程序。
+
+</ul>
+<li>
+Expect
+
+<ul>
+<li>
+这个包提供了一个程序，可以和其他的交互式程序进行脚本形式的对话。
+
+</ul>
+<li>
+E2fsprogs
+
+<ul>
+<li>
+这个包包含了处理ext2，ext3，ext4的工具。
+
+</ul>
+<li>
+File
+
+<ul>
+<li>
+这个包包含可以确定文件类型的工具。
+
+</ul>
+<li>
+Findutils
+
+<ul>
+<li>
+这个包包含需找文件系统中的文件的工具。
+
+</ul>
+<li>
+Flex
+
+<ul>
+<li>
+不清楚，貌似是文本编辑？
+
+</ul>
+<li>
+Gawk
+
+<ul>
+<li>
+这个包包含了操纵文本文件的程序，就是awk的GNU版。
+
+</ul>
+<li>
+Gcc
+
+<ul>
+<li>
+GNU的编译器合集，包含了c编译器和c++编译器。
+
+</ul>
+<li>
+GDBM
+
+<ul>
+<li>
+这个包包含Database Manager library，是数据库管理库。Man-DB会用到这个library吧。
+
+</ul>
+<li>
+Gettext
+
+<ul>
+<li>
+这个包包含了国际化和本地化的工具、library。
+
+</ul>
+<li>
+Glibc
+
+<ul>
+<li>
+这个包包含了the main C library。
+
+</ul>
+<li>
+GMP
+
+<ul>
+<li>
+这个包包含了可以进行任意精度计算的数学library。
+
+</ul>
+<li>
+Grep
+
+<ul>
+<li>
+包含可以搜寻文件内容的工具，就是grep吧
+
+</ul>
+<li>
+Groff
+
+<ul>
+<li>
+这个包包含处理和格式化文本文件的程序，主要功能是格式化man page。
+
+</ul>
+<li>
+GRUB
+
+<ul>
+<li>
+the Grand Unified Boot Loader
+
+</ul>
+<li>
+Gzip
+
+<ul>
+<li>
+包含压缩和解压缩文件的程序
+
+</ul>
+<li>
+Iana-etc
+
+<ul>
+<li>
+这个包提供data给network services和protocol。
+
+</ul>
+<li>
+Inetutils
+
+<ul>
+<li>
+包含了基本网络管理的程序。
+
+</ul>
+<li>
+IProute2
+
+<ul>
+<li>
+这个包提供了程序用于基本的和高级的IPv4、IPv6网络
+
+</ul>
+<li>
+Kbd
+
+<ul>
+<li>
+这个包包含了键盘按键表，键盘工具等。
+
+</ul>
+<li>
+Kmod
+
+<ul>
+<li>
+包里包含了管理kernel modules的程序
+
+</ul>
+<li>
+Less
+
+<ul>
+<li>
+包含很好的阅读文本文件的工具，就是less吗，manpage也用它看。
+
+</ul>
+<li>
+Libtool
+
+<ul>
+<li>
+提供了GNU generic library support script，不知道准确的工作定义
+
+</ul>
+<li>
+Linux Kernel
+
+<ul>
+<li>
+字面意思吧
+
+</ul>
+<li>
+M4
+
+<ul>
+<li>
+文本宏处理器，不明白准确的意思
+
+</ul>
+<li>
+Make
+
+<ul>
+<li>
+这个包包含了指导编译的工具，每个lfs的包都会用到。
+
+</ul>
+<li>
+Man-DB
+
+<ul>
+<li>
+这个包包含了寻找和浏览man page的程序，其中less就是其用来浏览man page的程序。
+
+</ul>
+<li>
+Man-pages
+
+<ul>
+<li>
+这个包包含man page的实际内容。
+
+</ul>
+<li>
+MPC
+
+<ul>
+<li>
+貌似包含复数运算的函数。
+
+</ul>
+<li>
+MPFR
+
+<ul>
+<li>
+貌似包含多精度运算的函数。
+
+</ul>
+<li>
+Ncurses
+
+<ul>
+<li>
+包含library，字符屏幕终端的什么处理
+
+</ul>
+<li>
+Patch
+
+<ul>
+<li>
+这个包包含一个程序，程序根据使用diff程序得到的patch文件来修改和创建文件。
+
+</ul>
+<li>
+Perl
+
+<ul>
+<li>
+实时编程语言PERL的解释器。
+
+</ul>
+<li>
+Pkg-config
+
+<ul>
+<li>
+这个包包含用于返回已安装的library或者包的元数据meta-data的程序。
+
+</ul>
+<li>
+Popt
+
+<ul>
+<li>
+包含一个library，用于分析命令行的输入。
+
+</ul>
+<li>
+Procps
+
+<ul>
+<li>
+这个包包含了监视进程的程序。
+
+</ul>
+<li>
+Psmisc
+
+<ul>
+<li>
+这个包包含了显示正在运行进程的信息的程序。
+
+</ul>
+<li>
+Readline
+
+<ul>
+<li>
+包含一组library，提供命令行编辑和历史记录功能。
+
+</ul>
+<li>
+Sed
+
+<ul>
+<li>
+这个包允许在没有一个编辑器的情况下编辑一个文本文件；大多数包的configure scripts都需要它。
+
+</ul>
+<li>
+Shadow
+
+<ul>
+<li>
+这个包提供了可以安全处理password的程序。
+
+</ul>
+<li>
+Sysklogd
+
+<ul>
+<li>
+这个包包含了记录系统信息的程序，比如kernel和daemon在事情发生时给出的信息。
+
+</ul>
+<li>
+Tar
+
+<ul>
+<li>
+这个包提供了打包和解包的能力，几乎所有的lfs的包都使用。
+
+</ul>
+<li>
+Tcl
+
+<ul>
+<li>
+用于测试的吧，不清楚。
+
+</ul>
+<li>
+Texinfo
+
+<ul>
+<li>
+这个包包含了读，写，转换info page的程序；大多数程序的安装过程都会用到。
+
+</ul>
+<li>
+Udev
+
+<ul>
+<li>
+这个包包含了动态创建device node的功能，用来替代在/dev下建立成千上万的静态节点。
+
+</ul>
+<li>
+Util-linux
+
+<ul>
+<li>
+这个包提供了各种工具程序，处理文件系统、控制台、分区等各种工具。
+
+</ul>
+<li>
+Vim
+
+<ul>
+<li>
+vim吗
+
+</ul>
+<li>
+XZ Utils
+
+<ul>
+<li>
+这个包包含压缩和解压文件的程序，提供了最高的压缩率。
+
+</ul>
+<li>
+Zlib
+
+<ul>
+<li>
+包含了压缩和解压routines，不明白。
+
+</ul>
+</ol>
+
+<h2 id="toc_1.2">Host System Requirements</h2>
+<ul>
+<li>
+Bash-3.2: <strong>Bash-4.1.2</strong>
+
+<li>
+Binutils-2.17: <strong>binutils-2.20.51.0.2</strong>
+
+<li>
+Bison-2.3: <strong>bison-2.4.1</strong>
+
+<li>
+Bzip2-1.0.4: <strong>bzip2-1.0.5</strong>
+
+<li>
+Coreutils-6.9: <strong>coreutils-8.4</strong>
+
+<li>
+Diffutils-2.8.1: <strong>diffutils-2.8.1</strong>
+
+<li>
+Findutils-4.2.31: <strong>findutils-4.4.2</strong>
+
+<li>
+Gawk-3.1.5: <strong>gawk-3.1.7</strong>
+
+<li>
+Gcc-4.1.2: <strong>gcc-4.4.6</strong>
+
+<li>
+Glibc-2.5.1: <strong>glibc-i686-2.12, glibc-x86_64-2.12</strong>
+
+<li>
+Grep-2.5.1a: <strong>grep-2.6.3</strong>
+
+<li>
+Gzip-1.3.12: <strong>gzip-1.3.12</strong>
+
+<li>
+Linux Kernel-2.6.25: <strong>kernel-2.6.32</strong>
+
+<li>
+M4-1.4.10: <strong>m4-1.4.13</strong>
+
+<li>
+Make-3.81: <strong>make-3.81</strong>
+
+<li>
+Patch-2.5.4: <strong>patch-2.6</strong>
+
+<li>
+Perl-5.8.8: <strong>perl-5.10.1</strong>
+
+<li>
+Sed-4.1.5: <strong>sed-4.2.1</strong>
+
+<li>
+Tar-1.18: <strong>tar-1.23</strong>
+
+<li>
+Texinfo-4.9: <strong>texinfo-4.13a</strong>
+
+<li>
+Xz-5.0.0: <em>xz-4.999.9</em>
+
+</ul>
+
+<p>
+想知道编译kernel的gcc版本，看 <strong>/proc/version</strong> ，里面的gcc就是指编译kernel的gcc。
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="ReadDocument";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="ReadDocument";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

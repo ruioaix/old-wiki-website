@@ -1,0 +1,23 @@
+# Geant4 资料经验
+
+## 经验
+
+  1. 记得`make clean`。 
+
+## 网上的资料
+
+  * [兰州大学某位的笔记](http://mpgd.lzu.edu.cn/mediawiki/index.php/GEANT4_learning_notes)
+  * [石漪的笔记](http://cnscott.blog.163.com/blog/static/640457020105185144603/)
+  * [极其NB的Geant4类wiki](http://www.lcsim.org/software/geant4/doxygen/html/annotated.html)
+  * [某人的网站（有一些Geant4的文章）](http://hi.baidu.com/cannonlee)
+  * [某人关于Run/Event/Step/Track/Hit关系的描述](http://wangyillang.blog.163.com/blog/static/191947382201232345013276/)
+  * 随机数的使用 
+    * [随机数的使用1](http://www.ge.infn.it/geant4/training/ornl_2008/day2/solutions_day2_partIV.html)
+    * [随机数的使用2](http://www-geant4.kek.jp/lxr/source/examples/extended/electromagnetic/TestEm4/src/PrimaryGeneratorAction.cc)
+  * 材料的使用 
+    * [Nist的材料（通过包含头文件的方式使用）](http://lcsim.org/software/geant4/doxygen/html/G4NistMaterialBuilder_8cc_source.html)
+    * [Geant4的一些材料构造1](http://lambda.phys.tohoku.ac.jp/~sirotori/geant4/example/geant4/src/MaterialList.cc)
+    * [Geant4的一些材料构造2](http://nemu.web.psi.ch/doc/LEMuSR_Simulation/html/LEMuSRMaterials_8cc-source.html)
+    * [Geant4的一些材料构造3](http://www.phenix.bnl.gov/~suhanov/ncc/geant/rad-source/src/ExN03DetectorConstruction.cc)
+    * [Geant4的一些材料构造4](http://www.physi.uni-heidelberg.de/~adler/TRD/TRDunterlagen/RadiatonLength/tgc2.htm)
+

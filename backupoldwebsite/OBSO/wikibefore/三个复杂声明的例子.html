@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>三个复杂声明的例子</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">三个很不错的C语言声明的例子</h1>
+
+<h2 id="toc_1.1">第一个</h2>
+<ul>
+<li>
+<code>char *(*c[10]) (int **p)</code>
+
+<ul>
+<li>
+c[10]是一个含有10个元素的数组，数组的元素是指向函数的指针。
+
+<li>
+c[10]中元素指向的函数有一个形参，是一个指向指针的指针，就当前来说：形参是p，p是一个指向*p的指针，*p还是一个指针，指向一个int类型的变量。
+
+<li>
+c[10]中元素指向的函数返回的也是一个指针，指向char类型的变量。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.2">第二个</h2>
+<ul>
+<li>
+<code>char * const *(*next) ()</code>
+
+<ul>
+<li>
+next是一个指针，指向一个函数，该函数没有形参。
+
+<li>
+该函数返回一个指针，这个指针指向char * const类型的变量。
+
+<li>
+假设a是一个char * const类型的变量，那么a是一个指针，一个const指针，也就是说a只能指向固定的地址。
+
+<li>
+a指向的是一个char类型的变量。
+
+<li>
+<code>*a='d';</code>是可以的，<code>a=0;</code>是不可以的。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.3">第三个</h2>
+<ul>
+<li>
+<code>void (*signal(int sig,void(*func)(int))) (int)</code>
+
+<ul>
+<li>
+signal()是一个函数，有两个形参。
+
+<li>
+signal()返回的是一个指针，这个指针指向一个函数，该函数有一个int类型的形参，无返回类型。
+
+<li>
+signal()的两个形参，一个是int类型的sig，一个是函数指针func，func的类型正好是signal()函数返回的那个指针类型（无返回类型，一个int类型形参）。
+
+<li>
+使用 <code>typedef void (*ptr_to_func)(int)</code>。
+
+<li>
+则上面的可以写为：<code>ptr_to_func signal(int, ptr_to_func)</code>。
+
+<li>
+typedef不可以简单的看作文本替换，更多的是一种封装。
+
+</ul>
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="三个复杂声明的例子";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="三个复杂声明的例子";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

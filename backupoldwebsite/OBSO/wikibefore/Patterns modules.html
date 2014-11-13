@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Patterns modules</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Patterns module</h1>
+<ul>
+<li>
+完整的使用这个module需要两个文件：一个components，一个pattern。
+
+<ul>
+<li>
+components是一个php格式的文件，后缀是inc。
+
+<li>
+pattern是一个或者多个yaml格式的文件。
+
+<li>
+两种文件合在一起，对某一module进行处理，或者说合在一起就构成了某一module的壳，可以和这个module进行交互的壳。
+
+</ul>
+<li>
+这种和module之间的交互都是以module中form为基础的。
+
+<ul>
+<li>
+yaml（pattern文件）为form提供了输入。
+
+<li>
+components文件
+
+</ul>
+<li>
+要知道，运行patterns的时候，其实是运行yaml的。yaml对于patterns是多对一的关系。
+
+<ul>
+<li>
+也就是说，components文件要包含对所有yaml文件的处理，运行的时候，可能我只运行一个yaml，components文件中的代码也只跑一部分而已。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.1">patterns hook</h2>
+<ul>
+<li>
+<code>hook_patterns($data)</code>
+
+<ul>
+<li>
+返回的是一个<code>$actions[tag][action]</code>的二维数组。
+
+<li>
+<code>tag</code>和yaml文件中的tag对应。
+
+<li>
+<code>action</code>和yaml文件中的create&amp;modify&amp;delete三者中的一个对应。
+
+<li>
+数组的value是一个form的名字，form存在于某一个将要交互的module中。
+
+</ul>
+<li>
+<code>hook_patterns_prepare(\(action, \)tag, &amp;$data)</code>
+
+<ul>
+<li>
+这个函数的前面两个参数，分别对应于<code>hook_patterns($data)</code>函数返回二维数组的二维key和一维key。
+
+<li>
+最后的参数<code>&amp;$data</code>是从yaml文件获得的值，yaml的所有的值。
+
+<li>
+这个函数要做的就是为对应的form准备对应的值。可能值已经在<code>&amp;\(data</code>里面包含了，可能还需要对<code>&amp;\)data</code>再做一些处理。
+
+</ul>
+<li>
+<code>hook_patterns_validate(\(action, \)tag, &amp;$data)</code>
+
+<ul>
+<li>
+在这里对<code>&amp;$data</code>进行一些验证，当然也根据tag和action来。
+
+<li>
+在这里可以报错。
+
+</ul>
+<li>
+<code>hook_patterns_callbacks(\(action, \)tag, &amp;$data)</code> 
+
+<ul>
+<li>
+这里就是返回form，将要构建并给于值，并提交的form。
+
+<li>
+如果form是<code>hook_patterns($data)</code>函数返回值中的一个，那么，返回这个form继续后面的函数调用。
+
+<li>
+如果不是，那么，patterns的运行过程到此就结束了，这时函数里面应该有处理数据的过程。
+
+</ul>
+<li>
+<code>hook_patterns_build(\(action, \)formid, &amp;\(data, &amp;\)action_state)</code>
+
+<ul>
+<li>
+这里的return是： <strong>patterns_results(PATTERNS_SUCCESS, t('xxx'), $data)</strong> 
+
+<li>
+上一个函数的return是： <strong>patterns_results(PATTERNS_SUCCESS, t('xxx'), $result)</strong> 
+
+<li>
+这里反应了一个值得注意的问题：callback返回的<code>\(result</code>是一个form的名字，build返回的<code>\)data</code>是form的数据。
+
+<li>
+从这里，可以知道了callback和build之间的关系和区别。
+
+<li>
+<code>\(data</code>可以是对应的数组，比如<code>form_state['value']['new']</code>,可以对应于<code>\)data['new']</code>。
+
+<li>
+还有其他方式的数据传入  <strong>TODO</strong> 
+
+</ul>
+<li>
+<code>hook_patterns_params(\(action, \)formid, &amp;\(data, &amp;\)action_state)</code>
+
+<ul>
+<li>
+这里同上面两个类似，也是得到数据，返回数据，返回的数据用于form需要的额外的参数。
+
+<li>
+可以从data里面得到这个数据。
+
+</ul>
+<li>
+<code>hook_patterns_cleanup(\(action, \)tag, &amp;$data)</code>
+
+<ul>
+<li>
+这个是在函数提交过后需要做的额外工作，一般也就不需要了。
+
+</ul>
+<li>
+<code>hook_patterns_get_arguments(\(action, \)tag, \(formid, &amp;\)loop)</code>
+
+<ul>
+<li>
+是在使用自动pattern导入函数的时候需要的参数，返回这时的参数。
+
+<li>
+应该是和<code>hook_patterns_params(\(action, \)formid, &amp;\(data, &amp;\)action_state)</code>是对应的。
+
+<li>
+<strong>TODO</strong>
+
+</ul>
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Patterns modules";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Patterns modules";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

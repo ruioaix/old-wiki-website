@@ -1,0 +1,11 @@
+# JavaScript and Ajax
+
+Standard Request/Response: Each click presents a whole new page.
+
+Ajax-Asynchronous JavaScript and XML: Each action sends data and receives
+results in the background. The browser typically gets back a fragment of HTML
+or XML which is used to update a portion of the screen using BOM.
+
+Ability to rewrite the BOM, Ability to interact with the web server from
+JavaScript; combine both.
+

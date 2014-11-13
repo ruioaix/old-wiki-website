@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>UEFI</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link type="image/x-icon" rel="shortcut icon" href="../cssjs/css/favicon.ico"/>
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/css/custom.css" rel="stylesheet">
+	<script type="text/javascript" src="../cssjs/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../cssjs/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../cssjs/js/custom.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+
+</head>
+
+<body>
+	<div class="row-fluid">
+		<div id="left-side"  class="span4"> <div class="row-fluid">
+			<div class="navbar navbar-fixed-top visible-desktop">
+				<div class="navbar-inner">
+					<a class="brand" href="#"></a> 
+					<ul class="nav">
+						<li class="active"><a href="../index.html">home</a></li>
+					</ul>
+				</div>
+			</div><!--navbar --!>
+
+			<div id="myCarousel" class="carousel slide span12 img-polaroid  hidden-phone">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+					<li data-target="#myCarousel" data-slide-to="6"></li>
+					<li data-target="#myCarousel" data-slide-to="7"></li>
+					<li data-target="#myCarousel" data-slide-to="8"></li>
+					<li data-target="#myCarousel" data-slide-to="9"></li>
+					<li data-target="#myCarousel" data-slide-to="10"></li>
+					<li data-target="#myCarousel" data-slide-to="11"></li>
+					<li data-target="#myCarousel" data-slide-to="12"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item">		 <img src="../file/LRphoto/fribourg001.jpg"></div> 
+					<div class="item">       <img src="../file/LRphoto/fribourg002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg003.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg004.jpg"></div>
+					<div class="active item"><img src="../file/LRphoto/fribourg005.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/hangzhou001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/kunming001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/shanghai001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/someplace001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zhoushan001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zurich001.jpg"></div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+
+			<div class="span12" id="profile"><div class="row-fluid">
+				<div class="span4 offset1">
+					<a href="http://github.com/xrfind"><img src="http://s.gravatar.com/avatar/c273e7c0a671536c4d122bc39d67c3d2?s=512" id="avatar" class="img-polaroid"></a>
+				</div>
+				<div class="span6 offset1 hidden-phone">
+					<strong><i class="icon-user"></i> xrfind</strong><br />
+					<span><i class="icon-home"></i><a href="http://wiki.rrrui.com"> wiki.rrrui.com</a></span><br />
+					<span><i class="icon-envelope"></i> xrfind@gmail.com</span><br />
+					<span><i class="icon-heart"></i><abbr title="c, c++, Linux"> System Engineer</abbr></span><br />
+					<span><i class="icon-tasks"></i><abbr title="php, html/css/javascript, LAMP, Redis"> Web Developer</abbr></span><br />
+					<span><i class="icon-road"></i> Complex Network</span>
+				</div>
+			</div></div>
+
+			<div class="span12 hidden-phone" id="disqus">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				var disqus_title="UEFI";
+				var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+				var disqus_identifier="UEFI";
+
+				(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+
+
+
+		</div></div><!-- left-side --!>
+
+		<div id="right-side" class="span8" >
+			<div id="content">
+			<h1>UEFI</h1>
+
+<p>Unified Extensible Firmware Interface, 统一可扩展固件接口。</p>
+
+<ul>
+<li>这是字面翻译。 </li>
+<li>有时候缩写为 <strong>UEFI</strong></li>
+<li>有时候缩写为 <strong>Unified EFI</strong></li>
+<li>UEFI是一个接口，更多的是规范，也就是标准性质的东西，是一个说明书。 </li>
+<li>各个厂商照着说明书作出统一的接口。 </li>
+<li>接口吗，就是供人使用的，或者供其他什么东西使用的。 </li>
+<li>统一，一致吗，统一的接口，就是大家都照着这个接口来，可能大家自己的实现各式各样，但是接口都是一致的。 </li>
+</ul>
+
+<p><strong>UEFI Specification</strong> ，UEFI规范，这就是那本书了，那本说明书了。 </p>
+
+<p>书是谁写的？ <strong>Unified EFI Forum</strong> 写的。</p>
+
+<ul>
+<li>这个论坛，或者组织负责开发，管理，推进UEFI Specification。 </li>
+<li>这是一个非盈利non-profit的合作贸易collaborative trade组织。不知道这样的组织是什么样的组织。 </li>
+<li>组织的董事会成员都是NB的大公司：Apple inc，Lenovo，IBM，Intel等等。 </li>
+<li>董事会干嘛的，左右公司的，左右组织的。 </li>
+</ul>
+
+<p>那么，UEFI到底是干嘛的？</p>
+
+<ul>
+<li>有一个词叫 <strong>the pre-boot environment</strong> ，这个就是你按下电脑电源键然后到windows或者linux或者mac开始启动的这段时间。 </li>
+<li>这段时间里面发生了什么？主板上电，然后主板上各式各样的芯片里面的固件开始运行，自检，初始化啊什么的，其中最重要的是BIOS了，它里面有固件，负责了大多数其他芯片和硬件的检测，并且会放入一些特定的数据在内存中，然后让cpu开始执行内存中的数据，这一步已经是这段时间的最后了，这段数据执行的结果就是windows或者linux或者mac开始他们的启动。 </li>
+<li>之前的BIOS，我们称为 <strong>Legacy BIOS</strong> ，它如何自检，如何读取硬盘第一扇区的数据等等太多资料可以看，我可以确定的是，它的工作过程太过死板，而且只能那么死板，没有改进的空间，或者说改进的空间太小，不能说智能，而且永远不能说智能。在Legacy BIOS上，就没有接口一说，因为过程死的，要什么接口？ </li>
+<li>现在的很多比较高级的主板上都有了新型的BIOS，它的接口是按照UEFI Specification来的，我们称这种BIOS为 <strong>UEFI BIOS</strong> 。 </li>
+<li><strong>UEFI BIOS</strong> 里面也是有固件的，这种固件就比 <strong>Legacy BIOS</strong> 里面的固件负责的多，可以做的事情，可以实现的功能也都多得多，在启动windows、linux、mac之前，它可以做的事情也多的多，多了就复杂了，复杂了就需要统一，统一的结果就是一致的接口。 </li>
+<li><strong>UEFI Specification</strong> 就定义了这种接口，这个规范详细的说明了控制是如何从 <strong>the pre-boot environment</strong> 转移到windows、linux、mac的。也就是OS和平台固件之间的接口。 </li>
+</ul>
+
+<p>EFI和UEFI</p>
+
+<ul>
+<li>EFI Specification是intel写的，然后intel把它捐给了Unified EFI Forum，Unified EFI Forum就在EFI Specification的基础上写了一本新的书，就是UEFI Specification。 </li>
+<li>EFI Specification已经被intel抛弃了，不再更新。 </li>
+<li>UEFI Specification变成了王道。 </li>
+</ul>
+
+<p>UEFI Specification就是一份说明书，任何人都可以根据说明书做出自己的实现。</p>
+
+<p>上面说了 <strong>the pre-boot environment</strong> ，这是UEFI BIOS的天下。</p>
+
+<ul>
+<li>OS还没有启动。 </li>
+<li>UEFI BIOS因为其智能和强大，拥有所有硬件的控制权。 </li>
+<li>只要UEFI BIOS里面的固件足够NB，那么，其实这也是一个系统啊。 </li>
+<li>根据UEFI Specification，固件可以支持网络，USB，高分辨率图形，文件系统，对所有硬件的访问权限。 </li>
+<li>现在可以知道UEFI有多么强大了，完全可以称为一个小OS了。 </li>
+</ul>
+
+<p>在Lenovo ThinkServer TS430（不是T430）上的UEFI firmware是符合UEFI Specification 2.1的。</p>
+
+<ul>
+<li>在该机器上的，UEFI在启动os的时候，会从物理或者逻辑上的设备找到特殊的文件。 </li>
+<li>在UEFI可以启动的硬盘上，一个特殊的分区会存在，该分区包含了 <strong>the main UEFI boot loader</strong> ，其路径是 <strong>efiootootx64.efi</strong> 。如果这个文件存在，也就是这个boot loader存在，那么UEFI firmware会自动的根据这个文件进行启动。 </li>
+<li>在POST的时候， <strong>the Boot Manager</strong> 会自动确定和枚举所有的可以启动的设备以及UEFI boot target，并会自动为这些启动项创建启动入口选项。如果UEFI发现某个OS安装了，也会为之创建入口选项，指向OS boot loader file。 </li>
+<li>一个硬盘要么是MBR，要么是GPT。如果的多个bootable UEFI 分区存在于一个硬盘上，boot manager将列出所有的启动选项。 </li>
+<li>Boot Manager我可以对应上我的T430了。 </li>
+</ul>
+
+<h2>T430的UEFI机制思考</h2>
+
+<ul>
+<li>T430的UEFI BIOS会搜索所有分区寻找每一个UEFI boot target（也就是efi后缀的文件）吗？ 
+<ul>
+<li>UEFI BIOS可以识别的filesystem貌似只有fat16，fat32几个吧，所以应该不会去搜索ntfs和extn的分区，我所知道的是RHEL6的启动efi文件可以放在不是ESP的fat32分区，UEFI BIOS的boot manager里面会有RHEL的选项。我猜测，UEFI BIOS会搜索fat16/32的分区，同时，安装一个系统的时候，很可能有一种注册机制，向UEFI BIOS的boot manager注册的机制。 </li>
+</ul></li>
+<li>CSM的概念（我的猜测） 
+<ul>
+<li>CSM的概念好像是必要的，对于一个硬盘的机器，可以只用纯的UEFI启动，但是如果你有一个dvd，而dvd的启动是x86 boot record，那么如果你使用的UEFI，你可能就会不能引导dvd的启动，对应的，如果你启用CSM，那么dvd是可以启动的。这才是CSM的意义所在。 </li>
+<li>更进一层，如果你有两个硬盘，那么，一个硬盘可以UEFI，一个可以x86 boot，由于CSM的存在后者中的系统应该是可以启动的。 </li>
+</ul></li>
+<li>一个硬盘要么是mbr格式的，要么是GPT格式的。 </li>
+<li>gdisk是支持GPT的，不，就是为GPT硬盘而存在的；fdisk是不支持GPT硬盘的。 </li>
+</ul>
+
+<p>UEFI理解分区表，也理解filesystems。 现在的UEFI固件支持MBR和GPT两种分区表。 大部分的UEFI
+firmware都支持FAT12（软盘），FAT16和FAT32（硬盘），ISO9660（cd、dvd）。</p>
+
+<p>UEFI不提取MBR的任何内容，不管其存不存在。 相对的，UEFI从分区表中找到ESP这个特殊分区，从中提取UEFI
+firmware需要的数据。每个vendor都可以将他的文件存入到<EFI SYSTEM partition>/EFI/<VENDOR
+NAME>/目录下，这个盒RHEL6还是很对应的，在RHEL6中，就是/boot/efi/xxx。每个vendor也能使用firmware或者UEFI
+shell来开启这些boot program。</p>
+
+<p>一般的ESP会使用FAT32.</p>
+
+<p>在UEFI下，OS loader，memory testing apps等等，都是UEFI应用。</p>
+
+<p>因为每个vendor都可以在ESP中放入自己的文件，这并不影响其他vendor的文件，所以，多引导在UEFI下就是选择的问题，很N啊。</p>
+
+<p>Boot Process under UEFI 1，系统启动，自检 2，UEFI firmware加载 3，UEFI firmware读取Boot
+Manager数据 4，UEFI firmware启动boot manager中的某一个应用，大多是ESP中的一个。 5，这个UEFI
+application可能是GRUB（RHEL6就是这么干的），可能是其他的UEFI application。</p>
+
+<h2>GPT磁盘</h2>
+
+<p>所有用于解释GPT磁盘分区方案所需的信息完全包含在物理媒体指定位置的结构中。</p>
+
+<p>我觉得吧，windows的很多文档里都说到了ESP，但windows并没有把它当做一个各种系统共用的分区，而是将之看做是自己独有的分区，windows对其E
+SP的使用也没有关心规范什么的，里面的内容恐怕都是按照windows自己的风格放置的。</p>
+
+<p>一个硬盘要么是MBR，要么是GPT的。</p>
+
+<p>很明显，我现在的硬盘是GPT的。</p>
+
+<p>GPT是如何实现的：</p>
+
+<ol>
+<li>第一个block是MBR，这里的block就是扇区，512字节。LBA0 
+<ul>
+<li>因为这一点，所以，在一个BIOS+GPT的系统上，从GPT启动是可能的，实现的方法是MBR中指定boot loader的地址，但boot loader和OS都必须是识别GPT的，这才能保证OS的正常启动。 </li>
+</ul></li>
+<li>第二个block是GPT header。LBA1 
+<ul>
+<li>GPT header中放置着指向partition entry array的指针。 </li>
+<li>一般，入口矩阵就在LBA2上。 </li>
+</ul></li>
+<li>UEFI Specification规定partition entry array至少要有16384字节，也就是512*32，也就是说，从LBA2开始，到LBA33为止的这32个block都必须是partition entry array的。 
+<ul>
+<li>而如果一个partition entry是128字节，那么16384字节总共就可以放置128个partition entry。 </li>
+<li>这里还有可以说的地方，windows的实现支持128个分区，那么90%的可能性windows就是按照上面这么干的，windows安装的时候，会将磁盘格式化为GPT磁盘，在这一过程里面就将partition entry array固化为了16384字节，而同时使用128字节一个partition entry。从而导致了128个分区的限制。 </li>
+<li>如果windows将partition entry array扩大一倍，partition entry仍然是128字节，那么分区数目就可以达到256个了。 </li>
+</ul></li>
+<li>我的T430是先安装的windows7，所以可以预见，我的磁盘是上述实现。而从LBA34开始，才是真实可用的空闲空间。 </li>
+<li>partition header和partition entry array有备份，在磁盘的最后33个block，1个header和32个array。 
+<ul>
+<li>partition header里面第一个可用的block的地址；disk guid；第一个partition entry的位置，有多少个partition entry，partition entry的size是多少；crc32 header，crc32 partition array。 </li>
+</ul></li>
+<li>LBA是一种计算方式，是按照扇区或者block来的，至于扇区里面有多少byte，其实不关心。多的byte，空着呗。 </li>
+<li>partition entry里面 
+<ul>
+<li>第一个16byte，是分区类型GUID </li>
+<li>第二个16byte，是分区GUID </li>
+<li>第三个16byte，是起始和结束LBA </li>
+<li>第四个8byte，是分区的属性标志。 </li>
+<li>剩下的72byte，是分区的名字。 </li>
+</ul></li>
+<li>以上。 </li>
+</ol>
+
+<h1>OVER</h1>
+			</div><!-- content --!>
+		</div><!-- right-side span8 --!>
+	</div> <!--row-fluid --!>
+</body>
+</html>

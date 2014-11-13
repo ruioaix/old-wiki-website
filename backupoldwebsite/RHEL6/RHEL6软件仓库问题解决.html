@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>RHEL6软件仓库问题解决</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">RHEL6的软件仓库问题解决</h1>
+
+<p>
+RHEL自带的软件仓库是要钱的，买的是服务吗。
+之前也曾经使用centos6的仓库，但是当<code>yum update</code>之后，RHEL左上角applications旁边的小红帽不见了，开机画面变成了centos6的，这样实在不伦不类。
+现在我是通过建立本地仓库，同时使用第三方仓库的方案来解决软件仓库的问题。
+</p>
+
+<h2 id="toc_1.1">本地仓库</h2>
+<ul>
+<li>
+RHEL的光盘镜像iso文件中存在着仓库，可以将iso的文件拷贝到本地，并建立本地仓库。
+
+<li>
+切换到root账户<code>su -</code>，建立<code>/yum/</code>目录，将iso中所有文件都拷贝到该目录下。
+
+<li>
+RHEL所有的仓库配置文件都放在<code>/etc/yum.repos.d/</code>目录中，建立一个本地仓库配置文件<code>yumlocal.repo</code>。
+
+<li>
+<code>su -</code>
+
+<li>
+<code>cd /etc/yum.repos.d/</code>
+
+<li>
+<code>vim yumlocal.repo</code>
+<pre>
+    [local]
+    name=local
+    baseurl=file:///yum/Server
+    enable=1
+    gpgcheck=0
+</pre>
+
+<li>
+<code>yum clean all</code>
+
+<li>
+<code>yum update</code>
+
+<li>
+<code>yum list</code> 可以查看本地仓库中有哪些文件。
+
+</ul>
+
+<h2 id="toc_1.2">第三方仓库</h2>
+<p>
+第三方仓库我一般使用两个： <strong>EPEL</strong> 和 <strong>rpmfusion</strong> 。
+同时，还有一个 <strong>remi</strong> ，这个虽然我有安装，但是保持了它本身的<code>enable=0</code>，只在某些库找不到的时候在这里查看一下。
+</p>
+<ul>
+<li>
+EPEL的安装很简单，去官网：<a href="http://fedoraproject.org/wiki/EPEL">http://fedoraproject.org/wiki/EPEL</a> ，下载对应的rpm，双击安装即可。
+
+<li>
+rpmfusion同上，官网: <a href="http://rpmfusion.org/Configuration">http://rpmfusion.org/Configuration</a> 。
+
+<li>
+remi同上，官网：<a href="http://rpms.famillecollet.com">http://rpms.famillecollet.com</a> 。
+
+<li>
+值得注意的是，EPEL和rpmfusion安装后，默认就是enable的，remi默认是unenabled。
+
+<li>
+enable与否的设置在<code>/etc/yum.repos.d/</code>目录中对应的配置文件中。
+
+<li>
+当前，我的<code>/etc/yum.repos.d/</code>目录中有的配置文件：
+
+<ol>
+<li>
+adobe-linux-x86_64.repo
+
+<li>
+epel.repo
+
+<li>
+epel-testing.repo
+
+<li>
+google-chrome.repo
+
+<li>
+remi.repo
+
+<li>
+rpmfusion-free-updates.repo
+
+<li>
+rpmfusion-free-updates-testing.repo
+
+<li>
+rpmfusion-nonfree-updates.repo
+
+<li>
+rpmfusion-nonfree-updates-testing.repo
+
+<li>
+yumlocal.repo
+
+</ol>
+</ul>
+
+<p>
+补充：还有一个仓库，rpmforge。可以在<a href="http://pkgs.repoforge.org/rpmforge-release/">http://pkgs.repoforge.org/rpmforge-release/</a> 这里找到rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm，安装即可。里面有smplayer。安装smplayer的时候，可能会出现在菜单Applications里的条目没有图片，这时使用<code>ln -s /usr/share/icons/hicolor/64x64/apps/smplayer.png /usr/share/icons/smplayer.png</code>。
+</p>
+
+<h2 id="toc_1.3">删除RHEL收费仓库相关的软体</h2>
+<ul>
+<li>
+不删除的话，系统会经常性的提醒你注册，我是无法忍受这种烦恼的。
+
+<li>
+和RHEL收费仓库相关的软体主要是两类
+
+<ul>
+<li>
+rhn（redhat network）
+
+<li>
+subscription-manager
+
+</ul>
+<li>
+使用<code>rpm -qa|grep subscription-manager</code>，检查与<code>subscription-manager</code>相关的软体。
+
+<ul>
+<li>
+一共有3个。
+
+<li>
+<code>rpm -e subscription-manager-firstboot subscription-manager-gnome subscription-manager</code>
+
+</ul>
+<li>
+使用<code>rpm -qa|grep rhn</code>，检查与<code>redhat network</code>相关的软体。
+
+<ul>
+<li>
+一共有7个。
+
+<li>
+<code>rpm -e rhn-check rhn-setup rhnlib rhnsd yum-rhn-plugin rhn-setup-gnome rhn-client-tools</code>
+
+</ul>
+</ul>
+
+<h2 id="toc_1.4">other tips</h2>
+
+<h1 id="toc_2">OVER</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="RHEL6软件仓库问题解决";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="RHEL6软件仓库问题解决";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

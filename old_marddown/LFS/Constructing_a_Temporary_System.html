@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Constructing a Temporary System</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link type="image/x-icon" rel="shortcut icon" href="../cssjs/css/favicon.ico"/>
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/css/custom.css" rel="stylesheet">
+	<script type="text/javascript" src="../cssjs/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../cssjs/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../cssjs/js/custom.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+
+</head>
+
+<body>
+	<div class="row-fluid">
+		<div id="left-side"  class="span4"> <div class="row-fluid">
+			<div class="navbar navbar-fixed-top visible-desktop">
+				<div class="navbar-inner">
+					<a class="brand" href="#"></a> 
+					<ul class="nav">
+						<li class="active"><a href="../index.html">home</a></li>
+					</ul>
+				</div>
+			</div><!--navbar --!>
+
+			<div id="myCarousel" class="carousel slide span12 img-polaroid  hidden-phone">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+					<li data-target="#myCarousel" data-slide-to="6"></li>
+					<li data-target="#myCarousel" data-slide-to="7"></li>
+					<li data-target="#myCarousel" data-slide-to="8"></li>
+					<li data-target="#myCarousel" data-slide-to="9"></li>
+					<li data-target="#myCarousel" data-slide-to="10"></li>
+					<li data-target="#myCarousel" data-slide-to="11"></li>
+					<li data-target="#myCarousel" data-slide-to="12"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item">		 <img src="../file/LRphoto/fribourg001.jpg"></div> 
+					<div class="item">       <img src="../file/LRphoto/fribourg002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg003.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg004.jpg"></div>
+					<div class="active item"><img src="../file/LRphoto/fribourg005.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/hangzhou001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/kunming001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/shanghai001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/someplace001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zhoushan001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zurich001.jpg"></div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+
+			<div class="span12" id="profile"><div class="row-fluid">
+				<div class="span4 offset1">
+					<a href="http://github.com/xrfind"><img src="http://s.gravatar.com/avatar/c273e7c0a671536c4d122bc39d67c3d2?s=512" id="avatar" class="img-polaroid"></a>
+				</div>
+				<div class="span6 offset1 hidden-phone">
+					<strong><i class="icon-user"></i> xrfind</strong><br />
+					<span><i class="icon-home"></i><a href="http://wiki.rrrui.com"> wiki.rrrui.com</a></span><br />
+					<span><i class="icon-envelope"></i> xrfind@gmail.com</span><br />
+					<span><i class="icon-heart"></i><abbr title="c, c++, Linux"> System Engineer</abbr></span><br />
+					<span><i class="icon-tasks"></i><abbr title="php, html/css/javascript, LAMP, Redis"> Web Developer</abbr></span><br />
+					<span><i class="icon-road"></i> Complex Network</span>
+				</div>
+			</div></div>
+
+			<div class="span12 hidden-phone" id="disqus">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				var disqus_title="Constructing a Temporary System";
+				var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+				var disqus_identifier="Constructing a Temporary System";
+
+				(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+
+
+
+		</div></div><!-- left-side --!>
+
+		<div id="right-side" class="span8" >
+			<div id="content">
+			<h1>Constructing a Temporary System</h1>
+
+<h2>Introduction</h2>
+
+<p>临时系统，现在还不能体会为什么要存在一个临时系统，直接以host来建立新系统不行吗？不行在什么地方？</p>
+
+<p>这一章过后，在/mnt/lfs/tools里面应该有各种工具：compiler，assember，linker等等各种。不过，在tools中也就应该是只有这
+些可执行的文件，没有其他的什么，本章的工作就是一个一个的编译之前download下来的所有包。</p>
+
+<p>编译第一个包的时候，显然，用的是RHEL6的编译器，第二个或许也是，大概第几个的时候，就不再需要RHEL6的编译器了，而开始使用刚刚编译出来的放在/mnt/
+lfs/tools下的编译器了，这就是第一阶段；第二阶段就是使用tools下的编译器编译所有还没编译的包，编译完了，第二阶段也就结束了。本章就结束了。</p>
+
+<p>之后，也就是在下一章，会进行<code>chroot</code>，还会经过设置吧，最终结果就是，只剩下tools下的工具可用了，使用这些工具，来建立一个lfs系统。</p>
+
+<h2>Toolchain Technical Notes</h2>
+
+<p>本章的目标是创造一个和host分离的area，其中包含了足够的tool。</p>
+
+<p>使用binutils中的 <strong>./config.guess</strong> 会输出 <strong>x86_64-unknown-linux-gnu</strong> 。</p>
+
+<p>dynamic loader和standard load是两个不同的东西。使用<code>readelf -l &lt;name of binary&gt; |grep
+interpreter</code>会输出 <strong>/lib64/ld-linux-x86_64.so.2</strong> 。前者是glibc提供的，后者是binutils提供的。</p>
+
+<p>在我的机器上LFS<em>TGT是 <strong>x86</em>64-lfs-linux-gnu</strong> 。</p>
+
+<ul>
+<li>cross-comipler是可以编译出并非本平台使用的二进制文件；通常的compiler都是将源文件编译成为可以在本机上运行的二进制文件。 </li>
+<li>使用LFS_TGT保证了，第一次编译binutils和gcc，可以得到一个cross-linker和cross-compiler。 </li>
+<li>cross的作用就是在我的64位机上，可以编译出32位的程序，也可以编译出64位的程序。 </li>
+</ul>
+
+<p>binutils安装assembler和linker。binutils先安装，gcc和glibc的configure文件执行很多对assembler和lin
+ker的测试，然后决定那种特性会启用，那种特性会关闭。</p>
+
+<p><strong>binutils</strong> 之后，第二个安装的是 <strong>GCC</strong> 。再然后，第三个安装的是 <strong>Linux API headers</strong> 。再然后是 <strong>Glibc</strong></p>
+
+<p>build process</p>
+
+<ol>
+<li>将需要编译的package和patch放在/mnt/lfs/sources/中。 </li>
+<li>进入sources目录 
+<ul>
+<li>tar </li>
+<li>进入tar产生的目录 </li>
+<li>build </li>
+<li>进入sources </li>
+<li>清理已ok的源文件。 </li>
+</ul></li>
+</ol>
+
+<p>编译之前的准备工作：</p>
+
+<ul>
+<li><code>mount -v -t ext4 /dev/sda9 /mnt/lfs</code></li>
+<li><code>cd /mnt/lfs/sources</code></li>
+<li><code>mkdir package_dir</code></li>
+<li><code>mkdir patch_dir</code></li>
+<li><code>mv *z *2 package_dir</code></li>
+<li><code>mv *patch patch_dir</code></li>
+</ul>
+
+<h2>Binutils-2.22-Pass 1</h2>
+
+<p>一个linker，一个assembler，其他处理object files二机制文件？的工具。</p>
+
+<ul>
+<li><code>mv package_dir/binutils-2.22.tar.bz2 .</code></li>
+<li><code>mv patch_dir/binutils-2.22-build_fix-1.patch .</code></li>
+<li><code>tar -jxvf binutils-2.22.tar.bz2</code></li>
+<li><code>cd binutils-2.22</code></li>
+<li><code>patch -Np1 -i ../binutils-2.22-build_fix-1.patch</code></li>
+<li><code>mkdir -v ../binutils-build</code></li>
+<li><code>cd ../binutils-build</code></li>
+<li><code>../binutils-2.22/configure --prefix=/tools --with-sysroot=(LFS --with-lib-path=/tools/lib --target=)LFS_TGT --disable-nls --disable-werror</code></li>
+<li><code>make</code></li>
+<li><code>mkdir -v /tools/lib &amp;&amp; ln -sv lib /tools/lib64</code></li>
+<li><code>make install</code></li>
+</ul>
+
+<p>在我的机器上，大概1分40秒。</p>
+
+<h2>GCC-4.7.1-Pass 1</h2>
+
+<p>GCC，就是GNU compiler collection，包含了c和c++ compiler。</p>
+
+<h2>Linux-3.5.2 API Headers</h2>
+
+<p>linux kernel's API，会被glibc用到。一坨头文件呗。</p>
+
+<h2>Glibc-2.16.0</h2>
+
+<p>glibc包含了main c library，就是c的标准库吧。</p>
+
+<ul>
+<li><code>[Requesting program interpreter: /tools/lib64/ld-linux-x86-64.so.2]</code></li>
+</ul>
+
+<h2>Binutils-2.22-Pass 2</h2>
+
+<p>介绍内容完全同上。</p>
+
+<h2>GCC-4.7.1-Pass 2</h2>
+
+<p>介绍内容完全同上。</p>
+
+<ul>
+<li><code>[Requesting program interpreter: /tools/lib64/ld-linux-x86-64.so.2]</code></li>
+</ul>
+
+<h2>Tcl-8.5.12</h2>
+
+<p>本package和之后的3个都是用来构筑一个test环境。</p>
+
+<h2>Expect-5.5</h2>
+
+<h2>DejaGNU-1.5</h2>
+
+<h2>Check-0.9.8</h2>
+
+<p>unix testing framework for C</p>
+
+<h2>Ncurses-5.9</h2>
+
+<h2>Bash-4.2</h2>
+
+<h2>Bzip2-1.0.6</h2>
+
+<h2>Coreutils-8.19</h2>
+
+<h2>Diffutils-3.2</h2>
+
+<h2>File-5.11</h2>
+
+<h2>Findutils-4.4.2</h2>
+
+<h2>Gawk-4.0.1</h2>
+
+<h2>Gettext-0.18.1.1</h2>
+
+<h2>Grep-2.14</h2>
+
+<h2>Gzip-1.5</h2>
+
+<h2>M4-1.4.16</h2>
+
+<h2>Make-3.82</h2>
+
+<h2>Patch-2.6.1</h2>
+
+<h2>Perl-5.16.1</h2>
+
+<h2>Sed-4.2.1</h2>
+
+<h2>Tar-1.26</h2>
+
+<h2>Texinfo-4.13a</h2>
+
+<h2>Xz-5.04</h2>
+
+<p>over</p>
+			</div><!-- content --!>
+		</div><!-- right-side span8 --!>
+	</div> <!--row-fluid --!>
+</body>
+</html>

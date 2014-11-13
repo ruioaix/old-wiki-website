@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>类型提升和寻常算术转换</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">类型提升和寻常算术转换</h1>
+
+<h2 id="toc_1.1">类型提升</h2>
+<ul>
+<li>
+C语言中的类型转换远比其他语言更为常见，其他语言往往将类型转换只用于操作数上，使操作符两端的类型一致。
+
+<li>
+C语言也做上面这项任务，但是，它同时也 <strong>提升比规范类型int或double更小的数据类型（即使操作符两端操作数类型是一致的）</strong> ，这种特性就是类型提升。
+
+<li>
+类型提升包括三类：
+
+<ul>
+<li>
+整形提升：char，short或者int型位段，包括他们的有符号或无符号类型，以及枚举类型，可以使用在需要int或unsigned int的表达式中。如果int可以完整的表示源类型的所有值，那么该源类型的值就转换为int，否则转换为unsigned int。
+
+<li>
+float类型，转换为double类型。
+
+<li>
+任何数组，转换为相应类型的指针。
+
+</ul>
+<li>
+这种提升是从K&amp;R C时代留下来的。
+
+<li>
+ANSI C表示： 如果编译器能够保证运算结果一致，也可以省略类型提升。
+
+</ul>
+
+<h2 id="toc_1.2">寻常算术转换</h2>
+<ul>
+<li>
+许多操作数类型为算术类型的双目运算符会引发转换，并以类似的方式产生结果类型。它的目的是产生一个普通类型，同时也是运算结果的类型。这个模式称为“寻常算术转换“。
+
+<li>
+过程如下：（按照if else if的方式描述）
+
+<ul>
+<li>
+if其中一个操作数类型是long double，那么另一个也被转换为long double。
+
+<li>
+else if其中一个操作数类型是double，那么另一个也double。
+
+<li>
+else if其中一个操作数类型是float，那么另一个也float。（这一条与上面“类型提升“的最后一条有关，所以ANSI C并没有将浮点操作数的类型改变）
+
+<li>
+else if其中一个操作数类型是unsigned long，那么另一个也unsigned long。
+
+<li>
+else if其中一个操作数类型是long，另一个操作数类型是unsigned int
+
+<ul>
+<li>
+如果long能够表示unsigned int的所有值，那么unsigned int转换为long。
+
+<li>
+如果不能，那么两个都转换为unsigned long。
+
+</ul>
+<li>
+else if其中一个操作数类型是long，那么另一个也long。
+
+<li>
+else if其中一个是unsigned int，那么另一个也unsigned int。
+
+<li>
+else 两个都int。（类型提升）
+
+</ul>
+<li>
+上面倒数第二行，要小心：“else if其中一个操作数是unsigned int，那么另一个也unsigned int”，这条会引起错误。
+
+<ul>
+<li>
+<code>int d=-1;</code>
+
+<li>
+<code>unsigned int a=1;</code>
+
+<li>
+<code>if(d&lt;a) xxx;</code>
+
+<li>
+这里的<code>d&lt;a</code>判断是错误的，因为a是unsigned int，d是int，d会转变为unsigned int，很大。
+
+<li>
+这在ANSI C中就是存在的。记住就可以了。
+
+</ul>
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="类型提升和寻常算术转换";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="类型提升和寻常算术转换";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

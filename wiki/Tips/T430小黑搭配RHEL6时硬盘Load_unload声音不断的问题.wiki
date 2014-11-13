@@ -1,0 +1,138 @@
+= Thinkpad T430搭配RHEL6时硬盘Load/unLoad声音不断的问题 =
+这里说的声音是指： *隔几秒钟硬盘会发出一次“咔嚓”或者“tick tick tick“的声音* 。
+
+== 声音是什么引起的 ==
+声音是由于硬盘parking its head，也就是load/unload 磁头产生的声音。
+- 不知道该怎么翻译上面的两部分英文，或者，使用英文更好一些。
+
+使用命令：`hdparm -I /dev/sda`；可以看到我的硬盘的Model Number是 *HITACHI HTS725050A7E630* 。
+- 这是日立的硬盘。
+- 日立硬盘被西部数据收购了，其官方的网站是：http://www.hgst.com/ 。
+- 在上面的网址上找到我的硬盘还是很简单的
+    - http://www.hgst.com/internal-drives/mobile/travelstar/travelstar-z7k500
+    - http://www.hgst.com/tech/techlib.nsf/techdocs/438BBDC96E3B3491882579AB0066CBB4/$file/TSZ7K500_ds.pdf 
+- 从上面pdf中，可以找到如何阅读硬盘的model number：
+{{{
+    How to read the Travelstar model number
+    HTS725050A7E630 = 500GB, SATA 6Gb/s
+
+    H = HGST
+    T = Travelstar
+    S = Standard (vs E for Enhanced Availability)
+    72 = 7200 RPM
+    50 = Full capacity — 500GB
+    50 = Capacity this model, 50 = 500GB
+       (32 = 320GB, 25 = 250GB)
+    A = Generation code
+    7 = 7mm z-height
+    E6 = SATA 6Gb/s with 512 emulation
+    3 = 32MB cache
+    0 = No encryption (1 = Bulk data encrypation, 5 = TCG Opal Encrypation)
+}}}
+- 从上面的pdf中可以看到在参数表中的 *Reliability* 中有一项 *Load/Unload cycle* ，其标注为 *600000* 。
+    - 这说明：Load/Unload cycle是于硬盘可靠性相关的，600000是官方给出的数值，从各种论坛的各种帖子来看，这或许只是日立官方给出的一个参考值，或者猜测值，有意义，但不绝对。
+    - 有人给出了Load_Cycle_Count值在1188005，Power_On_Hours值在15636，硬盘仍然正常工作的例子。（不知到是否是日立硬盘）
+    - 有人给出了已损坏的两个硬盘，Load_Cycle_Count值都在50k到100k之间。
+- 在下面这个网址，你可以搜寻你需要的信息：
+    - http://www.hgst.com/tech/techlib.nsf/search/$SearchForm?SearchView
+- 搜寻 *load* 你就可以得到：
+    - http://www.hgst.com/tech/techlib.nsf/techdocs/9076679E3EE4003E86256FAB005825FB
+    - http://www.hgst.com/tech/techlib.nsf/techdocs/9076679E3EE4003E86256FAB005825FB/$file/LoadUnload_white_paper_FINAL.pdf
+- 这是讲述Load/Unload到底是为何物的文档，已经是07年末的东西了。
+- 网上关于硬盘出现频繁Load/Unload的时间从06年就开始了。
+
+== Ramp Load/Unload Technology in Hard Disk Drives ==
+- Load/unload工艺从90年代中期开始。
+- 使用该工艺获得的好处：耐用性增强，节省能耗，防撞击。
+- 采用该工艺的原因描述：
+    - 硬盘的数据传输是通过磁头读写磁盘上的数据来完成的。在工作过程中，磁头并不与磁盘的盘面直接接触，两者之间有一层很薄的空气薄膜，这层空气薄膜是由于磁盘的高速旋转产生的。
+    - 如果磁盘停止旋转，空气薄膜消失，磁头则会直接接触到盘片，也就是说磁头是直接在盘片上休息。这种接触最显著的缺点是都有着非常光滑的表面的磁头和盘片之间的黏附，想要在不损伤两者的情况下将两者分离是一件很困难的事情。为了避免这种情况，早期的硬盘盘片都会经过一种叫做 *texturing* 的处理，这种处理会将盘片进行微小的粗糙化。
+    - *testuring* 可以用于整个盘片，也可以只用于盘片内径（这就是大家知道的start/stop zone）。
+    - 但是随着人们对于硬盘传输速度和硬盘容量需求的不断增加，制造商需要不断提高硬盘的面密度，同时要求盘片表面尽可能地平滑，这无疑与之前采用的技术产生了冲突，再加上其他的一些因素，硬盘制造商迫切地需要一种新的方式来代替之前采用的磁头直接接触盘面的行为。这时IBM的工程师们提出了一种叫做Load/Unload的技术。
+    - Ramp load/unload技术使得在硬盘power-down之前，先将磁头滑到盘片之外，安全的放置在一个cam-like的结构上。
+    - cam-like的结构有一个很浅的斜坡，也就是Ramp（斜坡）这个名字的由来。
+    - 在power-on的时候，磁头会在盘片达到合适的转速之后滑下斜坡，滑到磁盘之上。由于盘片已经达到足够的转速，空气就会充当缓冲，磁头和盘片之间保持这一定的距离，这个距离就是flying height。
+    - 通过Ramp Load/unload，磁头不再停靠在盘片上，所以 *texturing* 就不再需要，盘片就可以尽可能的光滑。更光滑的盘片允许更小的flying height，更小的flying height就会有更好的数据读取与写入。
+- 如上所述，load/unload就是将磁头和盘片分离开来，老死不相往来的技术。
+- 同时，产生了另外一个问题，load/unload是机械运动，其是有次数限制的。
+    - 硬盘的power-on就意味着，磁头要从cam-like结构上滑下来；硬盘的power-down就意味这，磁头要滑会到cam-like结构上。
+    - 这貌似也不是什么大问题，硬盘不都是开机power-on，关机power-down吗？
+    - 可惜，不是这样的，现在的系统（linux，windows，mac os），现在的硬件厂商（电源管理的很多内容不只在系统中，还会存在于主板中，特别的，笔记本厂商，更是注重电源管理，像thinkpad）都太智能了。
+    - 智能导致了一种情况：很多时候，如果硬盘空闲，那么系统或硬件就可能power-down硬盘，从而节省电源消耗（如果是使用电池，这种power-down硬盘的行为几乎已经是笔记本的缺省行为）于是乎一次unload，当存在一个存取硬盘的动作的时候，于是乎一次load。
+    - 结果就是，你的硬盘可能会不断的load/unload。
+    - 结果，tick tick tick ......
+
+== 改变tick tick tick的思考 ==
+- 在上面的Ramp Load/unload pdf中，有这样一段描述：
+    - 对于具有300000次load/unload规格的Hitachi GST Travelstar硬盘，进行1000000次的load/unload耐力测试，硬盘成功经历了这次测试。
+    - 而现在我的硬盘是600000的规格。相信其他的移动型硬盘应该也是这个级别的。
+- 当我在T430上使用windows7的时候，我听不到tick的声音。
+- 当我在T430上使用RHEL6的时候，如果我的硬盘操作比较少（比如看youtube，或者浏览一个很多信息量的页面很久，或者现在这样使用vim写东西）那么，我基本上都会听到几秒中一次的tick声音。但当我对硬盘的操作多的时候（比如看硬盘上的720p4G大小高清岛国电影，还时不时跳一段的时候）硬盘不会有tick的声音。
+- tick声音的存在，我理解，时不时会出现一声（比如几分钟一次），我理解；我不理解的是为什么会出现几秒钟一次的tick tick声音。
+    - 几秒钟一次，肯定是不可以接受的，而且是应当作为bug进行修复的。
+- 解决tick tick的方法在网上很容易就可以差到，而且非常的一致：`hdparm -B 254 /dev/sda`。
+    - 我测试了一个下午，作用非常明显。
+    - 我使用下面的shell script进行监测，每一分钟输出一次结果：
+{{{
+    #!/bin/bash
+    while [ 1 ]
+    do
+        smartctl -a /dev/sda |grep Load_Cycle
+        sleep 60
+    done
+}}} 
+    - 测试的结果如下：
+{{{
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       45996
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       45998
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46004
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46013
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46018
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46025
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46030
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46038
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46050
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46057
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46064
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46071
+    ... 上下两行之间相差10分钟
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46150
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46158
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46173
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46180
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46180
+    ... 上下两行相差200分钟
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46560
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46571
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46584
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46595  在这里我设定了 `hdparm -B 254 /dev/sda` 
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46595
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46595
+    ... 上下相差120分钟
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46595
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46595
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46595
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46595
+    193 Load_Cycle_Count        0x0012   096   096   000    Old_age   Always       -       46595  从设定apm为254开始，数值就没有变过
+}}}
+- 对于如此频繁的Load/unload，可能的原因如下：
+    # 电源管理中对硬盘的设置太过了，导致了如果硬盘idle，那么就立刻的unload，也就是磁头停靠在了cam-like结构上。
+    # 在RHEL6中，驻留后台的某些程序会因为这样或者那样的原因经常性的操作硬盘。
+    # 很可能就因为这两种情况的存在，导致了频繁的load/unload。
+    # 之前的设置命令中的`hdparm -B 254 /dev/sda`，就是告诉电源管理，即使硬盘idle，也不要unload，就让硬盘转着好了。这样的话，不会unload，自然也就不会load。
+    # 这也说明了，几秒钟就tick一次应该是操作系统对硬盘进行的规律性的操作；也就是RHEL6会几秒钟操作硬盘一次，我不知道是由什么引起的操作，但应该没有必要到几秒钟操作一次的程度吧。几分钟其实我觉得都是可以接受的。
+- 并不是所有的硬盘都有Load_Cycle_Count这一指标，所以如果你使用的是台式机，或者服务器，很可能当你使用smartctl的时候没有任何关于Load_Cycle_Count的输出。
+- 在linux中笔记本插上电源和使用电池时，电源管理通常都会一些区别。
+    - 在某些linux发行版中，你会发现使用AC时，apm level是254；而使用电池时，apm level是128。
+- Load/Unload技术发展出来是为了解决磁头和盘片接触的问题，但它的出现还带来了其他的好处。
+    - 比如省电，unload的时候，盘片不旋转或者低速旋转，自然省电。这也是电源管理和Load/unload有关的原因。
+    - 比如防撞击，unload的时候，自然安全一些。即使在盘片读取或者写入的时候，现在的笔记本可以通过重力感应或者陀螺仪等感知笔记本的移动或者倾斜，然后快速的unload，保证磁头和盘片不会产生撞击。
+- apm level的设置其实是一种妥协。
+    - apm=128的时候，load/unload的频繁一些，更省电一些，但Load/unload次数是有极限的。
+    - apm=254的时候，除了开机关机，不会产生额外的load/unload，但硬盘会保持旋转，硬盘温度可能会上升（硬盘温度如果太高一样会减少硬盘的使用寿命）
+
+= 解决方案 =
+- 在apm=128的时候，测试了硬盘空闲时候的温度，27-37之间，80%的时间在36度，10%在37度，4%在35度，6%在35度以下。
+- 在apm=254的时候，测试了硬盘空闲时候的温度，2%在37度，95%在38度，3%在39度。
+- 所以，就我的电脑来说，硬盘上升了2度，可以接受。
+- 将`hdparm -B 254 /dev/sda`写入了 */etc/rc.d/rc.local* 。

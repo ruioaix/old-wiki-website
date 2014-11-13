@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>The X server configuration HOWTO</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">The X server configuration HOWTO</h1>
+<ol>
+<li>
+<strong>X window system是一份规范，在屏幕上勾画或者移动图形，键盘鼠标的使用等等的规范；其也被简称为X或者X11</strong>
+
+<li>
+<strong>使用X window system规范，是linux用户可以使用图形界面的应用是Xorg-X11，这是xfree86的一个分支</strong>
+
+<li>
+<strong>要安装xorg-x11,则需要配置好显卡</strong>
+
+<li>
+<strong>在gentoo中配置显卡，需要kernel modesetting的支持，这是新的特性，简称KMS，在内核中配置</strong>
+
+<li>
+<strong>对ATI显卡，如果使用开源的驱动，那么需要安装radeon-ucode</strong>
+
+<li>
+<strong>然后就是配置make.conf这个文件，在这个文件中决定使用那个显卡，输入设备等等。</strong>
+
+</ol>
+
+<h2 id="toc_1.1">安装X server</h2>
+<ul>
+<li>
+x server是安装gnome的基础，当然也是kde的。
+
+<li>
+安装x server之前，需要对内核进行一些设置，从而支持输入设备和显卡。
+
+<ul>
+<li>
+输入设备一般使用 <strong>evdev</strong> （通用的输入驱动），这个是在 <em>Device Drivers</em> -&gt; _Input device support -&gt; Event interface （使能）。
+
+<li>
+现在的开源显卡驱动需要KMS（kernel modesetting）的支持。 
+
+<ul>
+<li>
+在 <em>Device Drivers</em> -&gt; <em>Graphics support</em> -&gt; <em>Support for frame buffer devices</em> 中，关闭所有的驱动，这是传统的frame buffer模式，和kms冲突。
+
+<li>
+在 <em>Device Drivers</em> -&gt; <em>Generic Driver Options</em> -&gt; 选择 <em>Include in-kernel firmware blobs in kernel binary</em> ；设置 <em>External firmware blobs</em> 和 <em>Firmware blobs root directory</em> 。
+
+</ul>
+<li>
+添加Radeon KMS support
+
+<ul>
+<li>
+在 <em>Device Drivers</em> -&gt; <em>Graphics support</em> -&gt; <em>Direct Rendering Manager</em> 中添加 <em>ATI Radeon</em> 和 <em>Enable modesetting on radeon by default</em> 支持。
+
+</ul>
+</ul>
+<li>
+由于我使用的是ATI的显卡，所以，我还必需安装<code>emerge -av radeon-ucode</code>。
+
+<li>
+在配置好内核之后，我需要对 <em>/etc/make.conf</em> 文件中添加一些语句：
+
+<ul>
+<li>
+<code>INPUT_DEVICES="evdev synaptics"</code>
+
+<li>
+<code>VIDEO_CARDS="radeon"</code>
+
+</ul>
+<li>
+<code>echo "x11-base/xorg-server udev" &gt;&gt; /etc/portage/package.use</code>
+
+<li>
+<code>emerge xorg-server</code>
+
+<li>
+<code>env-update</code>
+
+<li>
+<code>source /etc/profile</code>
+
+</ul>
+
+<h2 id="toc_1.2">配置xorg</h2>
+<ul>
+<li>
+一般来说，按照上面的步骤安装好了之后，应该就不需要什么设置了。
+
+<li>
+<code>startx</code>
+
+<ul>
+<li>
+这是一个script，其启动x server和一些图形化应用。执行什么应用由以下逻辑决定。
+
+<ul>
+<li>
+如果 <em>.xinitrc</em> 存在于用户主目录下，那么其就会执行其中的语句。
+
+<li>
+如果没有上述文件，那么，<code>startx</code>就会读取 <strong>XSESSION</strong> 变量，然后根据变量执行 <em>/etc/X11/Sessions/</em> 中的script。
+
+<li>
+而 <strong>XSESSION</strong> 可以在 <em>/etc/env.d/90xsession</em> 中定义。
+
+</ul>
+</ul>
+<li>
+执行<code>startx</code>之后，如果还没有窗口安装管理器（gnome或者kde），那么显示的就是黑屏，可以安装xterm什么的验证一下。
+
+<li>
+配置xorg是非常不推荐的，应该作为迫不得已的一种做法，配置文件在 <em>/etc/X11/xinit/</em> 中。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="The X server configuration HOWTO";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="The X server configuration HOWTO";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

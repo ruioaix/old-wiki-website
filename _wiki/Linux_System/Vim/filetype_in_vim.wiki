@@ -1,0 +1,8 @@
+%toc
+%title FILETYPE IN VIM
+Filetype is very important concept.
+
+The first thing which should be understood is that filetype is not the extension of a file.
+
+If I want, I can set _main.c_'s type to php.
+

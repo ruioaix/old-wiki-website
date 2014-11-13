@@ -1,0 +1,3 @@
+= 苏黎世 =
+
+<div class="PhotoAndIntro">{{../files/LRphoto/zurich001.jpg||class="photo"}} *苏黎世火车站* </div>

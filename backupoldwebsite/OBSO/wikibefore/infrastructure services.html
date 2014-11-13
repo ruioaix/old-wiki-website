@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>infrastructure services</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">infrastructure services</h1>
+<h2 id="toc_1.1">services and daemons</h2>
+<ul>
+<li>
+systemctl 是用来开始，停止，重启服务；并设置开机启动的服务。
+
+<li>
+貌似<code>ntsysv</code>和<code>chkconfig</code>也可以处理服务相关，但是，使用<code>systemctl</code>比较明智。
+
+<li>
+<code>systemctl enable service_name.service</code>，使能服务，下次系统启动的时候，服务就会启动。
+
+<li>
+<code>systemctl status service_name.service</code>，查看服务状态。
+
+<li>
+<code>systemctl disable service_name.service</code>，下次系统启动的时候，服务不再启动。
+
+<li>
+<code>systemctl is-active service_name.service</code>，status的缩水版。
+
+<li>
+<code>systemctl list-units --type=service</code>
+
+<li>
+<code>systemctl start service_name.service</code>，启动服务，但下次开机不一定。开机取决于enable。
+
+<li>
+<code>systemctl stop service_name.service</code>，停止服务。
+
+<li>
+<code>systemctl restart service_name.service</code>。
+
+</ul>
+
+<h2 id="toc_1.2">configuring authentication</h2>
+<ul>
+<li>
+用户信息是需要验证的，验证的用户的信息是可以从多个地方取来的，包括本机，LDAP，NIS，WINBIND。
+
+<li>
+（待续）
+
+</ul>
+
+<h2 id="toc_1.3">openssh</h2>
+<ul>
+<li>
+ssh是一种协议:两个系统间以client和server的形式进行安全通讯；允许用户远程登陆server。
+
+<li>
+ssh不同于ftp，telnet，其加密特性使得其非常安全。
+
+<li>
+ssh程序替代以前的那些远程登陆的软件，比如telnet和ssh。
+
+<li>
+scp程序替代以前的那些远程复制的软件，比如rcp。
+
+<li>
+网络威胁主要有两种：
+
+<ul>
+<li>
+两个系统之间的交流信息被截取了。
+
+<li>
+信息被提交给了错误的目的地。
+
+</ul>
+<li>
+ssh加密了每个网络传输中的包，只有在local和remote系统才知道。
+
+<li>
+ssh使用数字签名验证目的地，不会找错地点。
+
+<li>
+ssh 目前有两个版本，1，2，2改进了1的缺点，最好使用2，但openssh支持1。
+
+<li>
+ssh的配置文件有两种，一种是client和server。
+
+<ul>
+<li>
+client是ssh，scp，sftp。
+
+<li>
+server是sshd。
+
+<li>
+系统范围的配置文件在<code>/etc/ssh/</code>。
+
+<li>
+特定用户的配置文件在<code>~/.ssh/</code>。
+
+<li>
+<code>~/.ssh/id_rsa</code><code>~/.ssh/id_rsa.pub</code>2版本的ssh的私人和公共key。
+
+</ul>
+<li>
+<code>systemctl start sshd.service</code>
+
+<li>
+<code>systemctl stop sshd.service</code>
+
+<li>
+为了使用ssh，scp，sftp从client连接到server，必须生成验证key。
+
+<ul>
+<li>
+生成RSAkey，2版本的：<code>ssh-keygen -t rsa</code>
+
+<li>
+将产生的rsa.pub放到server的已验证key文件中，就可以登陆server中了。
+
+</ul>
+<li>
+<code>ssh john@xxx.example.com</code>
+
+<li>
+<code>scp localfile username@hostname:remotefile</code>，这是复制文件到server。
+
+<li>
+<code>ssh username@hostname:remotefile localfile</code>
+
+<li>
+<code>sftp username@hostname</code>
+
+<ul>
+<li>
+ls cd mkdir rmdir put(localfile to remotefile) get(remotefile to localfile) 
+
+</ul>
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="infrastructure services";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="infrastructure services";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+CHAR_BIT defined to be 8
+no symbol for _SC_CHAR_BIT
+CHAR_MAX defined to be 127
+no symbol for _SC_CHAR_MAX
+CHAR_MIN defined to be -128
+no symbol for _SC_CHAR_MIN
+SCHAR_MIN defined to be -128
+no symbol for _SC_SCHAR_MIN
+SCHAR_MAX defined to be 127
+no symbol for _SC_SCHAR_MAX
+UCHAR_MAX defined to be 255
+no symbol for _SC_UCHAR_MAX
+INT_MAX defined to be 2147483647
+no symbol for _SC_INT_MAX
+INT_MIN defined to be -2147483648
+no symbol for _SC_INT_MIN
+UINT_MAX defined to be -1
+no symbol for _SC_UINT_MAX
+SHRT_MIN defined to be -32768
+no symbol for _SC_SHRT_MIN
+SHRT_MAX defined to be 32767
+no symbol for _SC_SHRT_MAX
+USHRT_MAX defined to be 65535
+no symbol for _SC_USHRT_MAX
+LONG_MAX defined to be -1
+no symbol for _SC_LONG_MAX
+LONG_MIN defined to be 0
+no symbol for _SC_LONG_MIN
+ULONG_MAX defined to be -1
+no symbol for _SC_ULONG_MAX
+LLONG_MAX defined to be -1
+no symbol for _SC_LLONG_MAX
+LLONG_MIN defined to be 0
+no symbol for _SC_LLONG_MIN
+ULLONG_MAX defined to be -1
+no symbol for _SC_ULLONG_MAX
+MB_LEN_MAX defined to be 16
+no symbol for _SC_MB_LEN_MAX
+FOPEN_MAX defined to be 16
+no symbol for _SC_FOPEN_MAX
+no symbol for STREAM_MAX
+no symbol for _SC_STREAM_MAX
+TMP_MAX defined to be 238328
+no symbol for _SC_TMP_MAX
+FILENAME_MAX defined to be 4096
+no symbol for _SC_FILENAME_MAX
+no symbol for ARG_MAX
+no symbol for _SC_ARG_MAX
+no symbol for CHILD_MAX
+no symbol for _SC_CHILD_MAX
+HOST_NAME_MAX defined to be 64
+no symbol for _SC_HOST_NAME_MAX
+no symbol for LINK_MAX
+no symbol for _SC_LINK_MAX
+LOGIN_NAME_MAX defined to be 256
+no symbol for _SC_LOGIN_NAME_MAX
+MAX_CANON defined to be 255
+no symbol for _SC_MAX_CANON
+MAX_INPUT defined to be 255
+no symbol for _SC_MAX_INPUT
+NAME_MAX defined to be 255
+no symbol for _SC_NAME_MAX
+NGROUPS_MAX defined to be 65536
+no symbol for _SC_NGROUPS_MAX
+no symbol for OPEN_MAX
+no symbol for _SC_OPEN_MAX
+PATH_MAX defined to be 4096
+no symbol for _SC_PATH_MAX
+PIPE_BUF defined to be 4096
+no symbol for _SC_PIPE_BUF
+RE_DUP_MAX defined to be 32767
+no symbol for _SC_RE_DUP_MAX
+SSIZE_MAX defined to be -1
+no symbol for _SC_SSIZE_MAX
+no symbol for SYMLINK_MAX
+no symbol for _SC_SYMLINK_MAX
+no symbol for SYMLOOP_MAX
+no symbol for _SC_SYMLOOP_MAX
+TTY_NAME_MAX defined to be 32
+no symbol for _SC_TTY_NAME_MAX
+no symbol for TZNAME_MAX
+no symbol for _SC_TZNAME_MAX
+no symbol for NL_ARGMAX
+no symbol for _SC_NL_ARGMAX
+no symbol for NL_LANGMAX
+no symbol for _SC_NL_LANGMAX
+no symbol for NL_MSGMAX
+no symbol for _SC_NL_MSGMAX
+no symbol for NL_NMAX
+no symbol for _SC_NL_NMAX
+no symbol for NL_SETMAX
+no symbol for _SC_NL_SETMAX
+no symbol for NL_TEXTMAX
+no symbol for _SC_NL_TEXTMAX
+no symbol for NZERO
+no symbol for _SC_NZERO
+no symbol for IOV_MAX
+no symbol for _SC_IOV_MAX
+NAME_MAX defined to be 255
+no symbol for _SC_NAME_MAX
+PATH_MAX defined to be 4096
+no symbol for _SC_PATH_MAX
+no symbol for ATEXIT_MAX
+no symbol for _SC_ATEXIT_MAX
+no symbol for CLK_TCK
+no symbol for _SC_CLK_TCK
+HOST_NAME_MAX defined to be 64
+no symbol for _SC_HOST_NAME_MAX
+LINE_MAX defined to be 2048
+no symbol for _SC_LINK_MAX
+no symbol for PAGESIZE
+no symbol for _SC_PAGESIZE
+no symbol for PAGE_SIZE
+no symbol for _SC_PAGE_SIZE
+RE_DUP_MAX defined to be 32767
+no symbol for _SC_RE_DUP_MAX
+COLL_WEIGHTS_MAX defined to be 255
+no symbol for _SC_COLL_WEIGHTS_MAX
+no symbol for FILESIZEBITS
+no symbol for _PC_FILESIZEBITS
+no symbol for LINK_MAX
+no symbol for _PC_LINK_MAX
+MAX_CANON defined to be 255
+no symbol for _PC_MAX_CANON
+MAX_INPUT defined to be 255
+no symbol for _PC_MAX_INPUT
+NAME_MAX defined to be 255
+no symbol for _PC_NAME_MAX
+PATH_MAX defined to be 4096
+no symbol for _PC_PATH_MAX
+PIPE_BUF defined to be 4096
+no symbol for _PC_PIPE_BUF
+no symbol for SYMLINK_MAX
+no symbol for _PC_SYMLINK_MAX

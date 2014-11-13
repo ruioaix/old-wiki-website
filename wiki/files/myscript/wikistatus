@@ -1,0 +1,7 @@
+#!/bin/bash
+cd ~/Wiki/wikiofRRRUI
+echo "-----------------------------Now,show wiki's status"
+git status
+cd ~/webDevelopDir/wikiofRRRUI_html
+echo "-----------------------------Now,show html's status"
+git status

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>笔记（九）--类</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">类</h1>
+<ul>
+<li>
+类是cpp中最重要的特性，早期的cpp被命名为“带类的C”，后来，随着语言的演变，语言的设计目标变成：提供这样一些特性“允许程序员定义自己的类型，他们用起来与内置类型一样容易和直观。”。
+
+</ul>
+
+<h2 id="toc_1.1">类的定义和声明</h2>
+<ul>
+<li>
+最简单地来说，类就是定义了一个新的类型和一个新的作用域。
+
+<li>
+将类看成成员函数和数据成员两者组成的是不本质的，高一点，将类看作是成员的集合比较好。每个类可以没有成员也可以有多个成员，成员可以是数据，函数或类型别名。
+
+<li>
+public定义的成员可以被使用该类型的所有代码访问；private部分定义的成员可被其他类成员访问。
+
+<li>
+构造函数一般应使用一个构造函数初始化列表，来初始化对象的数据成员。
+
+<li>
+在类内部，声明成员函数是必须的，而定义成员函数是可选的。在类内部定义的函数默认为inline。
+
+<li>
+在类外部定义的成员函数必须指明他们是在类的作用域中。
+
+<li>
+成员函数有一个附加的实参，将函数绑定到调用函数的对象。
+
+<li>
+类的基本思想是数据抽象和封装。
+
+<ul>
+<li>
+数据抽象是一种依赖于接口和实现分离的编程技术。
+
+<li>
+封装就是封装，函数就是一种封装，可以使用，但你不能调用函数的语句。
+
+</ul>
+<li>
+cpp中，使用访问标号来定义类的抽象接口和实施封装。
+
+<ul>
+<li>
+类的数据抽象视图是由其public成员定义的。程序，是程序，的所有部分都可以访问带有public标号的成员。
+
+<li>
+private封装了类型的实现细节。使用类的代码不可以访问带有private标号的成员。
+
+<li>
+struct对应public，class对应private。
+
+</ul>
+<li>
+三级：设计类实现类，使用类，使用程序。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="笔记（九）--类";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="笔记（九）--类";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

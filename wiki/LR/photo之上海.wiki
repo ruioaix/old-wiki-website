@@ -1,0 +1,3 @@
+= 上海 =
+
+<div class="PhotoAndIntro">{{../files/LRphoto/shanghai001.jpg||class="photo"}} *somewhere* </div>

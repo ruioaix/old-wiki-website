@@ -1,0 +1,190 @@
+= UNIX标准化及实现 =
+所谓标准，大概具体存在的形式就是一本书，书里要么是规定，要么是指导意见，要么是特殊情况，一本书都是。
+
+不同的标准就是不同的书，书和书之间可以有相同的部分，也可以有不同的部分。
+
+遵循一本书，那么你就可以冠以“遵循xxx”的标签。
+
+== UNIX标准化 ==
+=== ISO C ===
+- ISO——International Organization for Standardization，国际标准化组织。
+- 所以，ISO C就可以认为是ISO出版的一本书，书里就是C的标准。
+- 书总是要修订的，其经历的版本有：ISO C90，C99等。
+- 书里定义了C的语法，语义，标准库；这就是C本身了。
+- 不过，书就是书，放在那里没什么用，重点是人。
+    - 人按照书里的规定什么的来写程序，当然写出来的是C程序。
+    - 根据书的版本，写出来的程序当然可以说是根据某个版本写的。
+    - 写出来之后呢？放在那里还是没什么用。现在的重点是编译器。
+    - 编译器也有版本的，C90的编译器可以编译按照C90写出来的程序，C99编译C99的。
+    - 编译出来后才有用吗。
+    - 编译器内部一般有不同的选项来选择C的标准。
+    - 不过想想，编译器本身是程序来着，也就是说编译器本身也要编译的，那第一个编译器是谁编译的？貌似那是机器语言的时代，第一个编译器没准是汇编甚至机器语言写的吧。
+    - 一个语言其核心当然是作为标准的那本书，而第二号重要的就是编译器。
+- ISO C书里面有定义标准库。
+    - 标准库是啥，就是头文件，头文件里是个啥，就是函数声明啊。
+    - 标准库就是一陀函数声明。
+    - 现在的标准库有二十多个头文件，也就是ISO C这本书里有二十多个小结，每个小结定义了一些函数声明。
+    - 函数声明了实现呢？每个系统上都不一样吧，就我现在的理解。
+    - 虽然实现不一样，但不妨碍使用，毕竟声明是一致的，格式是一致的，在这个机器上调用的代码和在另一个机器上调用的代码是一致的。两个机器上代码一致，还能正确，这就是可移植。
+    - 为啥要搞个标准库？只定义语法语义不够吗？
+        - 首先标准库是放在系统里面的，是系统提供的，你说标准库不是C的吗，是C的，但就是放在系统里面的，这两个又不矛盾。你发布代码的时候不会需要去包含标准库的代码，也就是说，如果没有标准库，你发布的代码就得包含标准库的内容，如果你的代码操作硬件，那么铁定是不可移植的。
+        - 其次，不涉及硬件的标准库函数，可能是一些重用率非常高的函数，这种函数提出来放在一起多方便，强过每次都去编写吧。
+
+=== IEEE POSIX ===
+- IEEE——Institule of Electrical and Electronics Engineers，电气与电子工程师协会。
+- POSIX——Portable Operating System Interface，可移植操作系统接口。
+- IEEE POSIX就是IEEE写的一本书，里面也是这规定，那规定的。
+- 什么叫可移植操作系统接口？
+    - 系统接口，系统提供的接口，系统提供的功能可以通过这些接口来使用。
+    - 接口是什么？就是函数声明。给一个声明，然后告诉你把东西写到硬盘使用的就是这个函数了，那么这个函数就是系统接口了。
+    - 系统接口N多啊，所以系统提供的函数就N多啊。
+    - 可移植，一份代码放到两个不同的机器上可以正常编译跑，就是可移植吗。
+    - 可移植操作系统接口，就是在两个机器上，同一个系统提供的功能的接口是可移植的，也就是同一个功能的函数声明格式是一样的。也就是，系统提供的函数声明是一样的。
+    - 也就是说，系统提供的N多函数的声明都是一样的。
+- IEEE POSIX也再版多次，IEEE 1003.1-1988；IEEE 1003.1-1990；IEEE 1003.1d-1999，IEEE 1003.1-2001。
+- IEEE POSIX里面还细分，貌似是一个合集，有好些本书构成，搞这么复杂干嘛。
+- 本书描述的是POSIX.1的2001，就上面最后一个。
+- 和ISO C一样，一陀头文件，而ISO C的二十多个包含在POSIX.1 2001之内。
+
+=== Single UNIX Specification ===
+- Single UNIX Specification是POSIX.1的超集。
+- 超集就是它有的我都有，它没有的我也有。
+- Single UNIX Specification这本书规定的接口的合集叫做X/Open系统接口。
+- XSI——X/Open System Interface。
+- 只有遵循XSI的实现才能称为UNIX系统。
+- 完全支持POSIX.1的必需部分，并支持一些可选部分才能称为遵循XSI。
+- SUS是Open Group发布的，Open Group拥有UNIX的商标，所以，你符合了SUS，也就是说你支持了XSI，那么Open Group才可能让你用UNIX的商标。
+- SUS也再版多次，最新的是SUS v3。
+
+== 限制 ==
+这一节真的很难理解。
+
+*已有若干种可移植的方法用以确定这些幻数和实现定义的限制。* 这句话怎么这么别扭。
+
+限制，限制什么？幻数和实现定义？幻数我懂，就是使用的数字字面值而不是额外定义常量。实现定义是什么东西？
+
+我可以理解的是：短整型的最大值在不同的系统上不同，所以就取一个最小的，比如两个字节，所有的系统短整型的最大值肯定大于2个字节，所以，我可以加一个限制，说UNIX下的编程中，短整型的最大值就是2个字节，短整型变量的值不可以查过2个字节所能表示的范围。
+
+这是我可以理解的限制。
+
+短整型是编译时的限制，文件名可以有多少个字符是运行时限制。
+
+不同的文件系统支持的文件名字符数目不同是可以理解的，但这就不可以使用上面挑一个最小的的方式，毕竟，文件系统在那，文件系统里面的文件也在那，文件名该长的长，该短的短，这是C语法中没办法定义的事情。我要读取一个文件，文件名该放在多大的数组里，这是问题。数组肯定不能比当前文件系统支持的最大字符数小。也有一个办法，挑所有文件系统中最大的那个，但又有些浪费，而且在未来可能不行。所以，在运行的时候检测文件系统支持的最大字符数，是最好的办法。但这是限制吗？上面的限制了确定的事情：短整型最大就2字节，这里更多的不是限制，而是一种解决问题的方法吧。但既然是限制，就认为是限制吧。
+
+这也是我可以理解的。
+
+诸如上面的问题，UNIX系统提供了以下三种限制：
+# 编译时限制（头文件）
+# 不与文件或目录相关联的运行时限制（sysconf函数）
+# 与文件或目录相关联的运行时限制（pathconf和fpathconf函数）
+
+=== ISO C限制 ===
+ISO C定义的限制都是编译时限制。
+- 这些限制以常量的形式存在，存在在头文件里，而且在一个给定系统中不会改变。
+- 因为是以常量的形式存在，所以，在code中使用的就是常量名。
+- 常量的值在每个系统中可以不一样，但常量名是一样的，code就是一样的，可移植。
+
+ISO C中的限制貌似都是设定了最小值，这也就是说，只要你的code能在这最小值以下，那么可移植么问题；但又貌似，有些最小值太小了点，很多时候不能满足要求，可移植就收到一定程度的折扣。
+
+其实限制，是对实现的限制，你的实现满足了这些限制，程序就符合标准了。
+
+=== POSIX限制 ===
+POSIX限制，也是常量的形式：
+# 不变的最小值，19个。
+# 不变值： *SSIZE_MAX* 。
+# 运行时可以增加的值，5个。
+# 运行时不变的值（可能不确定），11个。
+# 路径名可变值（可能不确定）8个。
+# 共44个。
+
+*这些值是不变的。* 
+
+这些值都是符合POSIX的实现至少要提供的值，也就是最小值。这里是这样的，定义一个值为10，那么，代表系统至少提供10，系统可以提供11，12，，，1033223，那跟你无关，反正我使用10和10以下肯定是没问题的，超过10可能有问题，也可能没有。对我来说10是max，对系统来说10是min，所以我在系统上么问题。
+
+上面的并不都能在头文件中定义，相应的就不能在code中使用，那么可以使用运行时函数来获取。但是，函数也可能获取不到，因为 *可能不确定* 。
+
+*可能不确定* 就是没上线，就是系统可以提供无限制个，只要还有资源。
+
+=== XSI限制 ===
+XSI限制，也是常量的形式：
+# 不变最小值，10个
+# 数值限制： *LONG_BIT* , *WORD_BIT* 。
+# 运行时不变值（可能不确定）： *ATEXIT_MAX* , *IOV_MAX* , *PAGE_SIZE* 。
+
+道理和上面一样。
+
+=== sysconf/pathconf/fpathconf函数 ===
+这三个函数用于获取运行时的限制，就是一些不能放入头文件的常量。
+
+但是如果一个常量没有在头文件中设置，那么按照常理，我们应该使用上面的运行时函数来获取运行时常量，但运行时常量可能是不确定的，这也就意味着，上面的三个函数返回的可能是-1，而不是我们期望的某一个正数。
+
+这种情况就需要考虑了，apue给出了两个函数，先检测编译时常量，如果没有，那么检测运行时常量，如果没有那么特殊处理，要么设置一个常量，要么试，试，试。
+
+== 选项 ==
+选项也是常量，要么编译时定义在头文件里面，要么运行时定义，要么没定义。
+
+如果未定义一个功能，也就是该系统未定义符号常量或对应的_SC或_PC名字，则将相关记录项标记为“未定义”。“已定义”表示该符号常量已定义，但未指定值。如果系统定义了符号常量，但其值为-1或0，但相应的sysconf或pathconf调用返回-1，那么该记录项“不被支持”。
+
+== 功能测试宏 ==
+也是常量，我发现，c里面总是常量。限制，选项，功能测试宏都是常量。
+
+常量_POSIX_C_SOURCE及_XOPEN_SOURCE都被称为功能测试宏。
+
+== 基本系统数据类型 ==
+头文件 *<sys/types.h>* 中定义了某些与实现有关的数据类型，它们本称为基本系统数据类型。
+
+都是使用typedef功能来定义的。
+
+大多都以_t结尾。
+
+这些数据负责处理系统的差异，给我们一致的表现。
+
+=OVER=
+An important part of standardization is the specification of various limits that each implementation should define, so we look at these limits and the various ways to determine their values.
+
+The intent of ISO C standard is to provide the portability of conforming C program to a wide variety of operating systems, not only UNIX system.
+
+The restrict keyword is used to tell compiler which pointer references can be optimized, by indicating that the object ot which the pointer refers is accessed in the function only via that pointer.
+
+The ISO C standard can be divided into 24 areas, based on the headers defined by the standard. Does it mean that there are only 24 headers defined by the ISO C standard? I think so.
+
+24 headers defined by ISO C standard:
+- type: <ctype.h>, <stdint.h>, <stdbool.h>
+- other type: <fenv.h>, <inttypes.h>
+- constants: <float.h>, <limits.h>, <math.h>
+- math: <complex.h>, <tgmath.h>
+- multibyte: <wchar.h>, <wctype.h>
+- <assert.h>, <errno.h>
+- macros: <iso646.h>
+- <locale.h>
+- <setjump.h>, <signal.h>
+- <stdarg.h>, <stdio.h>
+- <stddef.h>, <stdlib.h>
+- <string.h>, <time.h>
+
+POSIX stands for Portable Operating System Interface.
+
+The 1003.1 Portable Operationg System Standard defines the services that must be provided by an operating system if it is to be "POSIX compliant". The standard specifies an interface not an implementation, no distinction between system calls and library function.
+
+In this text we describe the 2001 version of POSIX.1, which include the function specified in the ISO C standard.
+
+The Single Unix Specification, a superset of The POSIX.1 standard.
+
+Only XSI-conforming implementations can be called UNIX systems. The Open Group owns the UNIX trademark and uses the Single UNIX Specification to define the interfaces an implementation must support to call itself a UNIX system. Implementation must file conformance statements, pass test suites that verify the conformance, license the right to use the UNIX trademark.
+
+All the limits defined by ISO C are compile-time limits.
+
+Three types of limits are provided:
+# compile-time limits
+# runtime limits that are not associated with file and directory.
+# runtime limits that are associated with file and directory.
+
+All the limits defined by ISO C standard are associated with maximum/minimum value of a certain type.
+
+The limits defined by POSIX.1 can be divided into five categories:
+# Invariant minimum value.
+# Invariant value.
+# Runtime increasable values.
+# Runtime invariant values, possibly indeterminate.
+# Runtime variable values, possibly indeterminate.
+

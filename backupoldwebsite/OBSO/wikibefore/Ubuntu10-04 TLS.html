@@ -1,0 +1,309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Ubuntu10-04 TLS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Ubuntu 10.04 发行版</h1>
+
+<ul>
+<li>
+<a href="最快的速度配置好ubuntu 10.04.html">最快的速度配置好ubuntu 10.04</a>
+
+</ul>
+
+<h2 id="toc_1.1">ATI显卡官方驱动导致的窗口最大最小化延迟问题</h2>
+<ul>
+<li>
+<code>sudo aticonfig --initial -f</code>
+
+<li>
+<code>sudo aticonfig --set-pcs-str=DDX,Direct2DAccel,TRUE</code>
+
+<li>
+[<a href="http://wiki.ubuntu.org.cn/Qref/Lucid">http://wiki.ubuntu.org.cn/Qref/Lucid</a> 参考]
+
+</ul>
+
+<h2 id="toc_1.2">chromium+switchysharp+google app engine</h2>
+<ul>
+<li>
+注册[<a href="http://code.google.com/appengine/">http://code.google.com/appengine/</a> Google App Engine]帐号。 
+
+<ul>
+<li>
+使用google帐号登录Google app engine后，点击create an application创建一个应用程序。
+
+<li>
+输入手机号码，接受创建验证码，必须由此过程，否则无法注册成功。中国用户使用+8612344445555这样的形式，瞬间短信来。
+
+<li>
+输入验证码后就进入了创建应用程序的详细设置界面。填写application identifier和application title以及勾选同意服务条款，点save即完成创建。两者可以一样。
+
+</ul>
+</ul>
+
+<ul>
+<li>
+安装Google app engine和fetchserver
+
+<ul>
+<li>
+安装python，这个在你的终端试下命令，如果有，就不需要安装了，ubuntu10.04是自带的。
+
+<li>
+下载[<a href="http://code.google.com/appengine/downloads.html">http://code.google.com/appengine/downloads.html</a> google app engine sdk]，我下载的是python版本的，将sdk解压到任意目录。
+
+<li>
+打开[<a href="http://code.google.com/p/gappproxy/downloads/list]">http://code.google.com/p/gappproxy/downloads/list]</a> ， 下载fetchserver，解压fetchserver到google app engine sdk目录。
+
+<li>
+打开fetchserver文件夹内的app.yaml文件，修改第一行your_application_name为刚才输入的application identifier，就是前面注册时候的那个。
+
+<li>
+上传fetchserver：打开终端，进入google app engine sdk目录，运行<code>export PATH=$PATH:/home/ray/google_appengine/</code>，这里要改成自己的目录。
+
+<li>
+在终端继续运行命令<code>appcfg.py update fetchserver</code>，会要求你输入google的账户和密码，之后关闭结束上传。
+
+<li>
+到这里，google app engine sdk这个文件夹就可以删掉了，没用了。
+
+</ul>
+<li>
+安装并运行gappproxy
+
+<ul>
+<li>
+下载[<a href="http://code.google.com/p/gappproxy/downloads/list]">http://code.google.com/p/gappproxy/downloads/list]</a> ，下载gappproxy。
+
+<li>
+解压到任意文件。
+
+<li>
+修改proxy.conf，在fetchserver一栏里面填写自己的appengine地址，并去掉这一行开头的#号，相邻的一行不用管。
+
+<li>
+在终端里输入<code>python proxy.py</code>，如果看到http enabled：yes的字样，则代理已经开启了。
+
+</ul>
+<li>
+chromium安装switchysharp
+
+<ul>
+<li>
+直接在扩展工具中search，然后安装。
+
+<li>
+然后，在情景模式中设置一个，http代理为127.0.0.1，端口为8000，即可。
+
+<li>
+点击地址栏右边的switchyproxy按钮，选择自动模式。
+
+<li>
+如果刚才<code>python proxy.py</code>终止了，那么打开一个终端，输入，回车。
+
+<li>
+在浏览器中打开facebook.com，不成功。 
+
+<li>
+点击地址栏右边的switchyproxy按钮，点击网址，选择新设置的情景模式，刷新页面应该就可以看到了。这是一次性的。
+
+<li>
+如果希望长久保持可以访问facebook，那么就点击网址上面的新建规则，那么会保存下如下<code>*://facebook.com/*</code>这样的规则，星号是通配符。那么下次再访问符合通配规则的网址，就会自动的使用代理进行链接。
+
+</ul>
+<li>
+设置代理后台开机启动。
+
+<ul>
+<li>
+首先将gappproxy文件夹放入你要放的地方。
+
+<li>
+编写一个shell脚本，内容是cd gappproxy，python proxy.py，编写完毕后，chmod，让其具有可执行特性。
+
+<li>
+在系统-首选项-启动应用程序中添加一个启动项，启动项路径就是你shell脚本的路径，保存。
+
+</ul>
+<li>
+至此，每次你开机的时候，代理服务都在后台运行，使用chromium的时候，switchyproxy最方便的是设置为自动模式，然后在使用中不断的添加规则。由于switchyproxy只是针对特定规则启用代理，所以，不是规则的网址，就不使用代理，非常方便惬意。
+
+<li>
+而且，google的代理，访问google是嘎嘎的，也不会有词屏蔽。
+
+<li>
+事实上，我搞这个，就是因为google东西时要死不活的样子实在让人吐血。
+
+</ul>
+
+
+<h2 id="toc_1.3">交换ctrl和caps两个按键</h2>
+<ul>
+<li>
+首选项- 键盘- 布局选项页- 选项
+
+<li>
+ctrl键位置- 交换ctrl和caps键位
+
+</ul>
+
+
+<h2 id="toc_1.4">./bashrc 中添加$PATH</h2>
+<ul>
+<li>
+<code>export PATH="$PATH:~/.myscript"</code>
+
+</ul>
+
+<h2 id="toc_1.5">fcitx输入法</h2>
+<p>
+目前官网上还是3.x的版本，与4.x的没法比。
+安装fcitx4的方法：
+</p>
+<ol>
+<li>
+<code>sudo add-apt-repository ppa:wengxt/fcitx-nightly</code>
+
+<li>
+<code>sudo apt-get update</code>
+
+<li>
+<code>sudo apt-get install fcitx fcitx-config-gtk fcitx-sunpinyin</code>
+
+<li>
+<code>im-switch -s fcitx-z default</code>  
+
+</ol>
+<p>
+<strong>前面三步是用来安装的，第四步是用来设置fcitx为默认输入法的，第四步不是必须的，可以在“系统”“系统管理”“语言支持”中做出对应修改。</strong>
+</p>
+
+<p>
+<strong>需要重启，才可以生效。</strong>
+</p>
+<ul>
+<li>
+最后，最好删除掉 <em>/etc/apt/source.list.d/</em> 下面相关的ppa。
+
+</ul>
+
+<h2 id="toc_1.6">3D效果</h2>
+<p>
+要关注的是：驱动和compiz。
+</p>
+<ol>
+<li>
+驱动ubuntu10.04会自动识别显卡，建议安装，安装即可。
+
+<li>
+compiz的安装
+
+<ul>
+<li>
+在新立得里面搜索以下：
+
+<ul>
+<li>
+python-compizconfig
+
+<li>
+compizconfig-settings-manager
+
+<li>
+compiz-plugins
+
+<li>
+compiz-core
+
+<li>
+compiz-gnome
+
+<li>
+libemeraldengine0
+
+<li>
+emerald
+
+<li>
+libdecoration0
+
+<li>
+compiz-fusion-plugins-extra
+
+<li>
+fusion-icon
+
+<li>
+compizconfig-backend-gconf
+
+</ul>
+</ul>
+<li>
+安装完毕后在“应用程序”“系统工具”中就有compiz了，点击就可以进行设置。
+
+<li>
+开机自动启用3D桌面：在“系统”“首选项”“启动应用程序”里面“添加”，添加中的命令写<code>fusion-icon</code>，其他随便。
+
+</ol>
+
+<h2 id="toc_1.7">终端窗口的默认大小</h2>
+<ul>
+<li>
+<code>sudo vim /usr/share/vte/termcap/xterm</code>
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Ubuntu10-04 TLS";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Ubuntu10-04 TLS";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

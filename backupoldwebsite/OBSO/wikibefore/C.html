@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>C</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">C语言学习</h1>
+
+<h2 id="toc_1.1">关于C标准</h2>
+<ul>
+<li>
+<a href="C标准的历史.html">C标准的历史</a>
+
+<ul>
+<li>
+K&amp;R-C和C89和C99，通常说的C标准，多指C89。
+
+</ul>
+<li>
+<a href="C标准中很有用的几个术语.html">C标准中很有用的几个术语</a>
+
+<ul>
+<li>
+不可移植的，未确定的，未定义的，约束条件，可移植的，遵循标准的，这6个。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.2">C语言中的类型</h2>
+<ul>
+<li>
+<a href="C语言的所有数据类型.html">C语言的所有数据类型</a>
+
+<ul>
+<li>
+基本数据类型
+
+<ul>
+<li>
+标准整型数据类型，以及扩充的数据类型。
+
+<li>
+是说浮点类型（单精度和双精度两种），以及复数浮点类型（C99）。
+
+</ul>
+<li>
+枚举数据类型
+
+<li>
+void
+
+<li>
+衍生的数据类型
+
+<ul>
+<li>
+指针 - 数组 - 结构 - 联合 - 函数
+
+</ul>
+</ul>
+</ul>
+    
+<ul>
+<li>
+<a href="类型提升和寻常算术转换.html">类型提升和寻常算术转换</a>
+
+<ul>
+<li>
+C语言的内置类型中除了算术类型外也就没有几个了。搞不懂算术类型，就搞不懂C语言。而算术类型的最重要的两个特性就是类型提升和寻常算术转换。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.3">C语言的声明</h2>
+<ul>
+<li>
+<a href="三个复杂声明的例子.html">三个复杂声明的例子</a>
+
+<ul>
+<li>
+对我来说足够了。  
+
+</ul>
+</ul>
+
+<h2 id="toc_1.4">C语言的编译</h2>
+<ul>
+<li>
+<a href="C预处理器.html">C预处理器</a>
+
+</ul>
+    
+<h2 id="toc_1.5">C语言的内存使用</h2>
+
+<h2 id="toc_1.6">一些语法的tips</h2>
+<ul>
+<li>
+<code>break;</code> 跳出的是最近的那个循环或者switch语句。
+
+<li>
+<code>static</code> 限定符用在三个地方：
+
+<ul>
+<li>
+函数内部的局部变量，表示该变量的值在各个调用间一直保持延续性。
+
+<li>
+函数外部的变量，表示变量作用域只在本文件中。
+
+<li>
+函数，表示函数只对本文件可见。
+
+</ul>
+<li>
+<code>extern</code> 限定符用在两个地方：
+
+<ul>
+<li>
+用于函数定义，表示全局可见。（冗余的，不加，函数也是全局可见的。）
+
+<li>
+用于变量，表示它在其他地方定义了。
+
+</ul>
+<li>
+<code>sizeof</code> 不是函数，是操作符，当操作数是个类型名时，两边必须加上括号，当操作数是变量的时候，则不必加括号，<code>'a'</code>单字符也不用。
+
+<li>
+C语言着那个记牢两个优先级就可以了，乘除先于加减，其他的一律加括号。
+
+<li>
+在ANSI C中，初始化指针时所创建的字符串常量被定义为只读，试图通过指针来修改，会出现未定义的行为。用于初始化数组的字符串常量是可以修改的。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="C";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="C";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

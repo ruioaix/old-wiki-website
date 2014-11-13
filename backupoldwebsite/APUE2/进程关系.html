@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>进程关系</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">进程关系</h1>
+<p>
+<strong>创建“终端窗口”的应用程序也被开发出来，它仿真了基于字符的终端，使得用户可以用熟悉的方式（即通过shell命令行）与主机交互。</strong>
+</p>
+<ul>
+<li>
+这说的应该就是gnome里面的终端。
+
+</ul>
+
+<p>
+经由终端登录至UNIX系统。终端可以是基于字符的终端、仿真简单的基于字符终端的图形终端、运行窗口系统的图形终端。
+</p>
+
+<p>
+BSD终端登录
+</p>
+<ul>
+<li>
+init是id为1的进程，这是不变的。
+
+<li>
+init对每一个ttys，fork一次。
+
+<li>
+子进程执行exec得到对应的getty。
+
+<li>
+getty负责打开终端，设置文件描述符012，然后输出login：
+
+<li>
+当用户键入username然后回车，getty的工作就结束，其再次exec login
+
+<li>
+login得到了用户名，然后显示password：获得用户密码，进行比对。
+
+<li>
+正确登录的话，login做一些权限设置的事情。
+
+<ul>
+<li>
+这里面有一些具体的事情不知道是如何实现的
+
+</ul>
+</ul>
+
+<p>
+BSD网络登录
+</p>
+<ul>
+<li>
+init进程fork并exec一个inetd程序，inetd根据网络连接来fork并exec其他的进程，比如telnetd。
+
+<li>
+先放着这里。
+
+</ul>
+
+<p>
+每个进程除了有一个进程ID之外，还属于一个进程组。
+</p>
+<ul>
+<li>
+每一个进程都属于一个进程组吗？
+
+</ul>
+
+<p>
+<code>pid_t getpgrp(void)</code>获得当前调用进程的组ID。
+</p>
+
+<p>
+<code>pid_t getpgid(void)</code>获得pid进程的组ID。
+</p>
+
+<p>
+每个进程组有一个组长进程，就是pid等于这个进程组ID的个进程。
+</p>
+
+<p>
+<code>int setpgid(pid_t pid, pid_t pgid);</code>
+</p>
+<ul>
+<li>
+设置pid进程的组ID为pgid。
+
+<li>
+pid=gpid则，pid进程就变成组长了。
+
+<li>
+pid=0，就认为pid为当前进程的pid。
+
+<li>
+如果pgid=0，则认为pid=pgid。
+
+<li>
+如果pid=pgid=0，就是当前进程变成组进程了。
+
+</ul>
+
+<p>
+会话是多个进程组的结合。
+</p>
+<ul>
+<li>
+<code>pid_t setsid(void);</code> 
+
+<li>
+如果一个进程组组长调用这个函数，就出错返回-1.
+
+<li>
+非组长进程可以调用导致：
+
+<ul>
+<li>
+进程变成新会话首进程
+
+<li>
+进程变成进程组组长
+
+<li>
+进程没有控制终端
+
+</ul>
+<li>
+<code>pid_t getsid(pid_t pid);</code>
+
+<ul>
+<li>
+pid=0，返回调用进程的会话首进程的进程组ID，不就是会话首进程的ID吗。
+
+<li>
+pid如果和调用进程的ID不在一个会话，那么返回。
+
+</ul>
+</ul>
+
+<p>
+如果一个会话有一个控制终端，则会话首进程称为控制进程。
+</p>
+<ul>
+<li>
+会话必有一个前台进程组，其他的进程组称为后台进程组。
+
+<li>
+ctrl+c，发送中断信号到前台进程组的所有进程
+
+<li>
+ctrl+\，发送退出信号到前台进程组的所有进程
+
+<li>
+如果终端接口检测到网络断开链接，则发送挂断信号给控制进程。
+
+</ul>
+
+<p>
+<code>pid_t tcgetpgrp(int filedes);</code>
+</p>
+<ul>
+<li>
+返回与filedes上打开的终端关联的前台进程组ID。
+
+</ul>
+
+<p>
+<code>pid_t tcsetpgrp(int filedes, pid_t pgrpid);</code>
+</p>
+<ul>
+<li>
+设置与filedes上打开的终端关联的前台进程组为pgrpid的进程组。
+
+<li>
+pgrpid进程组必须是同一会话中的一个进程组ID。
+
+</ul>
+
+<p>
+<code>pid_t tcgetsid(int filedes);</code>
+</p>
+<ul>
+<li>
+得到会话首进程的进程ID。
+
+<li>
+该会话相关的终端描述符是filedes。
+
+</ul>
+
+<p>
+作业控制就是允许在一个终端上启动多个作业（进程组），它控制哪一个作业可以访问该终端，以及那些作业在后台运行。
+</p>
+<ul>
+<li>
+就是我现在使用的终端上，我可以将一个工作放到后台，也可以不放后台，不放后台那么它就是前台。
+
+<li>
+我可以将后台的工作再放到前台上来。
+
+<li>
+作业控制
+
+<li>
+bash是有作业系统的
+
+</ul>
+
+<h1 id="toc_2">OVER</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="进程关系";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="进程关系";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

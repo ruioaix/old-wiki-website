@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Upstart_Process_Management_daemon</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Upstart process management daemon</h1>
+<p>
+linux内核启动的第一个process就是init。
+</p>
+
+<p>
+init负责启动所有其他的process。
+</p>
+
+<p>
+所有init管理的process都称为job，并且在/etc/init目录中定义。
+</p>
+
+<p>
+现在RHEL6中的init和RHEL5以及之前的init是完全不同的。两种架构。这里说的都是RHEL6的upstart init。
+</p>
+<h2 id="toc_1.1">Init in Fedora and RHEL</h2>
+<ul>
+<li>
+SysVinit
+
+<ul>
+<li>
+Fedora &lt; 9
+
+<li>
+RHEL &lt; 6
+
+</ul>
+<li>
+upstart
+
+<ul>
+<li>
+Fedora 9-14
+
+<li>
+RHEL 6
+
+</ul>
+<li>
+systemd
+
+<ul>
+<li>
+Fedora 15(Rawhide)
+
+</ul>
+</ul>
+
+<h2 id="toc_1.2">upstart startup</h2>
+<ul>
+<li>
+startup event
+
+<ul>
+<li>
+/etc/init/rcS.conf
+
+<ul>
+<li>
+/etc/rc.d/rc.sysinit
+
+<li>
+exec telinit $runlevel
+
+</ul>
+</ul>
+<li>
+runlevel event
+
+<ul>
+<li>
+/etc/init/rc.conf -&gt; /etc/rc.d/rc $runlevel
+
+</ul>
+</ul>
+
+<h2 id="toc_1.3">Event</h2>
+<ul>
+<li>
+init是基于event的。
+
+<li>
+也就是说，发生在系统中的改变会直接的导致job的启动和停止。
+
+<ul>
+<li>
+job的启动和停止本身就是一种发生在系统中的改变，也就是event的一种。
+
+<li>
+了解更多的event，可以查看 <strong>initctl</strong> 。
+
+<li>
+主要的event是 <strong>startup</strong> ，在init读取自己的配置文件之后就会导致该event的产生。
+
+<li>
+其他有用的event有： <strong>starting</strong> ， <strong>started</strong> ， <strong>stopping</strong> ， <strong>stopped</strong> 。
+
+</ul>
+<li>
+init不再自己去追踪runlevel，而是有相应的工具去做，而且有一个 <strong>runlevel</strong> event。可以查看。
+
+<li>
+init应该具有pid=1，如果不是，那么可以查看 <strong>telinit</strong> 。
+
+</ul>
+
+<h2 id="toc_1.4">/etc/init/</h2>
+<ul>
+<li>
+在机器启动时，init会读取它的配置文件，就在 <strong>/etc/init</strong> 目录中 。可以查看 <strong>inotify</strong> 。
+
+<li>
+在该目录下的文件，要么以 <strong>.conf</strong> 结尾，要么以 <strong>.override</strong> 结尾。
+
+<li>
+conf文件是主要的配置文件，override则具有更高的优先级，也就是像它的名字一样覆盖conf文件的对应配置。override不是必须的。
+
+<li>
+每个/etc/init/中的配置文件都定义了一个single service（lng-running process or daemon）或者task（short-lived process），
+
+<li>
+job是/etc/init目录下配置文件的运行实例。
+
+<li>
+/etc/init目录下的配置文件的名字就是去后缀，比如/etc/init/rc-sysinit.conf名字就是rc-sysyinit；/etc/init/net/apache.conf名字是net/apache。
+
+<li>
+system adminstrator可以使用start和stop来启动和停止job，但使用init可以自动的进行管理。
+
+<li>
+init自动管理是通过指定哪些event会引起job开始，哪些event会导致job停止。
+
+<li>
+最开始的时候，init会发出 <strong>startup</strong> event。
+
+<ul>
+<li>
+这会启动执行兼容system v的job，并发出 <strong>runlevel</strong> event。
+
+<ul>
+<li>
+随着之后的job启动和停止，init会发出 <strong>starting</strong> ， <strong>started</strong> ， <strong>stopping</strong> 和 <strong>stopped</strong> event。
+
+</ul>
+</ul>
+<li>
+<code>start on EVENT</code>
+
+<li>
+<code>stop on EVENT</code>
+
+<li>
+<code>exec COMMAND [ARG]</code>和<code>script ... end script</code>是main process。在一个job中，这两个只能存在一个。
+
+<li>
+以下四个是辅助process。
+
+<ul>
+<li>
+<code>pre-start exec|script ...</code> 在job starting event完成之后，在main process开始之前，执行。
+
+<li>
+<code>pre-stop exec|script...</code> job遭遇到了会导致stop的event，然后在main process被kill和stopping event发出之前，执行。
+
+<li>
+<code>post-stop exec|script...</code> 在main process已经挂了之后，再job stopped event发出之前，执行。
+
+<li>
+<code>post-start exec|script...</code> 在main process已经产生，但是started event还没有发出去的时候，执行。
+
+</ul>
+<li>
+这里四个辅助的process
+
+<ul>
+<li>
+两个start，两个stop。
+
+<li>
+一个start在main process开始之前，一个start在main process开始之后。
+
+<li>
+一个stop在main process停止之前，一个stop在main process停止之后。
+
+<li>
+一个start在starting之后，一个start在started之前。
+
+<li>
+一个stop在stopping之前，一个stop在stopped之前。
+
+<li>
+一个job先要starting，然后就是started，然后stopping，然后stopped。
+
+<li>
+starting的时候，main process还没开始，这之间有一个空位，就是pre-start。字面可以这么解释：main process开始之前。
+
+<li>
+main process产生之后，started之前，这之间有一个空位，就是post-start。
+
+<li>
+main process结束之前，stopping之前，但已经有event导致马上就要发生stop了，这个时候，是pre-stop，在stop开始之前。
+
+<li>
+main process结束了，stopped之前，有一个空位，就是post-stop。字面就是main process结束之后。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.5">Ubuntu Startup Process</h2>
+<ul>
+<li>
+开机之后到initramfs搞完之前，不管。
+
+<li>
+initramfs启动/sbin/init，其pid=1。
+
+<li>
+upstart（就是上面的/sbin/init）完成自己本身的初始化。
+
+<li>
+upstart发出一个event <strong>startup</strong> 。
+
+<li>
+在/etc/init中有一些conf文件里面有 <code>start on startup</code>这样的语句。/sbin/init就会启动这些job。
+
+<ul>
+<li>
+这些job会做mount各分区等等的行为。
+
+</ul>
+<li>
+这些被启动的job又会发出额外的event。比如virtual-filesystems event。
+
+<ul>
+<li>
+virtual-filesystems event：启动udev job。
+
+<ul>
+<li>
+udev job又发出event使得upstart-udev-brideg job启动。
+
+<ul>
+<li>
+……
+
+</ul>
+</ul>
+</ul>
+<li>
+当上面这些job完成之后，最后会发出filesystem event。
+
+<li>
+rc-sysinit job因此被启动。
+
+<li>
+rc-sysinit job调用telinit命令，并将runlevel作为参数发给它。
+
+<li>
+telinit命令发出runlevel event。
+
+<li>
+runlevel event又会导致其他的job启动，包含/etc/init/rc.conf，这个文件就是启动SystemV init system。
+
+</ul>
+
+<h2 id="toc_1.6">RHEL6 upstart init启动流程分析</h2>
+<ul>
+<li>
+先在/etc/init中搜寻包含startup event的conf。
+
+<ul>
+<li>
+rcS.conf
+
+<li>
+readahead-collector.conf
+
+<li>
+readahead.conf
+
+<li>
+readahead-disable-services.conf
+
+</ul>
+<li>
+rcS.conf
+
+<ul>
+<li>
+main process是 <code>exec /etc/rc.d/rc.sysinit</code> 。这个和system v init script的时候是一样的。
+
+<li>
+pre-start是看情况是否启动rcS-emergency。
+
+<li>
+然后发出runlevel event。
+
+</ul>
+<li>
+runlevel event导致的最重要的job就是rc.conf。在这个里面执行了<code>/etc/rc.d/rc $RUNLEVEL</code>。对应system v init。
+
+<li>
+然后当rc 5 stopped的时候，prefdm.conf执行。就是启动x11，桌面环境。
+
+<li>
+其实吧，启动过程不一样，但做的事情是一样的。
+
+</ul>
+
+<h1 id="toc_2">OVER</h1>
+<p>
+事实上，也许在RHEL7中upstart又会被systemd替代。
+</p>
+
+<p>
+还有一点要分清楚，job的控制和daemon的控制是两回事。job控制的是启动的流程。启动之后的system v init script还和以前的控制方法一样，比如chkconfig和/etc/init.d/xxx start等。
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Upstart_Process_Management_daemon";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Upstart_Process_Management_daemon";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

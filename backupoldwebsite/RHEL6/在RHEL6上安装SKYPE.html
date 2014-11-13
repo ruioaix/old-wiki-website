@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>在RHEL6上安装SKYPE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">在RHEL6上安装SKYPE</h1>
+
+<p>
+在RHEL6上安装skype，对于32位机和64位机有些许不同。
+下面的安装过程按照32位机来，64位机不同的地方我会特别指出。
+</p>
+<ul>
+<li>
+安装一些总要装的库
+
+<ul>
+<li>
+<code>yum install alsa-lib.i686 fontconfig.i686 freetype.i686 \</code>
+
+<li>
+<code>glib2.i686 libSM.i686 libXScrnSaver.i686 libXi.i686 \</code>
+
+<li>
+<code>libXrandr.i686 libXrender.i686 libXv.i686 libstdc++.i686 \</code>
+
+<li>
+<code>pulseaudio-libs.i686 qt.i686 qt-x11.i686 zlib.i686</code>
+
+<li>
+注意，这里都带了后缀，指定是i686，也就是32位机。
+
+<li>
+如果不带后缀，那么yum会自动根据系统的情况来选择x86_64或者i686。
+
+<li>
+<strong>在64位机器上，上面这些包的64位版本一般都已经安装过了，但仍然需要安装32位版本（也就是上面的i686版本）</strong>
+
+</ul>
+<li>
+下载skype包，从<a href="http://www.skype.com/intl/en/get-skype/on-your-computer/linux/">http://www.skype.com/intl/en/get-skype/on-your-computer/linux/</a> 这个网址，其中没有RHEL的，所以使用<code>Static</code>。当前的版本是4.0.0.8。
+
+<ul>
+<li>
+目前上面的网站已经没有<code>Static</code>了，取而代之的是<code>dynamic</code>，版本也变成了4.1.0.20。（2012.11.22）
+
+<li>
+这个版本目前再RHEL6上没有稳定的安装方法，Centos社区也建议仍然使用4.0.08的版本。地址：<a href="http://download.skype.com/linux/skype_static-4.0.0.8.tar.bz2">http://download.skype.com/linux/skype_static-4.0.0.8.tar.bz2</a>
+
+</ul>
+<li>
+解压
+
+<li>
+<code>su -</code>
+
+<li>
+<code>mkdir /opt/skype</code>
+
+<li>
+<code>tar xvf skype_static-4.0.0.8.tar.bz2 -C /opt/skype</code>
+
+<li>
+<code>cd /usr/lib</code>
+
+<li>
+<code>ln -s libtiff.so.3 /usr/lib/libtiff.so.4</code> 这一步在32位机器上是可以的，但在64位机器上，会发现在 <strong>/usr/lib/</strong> 下没有libtiff.so.3，这是因为机器上没有安装i686版本的libtiff（也就是32位版本的），这个时候需要你使用<code>yum install libtiff.i686</code>来强制在64位机器上安装32位的包。
+
+<li>
+<code>ln -s /opt/skype/skype.desktop /usr/share/applications/skype.desktop</code>  这几句话作用是将skype放入到RHEL左上角的applications菜单中。
+
+<li>
+<code>ln -s /opt/skype/icons/SkypeBlue_48x48.png /usr/share/icons/skype.png</code>
+
+<li>
+<code>ln -s /opt/skype/icons/SkypeBlue_48x48.png /usr/share/pixmaps/skype.png</code>
+
+<li>
+<code>vim /usr/bin/skype</code>
+<pre>
+    #!/bin/bash
+    export SKYPE_HOME="/opt/skype"
+    $SKYPE_HOME/skype --resources=$SKYPE_HOME $*
+</pre>
+
+<li>
+<code>chmod 755 /usr/bin/skype</code>
+
+</ul>
+
+<h1 id="toc_2">OVER</h1>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="在RHEL6上安装SKYPE";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="在RHEL6上安装SKYPE";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

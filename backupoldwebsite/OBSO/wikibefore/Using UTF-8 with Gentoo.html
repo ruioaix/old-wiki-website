@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Using UTF-8 with Gentoo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../../css/favicon.ico"/>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/moment.min.js"></script>
+    <script type="text/javascript" src="../../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">Using UTF-8 with Gentoo</h1>
+<h2 id="toc_1.1">character encodings（字符编码）</h2>
+<ul>
+<li>
+每一个字符在电脑里面都是使用一个number表示的，电脑本身是不认识字符的。
+
+<li>
+最普遍的character set（字符集）是ASCII。
+
+<ul>
+<li>
+ASCII是7-bits的，0-127；包括33个不可见控制字符，0-31和127（del），32-126是可见字符，包括空格，标点，字母，数字。
+
+<li>
+第八位原本是用来表示校验位，不需要的时候，设为0。
+
+</ul>
+<li>
+ISO 8859是对ASCII的一种扩展，其启用了第八位，得到了另外127（或者是128？）个字符，其用来表示欧洲带有重音的语系，现在有15个分支：ISO 8859-1到ISO 8859-15。
+
+<li>
+非拉丁字母的字符集带来更多的冲突。
+
+<li>
+Unicode脱离了单子节字符集的限制，其使用17个位面，每个位面包含65536（16位）个代码点，一共可以描述1114112（17×65536）个字符。
+
+<ul>
+<li>
+由于第一个位面包含了我们所用的几乎所有的字符，所以常常会错误的认为Unicode是双子节字符集。
+
+<li>
+Unicode有很多不同的映射方式，其中最普遍的是UTF和UCS。UTF-8是传播范围最广的方法。
+
+</ul>
+<li>
+UTF-8是长度可编的字符编码，表示一个字符，可以使用1-4bytes。
+
+<ul>
+<li>
+第一个个byte用于ASCII，使其完全兼容。
+
+</ul>
+</ul>
+
+<h2 id="toc_1.2">setting up UTF-8 with Gentoo Linux</h2>
+<ul>
+<li>
+确定<code>locale -a</code>有以<code>.utf-8</code>结尾的输出。
+
+<li>
+如果没有：<code>localedef -i zh_CN -f UTF-8 zh_CN.UTF-8</code>
+
+<li>
+编辑 <em>/etc/env.d/02locale</em> 文件，加入<code>LANG="zh_CN.UTF-8"</code>。
+
+<li>
+<code>env-update</code>
+
+<li>
+<code>source /etc/profile</code>
+
+</ul>
+
+<h2 id="toc_1.3">applicant support</h2>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="Using UTF-8 with Gentoo";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="Using UTF-8 with Gentoo";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

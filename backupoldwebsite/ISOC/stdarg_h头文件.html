@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>stdarg_h头文件</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1" class="justcenter">stdarg.h</h1>
+<p>
+本头文件提供了使我们能够自己编写带有变长参数列表的函数。如同printf和scanf。
+</p>
+
+<p>
+本头文件声明了一种类型（va_list）并定义了几个宏。
+</p>
+
+<p>
+C89中有三个宏：va_start,va_arg,va_end。C99增加了va_copy。
+</p>
+
+<p>
+vfprintf，vprintf，vsprintf函数都属于stdio.h。在C99中，增加了vsnprintf函数。这些函数总是和stdarg.h中的宏联合使用。
+</p>
+
+<pre>
+static void
+pr_sysconf(char *mesg, int name)
+{
+	long	val;
+
+	fputs(mesg, stdout);
+	errno = 0;
+	if ((val = sysconf(name)) &lt; 0) {
+		if (errno != 0) {
+			if (errno == EINVAL)
+				fputs(" (not supported)\n", stdout);
+			else
+				err_sys("sysconf error");
+		} else {
+			fputs(" (no limit)\n", stdout);
+		}
+	} else {
+		printf(" %ld\n", val);
+	}
+}
+</pre>
+<ul>
+<li>
+上面的函数中使用了err_sys函数。
+<pre>
+void
+err_sys(const char *fmt, ...)
+{
+	va_list		ap;
+
+	va_start(ap, fmt);
+	err_doit(1, errno, fmt, ap);
+	va_end(ap);
+	exit(1);
+}
+</pre>
+
+<li>
+上面的函数中首先定义了 <strong>va_list ap;</strong> 。
+
+<li>
+然后初始化 <strong>va_start(ap, fmt);</strong> 。
+
+<li>
+之后使用了err_doit函数。
+<pre>
+static void
+err_doit(int errnoflag, int error, const char *fmt, va_list ap)
+{
+	char	buf[MAXLINE];
+
+	vsnprintf(buf, MAXLINE, fmt, ap);
+	if (errnoflag)
+		snprintf(buf+strlen(buf), MAXLINE-strlen(buf), ": %s",
+		  strerror(error));
+	strcat(buf, "\n");
+	fflush(stdout);		/* in case stdout and stderr are the same */
+	fputs(buf, stderr);
+	fflush(NULL);		/* flushes all stdio output streams */
+}
+</pre>
+
+<li>
+上面使用了 <strong>vsnprintf(buf, MAXLINE, fmt, ap)</strong> 。
+
+<li>
+这个函数的意思是将ap的值嵌入到fmt中，就像printf（fmt，ap）的意思，然后，嵌入了的fmt放入buf中，但最多放入buf中MAXLINE个字符。
+
+<li>
+然后又使用了 <strong>snprintf(buf, MAXLINE, ": %s", str)</strong> 。这同上面的一样，只不过vsnprintf中的ap可以是多个参数，而snprintf只能是一个参数。同样放入buf中。
+
+<li>
+然后给buf添加一个换行符。
+
+<li>
+然后将buf输出。
+
+<li>
+对于err_sys，同样的输出错误信息，然后结束，返回1。
+
+</ul>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="stdarg_h头文件";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="stdarg_h头文件";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

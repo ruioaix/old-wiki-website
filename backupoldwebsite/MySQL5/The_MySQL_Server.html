@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>The_MySQL_Server</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="../css/favicon.ico"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/custom.js"> </script> 
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+</head>
+<body>
+    <div id="htop" style="width:128px;height:128px">
+    </div>
+    <div id="content">
+        
+<h1 id="toc_1">The MySQL Server</h1>
+<p>
+mysqld 就是 MySQL server，启动mysql的时候使用的命令<code>/etc/init.d/mysqld start</code>与此有一定的对应关系。
+</p>
+
+<h2 id="toc_1.1">Server Option and Variable Reference</h2>
+<ul>
+<li>
+MySQL server的配置选项和变量有以下几种：
+
+<ul>
+<li>
+command-line options
+
+<li>
+options in configuration files
+
+<li>
+server system variables
+
+<li>
+status variables（global，session或者both）
+
+</ul>
+<li>
+MySQL server有很多的操作参数，你可以在启动时候用command-line options设置，也可以在configuration files中进行options设置。
+
+<li>
+在server运行时，也可以改变非常多的参数。
+
+<li>
+MySQL server提供了很多配置好的配置文件，你可以直接拿来作为你自己配置的基础。
+
+</ul>
+
+<h2 id="toc_1.2">Server Command Options</h2>
+<ul>
+<li>
+mysqld 读取[mysqld]和[server]节的options。
+
+<li>
+mysqld_safe 读取[mysqld]，[server]，[mysqld_safe]，[safe_mysqld]节的options。
+
+<li>
+mysql.server读取[mysqld]，[mysql.server]节的options。
+
+</ul>
+
+<h1 id="toc_2">OVER</h1>
+<p>
+这节的东西太过于细节了，不再细看。
+</p>
+
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_title="The_MySQL_Server";
+        var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+        var disqus_identifier="The_MySQL_Server";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    <div id="hbottom">
+        <strong id="Times">Time is getting Fewer and Fewer.</strong>
+        <a href="../index.html">HomePage</a>
+        <a id="Contents" href="#">Contents</a>
+    </div>
+</body>
+</html>

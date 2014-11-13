@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PHP5 types</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="xrfind">
+    <meta name="copyright" content="copyright (c) 三月 08, 2011 xrfind">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link type="image/x-icon" rel="shortcut icon" href="../cssjs/css/favicon.ico"/>
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link type="text/css"         href="../cssjs/css/custom.css" rel="stylesheet">
+	<script type="text/javascript" src="../cssjs/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../cssjs/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../cssjs/js/custom.js"></script>
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36694423-1']);
+        _gaq.push(['_setDomainName', 'rrrui.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+
+</head>
+
+<body>
+	<div class="row-fluid">
+		<div id="left-side"  class="span4"> <div class="row-fluid">
+			<div class="navbar navbar-fixed-top visible-desktop">
+				<div class="navbar-inner">
+					<a class="brand" href="#"></a> 
+					<ul class="nav">
+						<li class="active"><a href="../index.html">home</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> index <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li class="dropdown-submenu"><a href="../">MyExperiences(wishToBeUseful)</a>
+									<ul class="dropdown-menu">
+									<li><a href="./index.html">RHEL6(6.3)</a>
+									<li><a href="#toc_1.1.2">Geant4(4.9.2.p02)</a>
+									<li><a href="#toc_1.1.3">Tips</a>
+									<li><a href="#toc_1.1.4">Apache(2.2.15)</a>
+									<li><a href="#toc_1.1.5">Reprint(good enough)</a>
+									</ul></li>
+								<li class="dropdown-submenu"><a href="#toc_1.2">Read&amp;Study(justForMyself)</a>
+									<ul class="dropdown-menu">
+									<li><a href="#toc_1.2.1">Css</a>
+									<li><a href="#toc_1.2.2">JQuery</a>
+									<li><a href="#toc_1.2.3">Ajax</a>
+									<li><a href="#toc_1.2.4">Cookies,Sessions</a>
+									<li><a href="#toc_1.2.5">Firebug</a>
+									<li><a href="#toc_1.2.6">GNU Make(3.81)</a>
+									<li><a href="#toc_1.2.7">Redis(2.6.10)</a>
+									<li><a href="#toc_1.2.8">LFS(7.2)</a>
+									<li><a href="#toc_1.2.9">APUE(v2)</a>
+									<li><a href="#toc_1.2.10">MySQL5(5.5)</a>
+									<li><a href="#toc_1.2.11">Drupal7</a>
+									</ul></li>
+								<li class="dropdown-submenu"><a href="#toc_1.3">LifeRecord(onTheRoad)</a></li>
+								<li class="dropdown-submenu"><a href="#toc_1.4">Obsoleted(useless)</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div><!--navbar --!>
+
+			<div id="myCarousel" class="carousel slide span12 img-polaroid  hidden-phone">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+					<li data-target="#myCarousel" data-slide-to="6"></li>
+					<li data-target="#myCarousel" data-slide-to="7"></li>
+					<li data-target="#myCarousel" data-slide-to="8"></li>
+					<li data-target="#myCarousel" data-slide-to="9"></li>
+					<li data-target="#myCarousel" data-slide-to="10"></li>
+					<li data-target="#myCarousel" data-slide-to="11"></li>
+					<li data-target="#myCarousel" data-slide-to="12"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item">		 <img src="../file/LRphoto/fribourg001.jpg"></div> 
+					<div class="item">       <img src="../file/LRphoto/fribourg002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg003.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/fribourg004.jpg"></div>
+					<div class="active item"><img src="../file/LRphoto/fribourg005.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/hangzhou001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/kunming001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/nanjing002.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/shanghai001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/someplace001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zhoushan001.jpg"></div>
+					<div class="item">       <img src="../file/LRphoto/zurich001.jpg"></div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			</div>
+
+			<div class="span12" id="profile"><div class="row-fluid">
+				<div class="span4 offset1">
+					<a href="http://github.com/xrfind"><img src="http://s.gravatar.com/avatar/c273e7c0a671536c4d122bc39d67c3d2?s=512" id="avatar" class="img-polaroid"></a>
+				</div>
+				<div class="span6 offset1 hidden-phone">
+					<strong><i class="icon-user"></i> xrfind</strong><br />
+					<span><i class="icon-home"></i><a href="http://wiki.rrrui.com"> wiki.rrrui.com</a></span><br />
+					<span><i class="icon-envelope"></i> xrfind@gmail.com</span><br />
+					<span><i class="icon-heart"></i><abbr title="c, c++, Linux"> System Engineer</abbr></span><br />
+					<span><i class="icon-tasks"></i><abbr title="php, html/css/javascript, LAMP, Redis"> Web Developer</abbr></span><br />
+					<span><i class="icon-road"></i> Complex Network</span>
+				</div>
+			</div></div>
+
+			<div class="span12 hidden-phone" id="disqus">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">
+				var disqus_title="PHP5 types";
+				var disqus_shortname = 'xrfindvimwiki'; // required: replace example with your forum shortname
+				var disqus_identifier="PHP5 types";
+
+				(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</div>
+
+
+
+		</div></div><!-- left-side --!>
+
+		<div id="right-side" class="span8" >
+			<div id="content">
+			<h1>PHP5 types</h1>
+
+<p>php 有8种类型。</p>
+
+<p>4种标量类型：boolean，integer，float（double），string。</p>
+
+<p>2种复合类型：array，object。</p>
+
+<p>2种特殊类型：resource，NULL。</p>
+
+<p>可以使用<code>var_dump()</code>来查看一个表达式结果的类型和值。</p>
+
+<p><code>gettype($xx)</code>返回变量的类型。</p>
+
+<p><code>is_type($xx)</code>来检查变量是否为某一类型。</p>
+
+<h2>Boolean</h2>
+
+<ul>
+<li><strong>TRUE</strong> 和 <strong>FALSE</strong> 是大小写不敏感的， <strong>true</strong> ， <strong>TRue</strong> ， <strong>FAlSe</strong> 都是相同的。 </li>
+<li>以下都是在转换为boolean时会变成 <strong>false</strong> 的值： 
+<ul>
+<li><strong>false</strong> 本身。 </li>
+<li>integer 0 </li>
+<li>float 0.0 </li>
+<li>empty string </li>
+<li>string “0” </li>
+<li>没有element的array </li>
+<li>特殊类型NULL </li>
+<li>从empty tags创建的SimpleXML object </li>
+</ul></li>
+<li>此外的所有都是 <strong>true</strong> 。 </li>
+</ul>
+
+<h2>Integer</h2>
+
+<ul>
+<li>整数 </li>
+<li>前面加0，表示八进制。 </li>
+<li>前面加0x，表示十六进制。 </li>
+<li>前面加0b，表示二进制。 </li>
+<li>integer的取值范围是平台决定的， </li>
+<li>php不支持无符号整数，只支持signed integer。 </li>
+<li>从 <strong>PHP<em>INI</em>SIZE</strong> 和 <strong>PHP<em>INI</em>MAX</strong> 可以知道整数可以取到的最大最小值。 </li>
+<li>从boolean到integer，false就是0，true就是1。 </li>
+<li>从float到integer，原则是向零逼近。 
+<ul>
+<li>如果float超出了integer的范围，转换结果不确定。我的机器上，变成了负数。有点c语言截断高位的感觉。 </li>
+</ul></li>
+<li>从string到integer，在string节介绍。 </li>
+<li>从上面3个之外的类型到integer类型的转换是未定义的。 </li>
+</ul>
+
+<h2>Floating point numbers</h2>
+
+<ul>
+<li>1.234，1.2e3，1E-11。 </li>
+<li>float的取值范围也是平台决定的。 </li>
+<li>float也是有精度限制的。 
+<ul>
+<li>不要相信float的最后一位，并且不要直接比较float是否相等。 </li>
+</ul></li>
+<li>string到float的转换，string节讲。 </li>
+<li>其他类型到float，先是到int，然后再到float。 </li>
+<li>float的比较，可以使用两者之差小于某个很小的数的方式。 </li>
+<li><strong>NAN</strong> 表示不可呈现的结果，使用任何value和这个值进行比较，结果都是 <strong>NAN</strong> 。 
+<ul>
+<li><code>is_nan()</code></li>
+</ul></li>
+</ul>
+
+<h2>String</h2>
+
+<ul>
+<li>string只支持256个字符，也就是8bit可以表示的所有。因此并不支持Unicode。 </li>
+<li>string可以到2G大小。 </li>
+<li>string literal（字符串字面值） 
+<ul>
+<li>Single quoted单引号 
+<ul>
+<li>如果字面值里面有单引号，那么使用backslash。 </li>
+<li>如果字面值里面有backslash，那么使用两个backslash。 </li>
+<li>其他情况下，backslash就是backslash本身。也就是说 <strong></strong> 之类的特殊字符是没有效果的，会原样输出。 </li>
+</ul></li>
+<li>Double quoted双引号 
+<ul>
+<li>双引号就会解释很多特殊字符。 </li>
+</ul></li>
+<li>Heredoc 
+<ul>
+<li><strong>&lt;&lt;&lt;</strong> 后面跟着一个标志符，然后同一个标志符用于结束。 </li>
+<li>结束用的标志符必须从newline开头开始，后面只能接一个分号，分号和标志符之间不允许任何的字符，分号之后不允许任何的字符。 </li>
+<li>heredoc里面的内容表现和双引号的一致。 </li>
+<li>同时，heredoc里面的双引号不需要backslash。 </li>
+<li><strong>&lt;&lt;&lt;</strong> 后面的标志副可以使用双引号，也可以不使用。 </li>
+</ul></li>
+<li>Nowdoc 
+<ul>
+<li>如果说Heredoc对应双引号，那么Nowdoc对应单引号。 </li>
+<li><strong>&lt;&lt;&lt;</strong> 后面的标志符需要使用单引号来包含。 </li>
+<li>nowdoc里面即使两个backslash和一个backslash加上一个单引号也不会解释，这是nowdoc和单引号的不同。也就是说nowdoc不解释任何东西。 </li>
+</ul></li>
+</ul></li>
+<li>Variable parsing（在双引号和heredoc之中） 
+<ul>
+<li>simple syntax，提供一个简单的方法从而嵌入一个variable，一个数组值，一个对象属性到一个string。 
+<ul>
+<li><strong>$</strong> 标志符 </li>
+<li>对数组来说， <strong>]</strong> 就是结束标志。 </li>
+</ul></li>
+<li>complex syntax 
+<ul>
+<li>这里的complex指复杂的表达式。 </li>
+<li>使用 <em>({</em> 和 <em>{)</em> 来搞定。就是使用 <strong>$</strong> 和 <strong>{</strong> 的不断组合。 </li>
+</ul></li>
+</ul></li>
+<li>String access and modification by character 
+<ul>
+<li>string可以被任务是array，从而操作其内部的字符。 </li>
+<li>可以使用 <em>(str[1]</em> ， 也可以使用 <em>)str{'1'}</em> 。 </li>
+</ul></li>
+<li>可以使用 <strong>.</strong> （dot）进行string的串联。 </li>
+<li>Converting to string 
+<ul>
+<li>boolean <strong>TRUE</strong> 变为string <strong>“1”</strong> 。 </li>
+<li>boolean <strong>False</strong> 变为 string <strong>“”</strong> 。 </li>
+<li>integer和float 就是 变成字面字符串。 </li>
+<li>array总是变为 <strong>“Array”</strong> 。 </li>
+<li>object总是变为 <strong>“Object”</strong> 。 </li>
+<li><strong>NULL</strong> 变为 <strong>“”</strong> 。 </li>
+<li>如上所述，直接将array，object，resource转为string不会得到任何有用的信息。 </li>
+</ul></li>
+<li>string conversion to number 
+<ul>
+<li>当string中不含有e，E和小数点的时候，就会被转换为integer，其他情况就是float。 </li>
+<li>只取string前面的数字部分，如果后面有字母，就不care了。如果第一个就不是数字，那么就为0. </li>
+</ul></li>
+<li>Details of the String Type 
+<ul>
+<li>string在php中就是通过an array of bytes and an length integer实现的。 </li>
+<li>至于这些byte如何表示character，就不是php关心的事情了。 </li>
+<li>那么php如何编码呢？结果：当你在使用什么编码编写php文件的时候，string就是按照那种编码编码的。 </li>
+<li>上面一行的功能只有Zend Multibyte enabled的时候才有用。 </li>
+<li>各种处理string的函数有各种对string编码的假定。 
+<ul>
+<li>一些就认为string就是byte。 </li>
+<li>一些将编码作为参数，传递给函数 </li>
+<li>结合当前locale来选择byte编码（只能使用single byte） </li>
+<li>一些假设string就是某种编码 </li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h2>Arrays</h2>
+
+<ul>
+<li>使用 <code>array()</code> 来建立一个array。 </li>
+<li><code>key =&gt; value</code>，逗号分开，最后一组的逗号留不留都可以。 </li>
+<li>从php5.4开始，可以使用 <strong>[]</strong> 来代替 <code>array()</code>。 </li>
+<li><code>key</code>可以是integer和string。 </li>
+<li>当<code>key</code>中出现某些类型时，会出现下面的强制转换。 
+<ul>
+<li>整数类型string会被转换为integer </li>
+<li>float类型直接截断为integer </li>
+<li>boolean类型要么是integer 1，要么是integer 0. </li>
+<li><strong>NULL</strong> 会变成 <strong>""</strong> ，这个只能出现一次。因为每个 <strong>NULL</strong> 都会变成 <strong>""</strong> ，就会报错。 </li>
+<li>array和object不能成为key。 </li>
+</ul></li>
+<li>多个同样的key，只使用最后一个key的value。除了上面的 <strong>NULL</strong> 。 </li>
+<li>array的元素可以使用 <code>array[key]</code> 的方式读取。 </li>
+<li><code>$arr[]=value</code> ，如果arr不存在，那么这是一种建立array的方式。 
+<ul>
+<li>如果arr存在，那么value的key就根据arr中曾经存在的key变化。 </li>
+<li>注意是曾经的key。 </li>
+</ul></li>
+<li><code>unset((arr);</code> <code>unset()arr[key]);</code>
+<ul>
+<li>上面的函数可以删除某一项key和value，但是并没有re-index数组。 </li>
+</ul></li>
+<li>使用<code>array_values()</code>来re-index数组。 </li>
+<li><code>foreach()</code>就是特别为array存在的。 </li>
+<li><code>(foo['bar']</code>是正确的，<code>)foo[bar]</code>是错误的。 
+<ul>
+<li>但是后者可以使用，在某些情况下。 </li>
+<li>这是因为，如果php找不到bar对应的标志符，那么就自动的将bar转化为<code>'bar'</code>这个string。 </li>
+<li>如果bar是常量，并且其代表的值是一个key，那么上面的后者是正确的。 </li>
+<li>key放入variable也是没错的。 </li>
+</ul></li>
+<li>4种标量类型和resource类型到array的转化： 
+<ul>
+<li><code>(array)(scalarValue</code>和<code>array()scalarValue)</code>是相同的。 </li>
+</ul></li>
+</ul>
+
+<h2>Objects</h2>
+
+<ul>
+<li>to create a new object，use the new statement to instantiate a class. </li>
+</ul>
+
+<h2>Resources</h2>
+
+<ul>
+<li>a resource is a special variable, holding a reference to an external resource. </li>
+</ul>
+
+<h2>NULL</h2>
+
+<ul>
+<li>null类型中唯一一个可能的值就是NULL。 </li>
+<li>NULL表示一个没有值的变量。 </li>
+<li>在下面的情况下，一个变量会被认为是null 
+<ul>
+<li>被赋予NULL的变量 </li>
+<li>还没被赋予任何变量 </li>
+<li>被<code>unset()</code></li>
+</ul></li>
+<li>NULL大小写不敏感，null，Null，NuLL都一样。 </li>
+</ul>
+
+<h2>Pseudo-types</h2>
+
+<ul>
+<li>mixed指可能接受多种类型，<code>gettype()</code></li>
+<li>number要么是integer，要么是float。 </li>
+<li>callback </li>
+<li>void表示返回值是无用的。 </li>
+</ul>
+			</div><!-- content --!>
+		</div><!-- right-side span8 --!>
+	</div> <!--row-fluid --!>
+</body>
+</html>
